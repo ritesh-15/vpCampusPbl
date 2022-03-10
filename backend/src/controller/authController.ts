@@ -16,8 +16,6 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
-    console.log(req.body)
-    console.log(req.headers)
 
     if(!email || !password)
       return next(CreateHttpError.notFound("Email address and password is required!"))
@@ -26,7 +24,6 @@ class AuthController {
       // check if user already exists with this email
       const user = await User.findOne({ email }).select("+password");
 
-      console.log("ABOVE RESPONSE 😊")
 
       if (!user)
         return next(
@@ -36,7 +33,7 @@ class AuthController {
       // compare user password
       const isAuthenticated = await bcrypt.compare(password, user.password);
 
-      console.log("ABOVE RESPONSE 😊")
+
 
       if (!isAuthenticated)
         return next(
@@ -45,12 +42,11 @@ class AuthController {
           )
         );
 
-    console.log("ABOVE RESPONSE 😊")
+ 
 
      const tokens =  await setResponseToken(res, user);
 
-    
-     console.log("ABOVE RESPONSE 😊")
+  
 
       return res.status(200).json({
         ok: true,
@@ -207,7 +203,11 @@ class AuthController {
   // @access public
 
   async refresh(req: Request, res: Response, next: NextFunction) {
-    let { refreshToken: recivedRefreshToken } = req.cookies;
+    let recivedRefreshToken:string | undefined;
+
+    if(req.cookies){
+      recivedRefreshToken = req.cookies.refreshToken
+    }
 
     if(!recivedRefreshToken){
       const token = req.headers['refreshtoken']

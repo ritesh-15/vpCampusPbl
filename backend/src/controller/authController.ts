@@ -225,7 +225,6 @@ class AuthController {
       if(!isTokenExists)
         throw new Error("Session exipred!")
 
-      console.log(isTokenExists)
 
       const user = await User.findById(tokenInfo._id);
 

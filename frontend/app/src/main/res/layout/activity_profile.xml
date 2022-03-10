@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.user.ProfileActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:liftOnScroll="true"
+                >
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/register_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@string/profile"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    android:background="@color/white"
+                    />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="@dimen/screenPadding"
+                android:gravity="center"
+                >
+
+
+            
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/profile_image_width_height"
+                android:layout_height="@dimen/profile_image_width_height"
+                android:src="@drawable/ic_user_avatar"
+                android:id="@+id/iv_user_image"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/profile_short_info_margin_top"
+                android:layout_gravity="center"
+                android:gravity="center"
+                >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ritesh"
+                android:textSize="@dimen/profile_name_text_size"
+                android:textColor="@color/textPrimary"
+                android:id="@+id/tv_short_name"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lorem epsum bio is here and can be updated with given text"
+                android:textSize="@dimen/textSize"
+                android:textColor="@color/textLight"
+                android:layout_marginTop="@dimen/profile_bio_margin_top"
+                android:gravity="center"
+                android:id="@+id/tv_short_bio"
+                />
+            
+            </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:id="@+id/et_name"
+                        android:text="Ritesh Khore"
+                        android:textColor="@color/textPrimary"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_email_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_address"
+                    android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:id="@+id/et_email_address"
+                        android:text="riteshkhore@gmail.com"
+                        android:textColor="@color/textPrimary"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/department"
+                    android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:id="@+id/et_department"
+                        android:text="Computer engineering"
+                        android:textColor="@color/textPrimary"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_year_of_study"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/year_of_study"
+                    android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:id="@+id/et_year_of_study"
+                        android:text="Second year"
+                        android:textColor="@color/textPrimary"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="bottom|end"
+        android:gravity="bottom|end"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="Edit"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_edit_icon"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

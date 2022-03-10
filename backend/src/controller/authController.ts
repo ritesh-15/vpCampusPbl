@@ -17,21 +17,26 @@ class AuthController {
     const { email, password } = req.body;
 
     console.log(req.body)
+    console.log(req.headers)
 
     if(!email || !password)
-      return next(CreateHttpError.forbidden("Email address and password is required!"))
+      return next(CreateHttpError.notFound("Email address and password is required!"))
 
     try {
       // check if user already exists with this email
       const user = await User.findOne({ email }).select("+password");
 
+      console.log("ABOVE RESPONSE 😊")
+
       if (!user)
         return next(
-          CreateHttpError.forbidden("User with this email does not exists!")
+          CreateHttpError.notFound("User with this email does not exists!")
         );
 
       // compare user password
       const isAuthenticated = await bcrypt.compare(password, user.password);
+
+      console.log("ABOVE RESPONSE 😊")
 
       if (!isAuthenticated)
         return next(
@@ -39,6 +44,8 @@ class AuthController {
             "Email address or password is incorrect!"
           )
         );
+
+    console.log("ABOVE RESPONSE 😊")
 
      const tokens =  await setResponseToken(res, user);
 

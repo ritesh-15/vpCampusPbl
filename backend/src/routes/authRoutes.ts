@@ -4,7 +4,12 @@ import { isAuthenticated } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.route("/login").post(authController.login);
+router.route("/login").post(authController.login).get((req,res) => {
+    res.json({
+        ok:true,
+        message:"Request Successfull!"
+    })
+});
 
 router.route("/register").post(authController.register);
 

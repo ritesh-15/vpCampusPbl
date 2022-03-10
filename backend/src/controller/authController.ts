@@ -42,7 +42,10 @@ class AuthController {
 
      const tokens =  await setResponseToken(res, user);
 
-      return res.json({
+    
+     console.log("ABOVE RESPONSE 😊")
+
+      return res.status(200).json({
         ok: true,
         user: {
           _id: user._id,

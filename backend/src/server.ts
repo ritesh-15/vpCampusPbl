@@ -21,13 +21,6 @@ const PORT = process.env.PORT || 9000;
 connection();
 
 // middlewares
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
 
 app.use("/api", apiLimiter);
 

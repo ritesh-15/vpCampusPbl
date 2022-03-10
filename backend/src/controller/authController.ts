@@ -16,8 +16,10 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
+    console.log(req.body)
+
     if(!email || !password)
-    return next(CreateHttpError.forbidden("Email address and password is required!"))
+      return next(CreateHttpError.forbidden("Email address and password is required!"))
 
     try {
       // check if user already exists with this email

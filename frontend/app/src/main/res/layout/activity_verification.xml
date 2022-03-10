@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.auth.VerificationActivity"
+    android:orientation="vertical"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/screenPadding"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verification"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/verification_text_size"
+            android:textColor="@color/colorSecondary"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verification_description_text"
+            android:layout_marginTop="@dimen/verification_description_text_margin_top"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/login_description_text_size"
+            android:textColor="@color/textLight"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tf_one_time_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/one_time_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="@color/colorPrimary"
+            android:layout_marginTop="@dimen/text_field_margin_top"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_one_time_password"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/verify"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textSize"
+            android:padding="@dimen/btnPadding"
+            android:layout_marginTop="@dimen/text_field_margin_top"
+            android:id="@+id/btn_verify"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_otp_timer"
+            android:layout_marginTop="@dimen/text_field_margin_top"
+            >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resend_otp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/login_description_text_size"
+            android:textColor="@color/textLight"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:59"
+            android:layout_marginTop="@dimen/verification_description_text_margin_top"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/otp_text_size"
+            android:textColor="@color/textPrimary"
+            android:id="@+id/tv_otp_timer"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_resend_otp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginTop="@dimen/text_field_margin_top"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/resend_otp_text"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSize"
+                android:padding="@dimen/btnPadding"
+                android:id="@+id/btn_resend_otp"
+                android:background="@drawable/outline_button_primary"
+                android:textColor="@color/textPrimary"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

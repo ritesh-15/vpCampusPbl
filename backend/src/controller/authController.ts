@@ -220,6 +220,11 @@ class AuthController {
     try {
       const tokenInfo = JWTToken.verifyRefreshToken(recivedRefreshToken);
 
+      const isTokenExists = await Token.findOne({refreshToken:recivedRefreshToken})
+
+      if(!isTokenExists)
+        throw new Error("Session exipred!")
+
       const user = await User.findById(tokenInfo._id);
 
       if (!user) throw new Error("User not exists!");

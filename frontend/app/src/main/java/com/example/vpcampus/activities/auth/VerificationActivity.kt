@@ -5,13 +5,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.Toast
 import com.example.vpcampus.R
+import com.example.vpcampus.activities.BaseActivity
+import com.example.vpcampus.api.authApi.AuthApi
 import com.example.vpcampus.databinding.ActivityVerificationBinding
+import com.example.vpcampus.models.User
+import com.example.vpcampus.store.UserState
+import com.example.vpcampus.utils.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class VerificationActivity : AppCompatActivity() {
+class VerificationActivity : BaseActivity() {
 
     private lateinit var binding:ActivityVerificationBinding
+
+    private var email:String? = null
+    private var hash:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,21 +38,62 @@ class VerificationActivity : AppCompatActivity() {
         binding.btnResendOtp.setOnClickListener {
             handlerResendBtnClick()
         }
+
+        if(intent.hasExtra(Constants.EMAIL) && intent.hasExtra(Constants.HASH)){
+            email = intent.getStringExtra(Constants.EMAIL)
+            hash = intent.getStringExtra(Constants.HASH)
+            binding.tvEmailAddress.text = email!!
+        }
     }
 
     // handle resend otp handler
     private fun handlerResendBtnClick(){
+        if(email == null || hash == null){
+            showErrorMessage(binding.root,"Something went wrong!")
+            return
+        }
 
-        // TODO:Resend otp api call
-
-        showTimer(60)
+        showProgressDialog()
+        AuthApi.resendOtp(this,email!!,{
+            otp ->
+            email = otp.email
+            hash = otp.hash
+            hideProgressDialog()
+        },{
+            showErrorMessage(binding.root,"Email address not match with account email address!")
+            hideProgressDialog()
+        })
 
     }
 
     //handle verify button click
     private fun handleVerifyBtnClick(){
-        // TODO:Verify account api call
+        val otp = binding.etOneTimePassword.text.toString()
+
+        if(otp.isEmpty()){
+            showErrorMessage(binding.root,"One time password is required!")
+            return
+        }
+
+        if(email == null || hash == null){
+            showErrorMessage(binding.root,"Something went wrong!")
+            return
+        }
+
+        showProgressDialog()
+        AuthApi.verifyOtp(this,email!!,otp,hash!!,
+            {
+            user -> onSuccessListener(user)
+        },{
+            showErrorMessage(binding.root,"One time password do not match!")
+                hideProgressDialog()
+            })
+    }
+
+    private fun onSuccessListener(user:User){
+        UserState.user = user
         startActivity(Intent(this,ActivationActivity::class.java))
+        hideProgressDialog()
         finish()
     }
 

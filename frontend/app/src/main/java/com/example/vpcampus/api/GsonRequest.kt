@@ -5,6 +5,8 @@ import com.android.volley.ParseError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.HttpHeaderParser
+import com.example.vpcampus.models.Tokens
+import com.example.vpcampus.utils.TokenHandler
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
@@ -26,7 +28,9 @@ class GsonRequest<T>(
         return gson.toJson(requestBody).toByteArray(Charset.defaultCharset())
     }
 
-    override fun getHeaders(): MutableMap<String, String> = headers ?: super.getHeaders()
+    override fun getHeaders(): MutableMap<String, String> {
+      return  headers ?: super.getHeaders()
+    }
 
     override fun deliverResponse(response: T) = listener.onResponse(response)
 

@@ -25,16 +25,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
         if(tokens.accessToken.isEmpty() || tokens.refreshToken.isEmpty()){
             onFailureListener()
+        }else{
+
+            AuthApi.refresh(this,tokens,
+                {
+                        user -> onSuccessListener(user)
+                },
+                {
+                    onFailureListener()
+                }
+            )
+
+
         }
 
-        AuthApi.refresh(this,tokens,
-            {
-                user -> onSuccessListener(user)
-            },
-            {
-                onFailureListener()
-            }
-            )
 
     }
 

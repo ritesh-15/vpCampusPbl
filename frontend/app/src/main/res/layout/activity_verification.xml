@@ -40,6 +40,16 @@
             android:textColor="@color/textLight"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verification_description_text_margin_top"
+            android:id="@+id/tv_email_address"
+            android:text="Email address"
+            android:textSize="@dimen/textSize"
+            android:textColor="@color/textPrimary"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_one_time_password"
             android:layout_width="match_parent"
@@ -54,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_one_time_password"
-                android:inputType="text"
+                android:inputType="number"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

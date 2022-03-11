@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">VpCampus</string>
+
+    <!--  Authentication activity text (Common)   -->
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+
+    <!--  Login activity   -->
+    <string name="login_description_text">Glad to have you back please login to get started</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_new_account">Do not have account? Create new account</string>
+
+    <!-- Register activity   -->
+    <string name="already_have_account">Already have account? Login</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="register_description_text">Dont have account yet please register to get started</string>
+
+    <!-- Verification activity   -->
+    <string name="verification_dialog_cancel">Cancel</string>
+    <string name="verification_dialog_Proceed">Proceed</string>
+    <string name="verification_dialog_title">Cancel Verification?</string>
+    <string name="verification_dialog_description">Account verification is required to use this application</string>
+    <string name="verification">Verification</string>
+    <string name="resend_otp">Resend OTP In</string>
+    <string name="resend_otp_text">Resend OTP</string>
+    <string name="verify">Verify</string>
+    <string name="one_time_password">One Time Password</string>
+    <string name="verification_description_text">One time password has been sent to you email address please verify</string>
+
+    <!-- Activation activity   -->
+    <string name="account_activation">Account activation</string>
+    <string name="account_activation_description">You are just on step away to activate you account</string>
+    <string name="year_of_study">Year of study</string>
+    <string name="department">Department</string>
+    <string name="activate">Activate</string>
+    <string name="account_activation_dialog_title">Cancel activation?</string>
+    <string name="account_activation_dialog_description">You are just one step away from activating
+        you account. Account activation is necessary for displaying the user information</string>
+    <string name="account_activation_dialog_cancel">Cancel</string>
+    <string name="account_activation_dialog_proceed">Proceed</string>
+    <string name="choose_year_of_study">Choose year of study</string>
+    <string name="choose_department">Choose department</string>
+    <string name="choose">Choose</string>
+
+    <!-- Profile activity   -->
+    <string name="profile">Profile</string>
+
+</resources>

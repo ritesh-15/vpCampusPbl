@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.auth.ActivationActivity"
+    android:orientation="vertical"
+    android:padding="@dimen/screenPadding"
+    android:layout_gravity="center"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_activation"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="@dimen/account_activation_text_size"
+        android:textColor="@color/colorSecondary"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_activation_description"
+        android:layout_marginTop="@dimen/account_activation_description_margin_top"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="@dimen/account_activation_description_text_size"
+        android:textColor="@color/textLight"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/activation_account_image_width_height"
+        android:layout_height="@dimen/activation_account_image_width_height"
+        android:layout_marginTop="@dimen/activation_account_image_margin_top"
+        android:src="@drawable/ic_user_avatar"
+        android:id="@+id/cim_user_avatar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_year_of_study"
+        android:layout_marginTop="@dimen/department_year_of_study_margin_top"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/year_of_study"
+                android:textSize="@dimen/department_year_of_study_text_size"
+                android:textColor="@color/textPrimary"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Second year"
+                android:layout_marginTop="@dimen/department_year_of_study_inner_text_margin_top"
+                android:textSize="@dimen/account_activation_description_text_size"
+                android:textColor="@color/textLight"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_edit_icon"
+            android:id="@+id/iv_edit_year_of_study"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_department"
+        android:layout_marginTop="@dimen/department_year_of_study_margin_top"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/department"
+                android:textSize="@dimen/department_year_of_study_text_size"
+                android:textColor="@color/textPrimary"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Computer Engineering"
+                android:layout_marginTop="@dimen/department_year_of_study_inner_text_margin_top"
+                android:textSize="@dimen/account_activation_description_text_size"
+                android:textColor="@color/textLight"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_edit_icon"
+            android:id="@+id/iv_edit_department"
+            />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_year_of_study"
+        android:textAllCaps="false"
+        android:textSize="@dimen/textSize"
+        android:padding="@dimen/btnPadding"
+        android:id="@+id/btn_select_year_of_study"
+        android:background="@drawable/outline_button_primary"
+        android:textColor="@color/textPrimary"
+        android:layout_marginTop="@dimen/activation_account_select_button_margin_top"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_department"
+        android:textAllCaps="false"
+        android:textSize="@dimen/textSize"
+        android:padding="@dimen/btnPadding"
+        android:id="@+id/btn_select_department"
+        android:background="@drawable/outline_button_primary"
+        android:textColor="@color/textPrimary"
+        android:layout_marginTop="@dimen/activation_account_select_button_margin_top"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activate"
+        android:textAllCaps="false"
+        android:textSize="@dimen/textSize"
+        android:padding="@dimen/btnPadding"
+        android:layout_marginTop="@dimen/department_year_of_study_margin_top"
+        android:id="@+id/btn_register"
+        android:visibility="gone"
+        />
+
+
+</LinearLayout>

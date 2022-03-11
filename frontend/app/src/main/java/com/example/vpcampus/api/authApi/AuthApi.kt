@@ -38,6 +38,7 @@ class AuthApi {
                 { response ->
                     try {
                         onSuccessListener(response.user)
+                        TokenHandler.saveTokenInSharedPreference(context,response.tokens)
                     }catch (e:java.lang.Exception){
                         onFailureListener()
                     }

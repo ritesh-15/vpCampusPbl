@@ -219,7 +219,7 @@ class AuthController {
     try {
       const tokenInfo = JWTToken.verifyRefreshToken(recivedRefreshToken);
 
-      const isTokenExists = await Token.findOne({refreshToken:recivedRefreshToken})
+      const isTokenExists = await Token.findOne({token:recivedRefreshToken})
 
       if(!isTokenExists)
         throw new Error("Session exipred!")

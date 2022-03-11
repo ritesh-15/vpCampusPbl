@@ -191,7 +191,6 @@ class AuthController {
 
       return res.json({ ok: true, message: "Logged out successfull!" });
     } catch (error: any) {
-      console.log(error);
       return next(
         CreateHttpError.internalServerError("Internal server error!")
       );
@@ -224,7 +223,6 @@ class AuthController {
 
       if(!isTokenExists)
         throw new Error("Session exipred!")
-
 
       const user = await User.findById(tokenInfo._id);
 

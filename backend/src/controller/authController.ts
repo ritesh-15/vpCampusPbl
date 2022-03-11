@@ -231,6 +231,7 @@ class AuthController {
       // revoke last refresh tokens
       await Token.deleteMany({ userId: user._id });
 
+      // setting up new tokens
       const tokens = await setResponseToken(res, user);
 
       return res.json({ ok: true, user ,tokens});

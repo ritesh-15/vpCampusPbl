@@ -3,9 +3,12 @@ package com.example.vpcampus.activities.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.vpcampus.activities.BaseActivity
+import com.example.vpcampus.api.authApi.AuthApi
 import com.example.vpcampus.databinding.ActivityRegisterBinding
+import com.example.vpcampus.models.User
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity() {
 
     private lateinit var binding:ActivityRegisterBinding
 
@@ -32,10 +35,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun handleRegisterBtnClick(){
-        // TODO: Implement register api
+        val email = binding.etEmailAddress.text.toString()
+        val password = binding.etPassword.text.toString()
+        val name = binding.etName.text.toString()
 
-        // after successfully register send user to verification screen for otp validation
-        startActivity(Intent(this,VerificationActivity::class.java))
-        finish()
+        if(!validateData(name,email, password))
+        {
+            showErrorMessage(binding.root,"Name, Email address and Password is required!")
+            return
+        }
+
+        AuthApi.register(this,email,password,name,{},{})
+
+    }
+
+    private fun onSuccessListener(user:User){
+        
+    }
+
+    private fun validateData(name:String,email:String,password:String):Boolean{
+        if(name.isEmpty() || email.isEmpty() || password.isEmpty())
+            return false
+
+        return true
     }
 }

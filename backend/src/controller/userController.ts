@@ -3,7 +3,7 @@ import { ADMIN, FACULTY, USER } from "../constants/userRoles";
 import { UserInterface } from "../interfaces/UserInterface";
 import User from "../model/userModel";
 import CreateHttpError from "../utils/errorHandler";
-import UploadService from "../utils/uploadFileService";
+import UploadService from "../services/uploadFileService";
 
 class UserController {
   // @route PUT/update-profile

@@ -16,4 +16,5 @@ export interface UserInterface {
   _id: ObjectId;
   isActivated: boolean;
   role: "user" | "faculty" | "admin";
+  isVerified:Boolean
 }

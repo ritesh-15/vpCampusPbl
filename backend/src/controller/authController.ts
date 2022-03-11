@@ -3,11 +3,12 @@ import User from "../model/userModel";
 import CreateHttpError from "../utils/errorHandler";
 import bcrypt from "bcrypt";
 import { setResponseToken } from "../utils/setResponseToken";
-import AuthValidation from "../validations/authValidations";
-import UploadService from "../utils/uploadFileService";
+import UploadService from "../services/uploadFileService";
 import Token from "../model/tokenModel";
 import { UserInterface } from "../interfaces/UserInterface";
-import JWTToken from "../utils/tokenService";
+import JWTToken from "../services/tokenService";
+import OtpService from "../services/OtpService";
+import EmailService from "../services/emailService";
 
 class AuthController {
   // @route   POST /login
@@ -15,7 +16,6 @@ class AuthController {
   // @access  Public
   async login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
-
 
     if(!email || !password)
       return next(CreateHttpError.notFound("Email address and password is required!"))
@@ -42,11 +42,7 @@ class AuthController {
           )
         );
 
- 
-
      const tokens =  await setResponseToken(res, user);
-
-  
 
       return res.status(200).json({
         ok: true,
@@ -102,7 +98,7 @@ class AuthController {
         name,
       };
 
-      const user = await User.create(body);
+    const user = await User.create(body);
 
      const tokens  =  await setResponseToken(res, user);
 
@@ -126,6 +122,106 @@ class AuthController {
         CreateHttpError.internalServerError("Internal server error!")
       );
     }
+  }
+
+  // @route POST/send-otp
+  // @desc send otp
+  // @access public
+  async sendOtp(req: Request, res: Response, next: NextFunction){
+    const {email} = req.body
+    const currentUser = req.user!! as UserInterface
+
+    if(!email)
+      return next(CreateHttpError.badRequest("Email address is not found!"))
+
+    if(email != currentUser.email){
+      return next(CreateHttpError
+        .badRequest("Email address not match with account email address!"))
+    }  
+
+    try {
+      const user = await User.findOne({email})
+
+      if(!user)
+        return next(CreateHttpError.notFound("User with this email is not found!"))
+
+      const newOtp = new OtpService(email)
+      
+      const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`
+
+      const newEmail = new EmailService(
+        {
+          to:email,
+          subject:"Account verification!",
+          html:EmailService.generateOtpTemplate(user.name,newOtp.otp),
+          text:"Account verification!"
+        }
+      )
+
+    await newEmail.send()
+
+      return res.json({
+        ok: true,
+        otp: {
+          hash: hashedOtp,
+          email: email,
+          otp: newOtp.otp,
+        },
+      });
+    
+
+    } catch (error) {
+      return next(CreateHttpError.internalServerError("Internal server error!"))
+    }  
+
+  }
+
+  // @route PUT/verify
+  // @desc verify account
+  // @access private
+  async verify(req: Request, res: Response, next: NextFunction){
+    const currentUser = <UserInterface>req.user
+
+    const {otp,email,hash} = req.body
+
+    if(!otp || !email || !hash)
+      return next(CreateHttpError.badRequest("All fileds are required!"))
+
+
+    try {
+      if(currentUser.email != email)
+        return next(CreateHttpError.badRequest("Account email address not match!"))
+
+      const givenHash = <string>hash;
+
+      const expiresIn = parseInt(givenHash.split(".")[1]);
+  
+      const hashedOtp = givenHash.split(".")[0];
+  
+      if (Date.now() > expiresIn)
+        return next(CreateHttpError.badRequest("Otp expires!"));
+  
+      const isValideOtp = OtpService.verify(email, otp, expiresIn, hashedOtp);
+  
+      if (!isValideOtp)
+        return next(CreateHttpError.badRequest("Otp does not match!"));
+
+      const user = await User.findOneAndUpdate({_id:currentUser._id},
+        {
+          $set:{
+            isVerified:true
+          }
+        },{new:true})
+
+      return res.json({
+        ok:true,
+        user
+      })  
+
+    } catch (error) {
+      return next(CreateHttpError.internalServerError("Internal server error!"))
+    }  
+
   }
 
   // @route PUT/activate

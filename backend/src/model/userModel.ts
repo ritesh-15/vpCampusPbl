@@ -6,7 +6,7 @@ const userSchema = new Schema<UserInterface>(
   {
     name: {
       type: String,
-      required: true,
+      required: true, 
     },
     password: {
       type: String,
@@ -48,6 +48,10 @@ const userSchema = new Schema<UserInterface>(
       type: String,
       default: USER,
     },
+    isVerified:{
+      type:Boolean,
+      default:false
+    }
   },
   {
     timestamps: true,

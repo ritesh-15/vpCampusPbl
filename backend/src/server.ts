@@ -24,11 +24,11 @@ connection();
 
 app.use("/api", apiLimiter);
 
-// app.use(cookieParser());
+app.use(cookieParser());
 
 app.use(morgan("dev"));
 
-// app.use(helmet());
+app.use(helmet());
 
 app.use(express.json());
 

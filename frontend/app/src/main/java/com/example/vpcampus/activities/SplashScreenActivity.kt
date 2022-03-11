@@ -40,19 +40,15 @@ class SplashScreenActivity : AppCompatActivity() {
 
     // on success
     private fun onSuccessListener(user:User){
-        Handler().postDelayed(Runnable {
-            val mainIntent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-            this@SplashScreenActivity.startActivity(mainIntent)
-            this@SplashScreenActivity.finish()
-        }, 1000)
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
+        finish()
     }
 
     // on failure
     private fun onFailureListener(){
-        Handler().postDelayed(Runnable {
-            val loginIntent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-            this@SplashScreenActivity.startActivity(loginIntent)
-            this@SplashScreenActivity.finish()
-        }, 1000)
+        val loginIntent = Intent(this, LoginActivity::class.java)
+        startActivity(loginIntent)
+        finish()
     }
 }

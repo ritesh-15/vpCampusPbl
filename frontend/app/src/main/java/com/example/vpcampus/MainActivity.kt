@@ -3,13 +3,9 @@ package com.example.vpcampus
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import com.example.vpcampus.activities.auth.LoginActivity
-import com.example.vpcampus.activities.user.ProfileActivity
 import com.example.vpcampus.databinding.ActivityMainBinding
-import com.example.vpcampus.utils.Constants
-import com.example.vpcampus.utils.TokenHandler
+
 
 class MainActivity : AppCompatActivity() {
 

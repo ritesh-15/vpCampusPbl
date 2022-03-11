@@ -13,5 +13,8 @@ data class User(
     val email:String,
     val department:String,
     val yearOfStudy:String,
-    val avatar:Avatar
+    val avatar:Avatar,
+    val bio : String,
+    val role: String,
+    val isActivated:Boolean
 ):Serializable

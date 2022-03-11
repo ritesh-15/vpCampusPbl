@@ -8,6 +8,7 @@ import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.AuthApi
 import com.example.vpcampus.databinding.ActivityLoginBinding
 import com.example.vpcampus.models.User
+import com.example.vpcampus.store.UserState
 
 class LoginActivity : BaseActivity() {
 
@@ -52,7 +53,8 @@ class LoginActivity : BaseActivity() {
                 hideProgressDialog()
             },
             {
-                error -> // TODO
+                error ->
+                onLoginFailureListener(error)
                 hideProgressDialog()
             }
             )
@@ -61,13 +63,20 @@ class LoginActivity : BaseActivity() {
     // on login success
     private fun onLoginSuccessListener(user:User){
         Toast.makeText(this,"Login success ${user._id}",Toast.LENGTH_SHORT).show()
-        // TODO: set user globally
-        startActivity(Intent(this,MainActivity::class.java))
-        finish()
+
+        UserState.user = user
+
+        if(!user.isActivated){
+            startActivity(Intent(this,ActivationActivity::class.java))
+            finish()
+        }else{
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
     }
 
     // on login fail
-    private fun onLoginFailureSuccess(error:String){
-
+    private fun onLoginFailureListener(error:String){
+        showErrorMessage(binding.root,"Email address or password is wrong please try again!")
     }
 }

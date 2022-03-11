@@ -56,6 +56,7 @@ class AuthController {
           yearOfStudy: user.yearOfStudy,
           bio: user.bio,
           role: user.role,
+          isVerified:user.isVerified
         },
         tokens
       });
@@ -100,6 +101,21 @@ class AuthController {
 
     const user = await User.create(body);
 
+    const newOtp = new OtpService(email)
+      
+    const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`
+
+    const newEmail = new EmailService(
+      {
+        to:email,
+        subject:"Account verification!",
+        html:EmailService.generateOtpTemplate(user.name,newOtp.otp),
+        text:"Account verification!"
+      }
+    )
+
+    await newEmail.send()
+
      const tokens  =  await setResponseToken(res, user);
 
       return res.json({
@@ -114,8 +130,14 @@ class AuthController {
           yearOfStudy: user.yearOfStudy,
           bio: user.bio,
           role: user.role,
+          isVerified:user.isVerified
         },
-        tokens
+        tokens,
+        otp: {
+          hash: hashedOtp,
+          email: email,
+          otp: newOtp.otp,
+        },
       });
     } catch (error) {
       return next(

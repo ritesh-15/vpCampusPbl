@@ -1,15 +1,9 @@
 package com.example.vpcampus.activities.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.vpcampus.activities.BaseActivity
-import com.example.vpcampus.api.authApi.AuthApi
-import com.example.vpcampus.api.authApi.OtpData
 import com.example.vpcampus.databinding.ActivityRegisterBinding
-import com.example.vpcampus.models.User
-import com.example.vpcampus.utils.Constants
 
 class RegisterActivity : BaseActivity() {
 
@@ -48,26 +42,8 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        showProgressDialog()
-        AuthApi.register(this,email,password,name,{
-            user, otp ->  onSuccessListener(user,otp)
-        },{ onFailureResponse() })
-
     }
 
-    private fun onSuccessListener(user:User,otp:OtpData){
-        val intent = Intent(this,VerificationActivity::class.java)
-        intent.putExtra(Constants.EMAIL,otp.email)
-        intent.putExtra(Constants.HASH,otp.hash)
-        hideProgressDialog()
-        startActivity(intent)
-        finish()
-    }
-
-    private fun onFailureResponse(){
-        hideProgressDialog()
-        showErrorMessage(binding.root,"Email address is already taken by another user!")
-    }
 
     private fun validateData(name:String,email:String,password:String):Boolean{
         if(name.isEmpty() || email.isEmpty() || password.isEmpty())

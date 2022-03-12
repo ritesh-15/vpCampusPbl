@@ -1,27 +1,22 @@
 package com.example.vpcampus.api
 
-import android.content.Context
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.Volley
+import com.example.vpcampus.api.authApi.AuthInterface
+import com.example.vpcampus.utils.Constants
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiInstance constructor(context: Context) {
-    companion object {
-        @Volatile
-        private var INSTANCE: ApiInstance? = null
-        fun getInstance(context: Context) =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ApiInstance(context).also {
-                    INSTANCE = it
-                }
-            }
+
+
+object ApiInstance {
+    private val retrofit:Retrofit by lazy{
+        Retrofit.Builder()
+            .baseUrl(Constants.API_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
-    val requestQueue: RequestQueue by lazy {
-        Volley.newRequestQueue(context.applicationContext)
+    val authApi:AuthInterface by lazy {
+        retrofit.create(AuthInterface::class.java)
     }
 
-    fun <T> addToRequestQueue(req: Request<T>) {
-        requestQueue.add(req)
-    }
 }

@@ -3,21 +3,33 @@ package com.example.vpcampus.activities.auth
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import com.example.vpcampus.MainActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.vpcampus.activities.BaseActivity
-import com.example.vpcampus.api.authApi.AuthApi
+import com.example.vpcampus.api.authApi.AuthResponse
 import com.example.vpcampus.databinding.ActivityLoginBinding
-import com.example.vpcampus.models.User
+import com.example.vpcampus.network.factory.AuthViewModelFactory
+import com.example.vpcampus.network.models.AuthViewModel
+import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.store.UserState
+import com.example.vpcampus.utils.ScreenState
+import com.example.vpcampus.utils.TokenHandler
+
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding:ActivityLoginBinding
 
+    private lateinit var viewModel:AuthViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // view model
+        val repository = AuthRepository()
+        val viewModelFactory = AuthViewModelFactory(repository)
+        viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
 
         // Toolbar back press handler
         binding.loginToolbarr.setNavigationOnClickListener{
@@ -46,37 +58,41 @@ class LoginActivity : BaseActivity() {
             return
         }
 
-        showProgressDialog()
-        AuthApi.login(this,email,password,
-            {
-                user -> onLoginSuccessListener(user)
-                hideProgressDialog()
-            },
-            {
-                error ->
-                onLoginFailureListener(error)
-                hideProgressDialog()
-            }
-            )
+        viewModel.login(email,password)
+
+        viewModel.loginResponse.observe(this){
+            response ->
+            parseLoginResponse(response)
+
+        }
+
     }
 
-    // on login success
-    private fun onLoginSuccessListener(user:User){
-        Toast.makeText(this,"Login success ${user._id}",Toast.LENGTH_SHORT).show()
+    // parse the login response and to the specific task
+    private fun parseLoginResponse(state:ScreenState<AuthResponse.LoginResponse>){
+        when(state){
 
-        UserState.user = user
+            is ScreenState.Success -> {
+                hideProgressDialog()
+                if(state.data != null){
+                    Toast.makeText(this,"Login successfull",Toast.LENGTH_SHORT).show()
 
-        if(!user.isActivated){
-            startActivity(Intent(this,ActivationActivity::class.java))
-            finish()
-        }else{
-            startActivity(Intent(this,MainActivity::class.java))
-            finish()
+                    // save tokens
+                    TokenHandler.saveTokenInSharedPreference(this,state.data.tokens)
+
+                    // save user globally
+                    UserState.user = state.data.user
+                }
+            }
+
+            is ScreenState.Loading -> {
+                showProgressDialog()
+            }
+
+            is ScreenState.Error -> {
+                hideProgressDialog()
+            }
         }
     }
 
-    // on login fail
-    private fun onLoginFailureListener(error:String){
-        showErrorMessage(binding.root,"Email address or password is wrong please try again!")
-    }
 }

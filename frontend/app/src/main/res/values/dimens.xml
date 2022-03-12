@@ -10,7 +10,7 @@
 
     <!-- Circular progress bar   -->
     <dimen name="progress_bar_width_height">50dp</dimen>
-    <dimen name="progress_padding">16dp</dimen>
+    <dimen name="progress_padding">18dp</dimen>
     <dimen name="progress_dialog_loading_margin_right">18dp</dimen>
 
     <!--  Button Dimes   -->

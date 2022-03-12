@@ -2,6 +2,7 @@ package com.example.vpcampus.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.vpcampus.MainActivity
 import com.example.vpcampus.models.Tokens
 import org.json.JSONException
 
@@ -12,12 +13,17 @@ class TokenHandler {
         private var prefs:SharedPreferences? = null
         private var edit:SharedPreferences.Editor?= null
 
-        fun getTokens(context: Context): Tokens {
+        fun getTokens(context: Context): Map<String,String> {
             prefs = context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-            val accessToken: String = prefs?.getString("accessToken", "")!!
-            val refreshToken: String = prefs?.getString("refreshToken", "")!!
+            val accessToken: String = prefs?.getString(Constants.ACCESS_TOKEN, "")!!
+            val refreshToken: String = prefs?.getString(Constants.REFRESH_TOKEN, "")!!
 
-            return Tokens(accessToken, refreshToken)
+            val tokens = HashMap<String,String>()
+
+            tokens[Constants.AUTHORIZATION] = accessToken
+            tokens[Constants.REFRESH_TOKEN] = refreshToken
+
+            return tokens
 
         }
 

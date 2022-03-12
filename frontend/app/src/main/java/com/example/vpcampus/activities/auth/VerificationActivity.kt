@@ -1,17 +1,11 @@
 package com.example.vpcampus.activities.auth
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Toast
 import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
-import com.example.vpcampus.api.authApi.AuthApi
 import com.example.vpcampus.databinding.ActivityVerificationBinding
-import com.example.vpcampus.models.User
-import com.example.vpcampus.store.UserState
 import com.example.vpcampus.utils.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -53,17 +47,6 @@ class VerificationActivity : BaseActivity() {
             return
         }
 
-        showProgressDialog()
-        AuthApi.resendOtp(this,email!!,{
-            otp ->
-            email = otp.email
-            hash = otp.hash
-            hideProgressDialog()
-        },{
-            showErrorMessage(binding.root,"Email address not match with account email address!")
-            hideProgressDialog()
-        })
-
     }
 
     //handle verify button click
@@ -75,27 +58,10 @@ class VerificationActivity : BaseActivity() {
             return
         }
 
-        if(email == null || hash == null){
-            showErrorMessage(binding.root,"Something went wrong!")
-            return
-        }
 
-        showProgressDialog()
-        AuthApi.verifyOtp(this,email!!,otp,hash!!,
-            {
-            user -> onSuccessListener(user)
-        },{
-            showErrorMessage(binding.root,"One time password do not match!")
-                hideProgressDialog()
-            })
     }
 
-    private fun onSuccessListener(user:User){
-        UserState.user = user
-        startActivity(Intent(this,ActivationActivity::class.java))
-        hideProgressDialog()
-        finish()
-    }
+
 
     // handle back press here
     override fun onBackPressed() {

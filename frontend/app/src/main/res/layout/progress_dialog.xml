@@ -25,9 +25,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading"
+            android:text="Please wait..."
             android:textSize="@dimen/textSize"
             android:layout_marginStart="@dimen/progress_dialog_loading_margin_right"
+            android:id="@+id/pb_text"
             />
 
     </LinearLayout>

@@ -7,4 +7,8 @@ object Constants {
     const val EMAIL = "email"
     const val HASH = "hash"
 
+    const val ACCESS_TOKEN = "accessToken"
+    const val REFRESH_TOKEN = "refreshToken"
+    const val AUTHORIZATION = "authorization"
+
 }

@@ -322,6 +322,8 @@ class AuthController {
   async refresh(req: Request, res: Response, next: NextFunction) {
     let recivedRefreshToken:string | undefined;
 
+    console.log(req.headers)
+
     if(req.cookies){
       recivedRefreshToken = req.cookies.refreshToken
     }

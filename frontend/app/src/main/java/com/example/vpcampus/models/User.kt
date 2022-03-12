@@ -16,5 +16,6 @@ data class User(
     val avatar:Avatar,
     val bio : String,
     val role: String,
-    val isActivated:Boolean
+    val isActivated:Boolean,
+    val isVerified:Boolean
 ):Serializable

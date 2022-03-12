@@ -20,8 +20,8 @@ class TokenHandler {
 
             val tokens = HashMap<String,String>()
 
-            tokens[Constants.AUTHORIZATION] = accessToken
-            tokens[Constants.REFRESH_TOKEN] = refreshToken
+            tokens[Constants.AUTHORIZATION] = "Bearer $accessToken"
+            tokens[Constants.REFRESH_TOKEN] = "Bearer $refreshToken"
 
             return tokens
 

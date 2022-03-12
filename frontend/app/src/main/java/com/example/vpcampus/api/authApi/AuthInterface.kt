@@ -10,12 +10,12 @@ interface AuthInterface {
 
     @POST("auth/login")
     suspend fun login(
-        @Body body:AuthBodyState.LoginRequestBody
-    ) : Response<AuthResponse.LoginResponse>
+        @Body body:LoginRequestBody
+    ) : Response<LoginResponse>
 
     @GET("auth/refresh")
     suspend fun refresh(
         @HeaderMap headers : Map<String,String>
-    ):Response<AuthResponse.RefreshResponse>
+    ):Response<RefreshResponse>
 
 }

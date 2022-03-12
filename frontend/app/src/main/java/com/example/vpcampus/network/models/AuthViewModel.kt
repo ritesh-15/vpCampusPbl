@@ -1,8 +1,10 @@
 package com.example.vpcampus.network.models
 
+
 import androidx.lifecycle.*
-import com.example.vpcampus.api.authApi.AuthBodyState
-import com.example.vpcampus.api.authApi.AuthResponse
+import com.example.vpcampus.api.authApi.LoginRequestBody
+import com.example.vpcampus.api.authApi.LoginResponse
+import com.example.vpcampus.api.authApi.RefreshResponse
 import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.utils.ScreenState
 import kotlinx.coroutines.launch
@@ -12,54 +14,51 @@ class AuthViewModel(
     private val repository: AuthRepository
 ):ViewModel() {
 
-    private val _loginResponse = MutableLiveData<ScreenState<AuthResponse.LoginResponse>>()
+   private var  _loginResponse = MutableLiveData<ScreenState<LoginResponse>>()
 
-    private val _refreshResponse = MutableLiveData<ScreenState<AuthResponse.RefreshResponse>>()
+    val loginResponse:LiveData<ScreenState<LoginResponse>>
+    get()  = _loginResponse
 
-    val loginResponse:LiveData<ScreenState<AuthResponse.LoginResponse>>
-        get() = _loginResponse
+    private var _refreshResponse = MutableLiveData<ScreenState<RefreshResponse>>()
 
-    val refreshResponse:LiveData<ScreenState<AuthResponse.RefreshResponse>>
-        get() = _refreshResponse
+    val refreshResponse:LiveData<ScreenState<RefreshResponse>>
+        get()  = _refreshResponse
+
 
     fun login(email:String,password:String){
-        val body = AuthBodyState.LoginRequestBody(email,password)
+        val body = LoginRequestBody(email, password)
 
         viewModelScope.launch {
-            val response = repository.login(body)
             _loginResponse.value = ScreenState.Loading(null)
-
+            val response = repository.login(body)
             try {
                 if(response.isSuccessful){
                     _loginResponse.value = ScreenState.Success(response.body())
                 }else{
                     _loginResponse.value = ScreenState.Error(response.code().toString())
                 }
-
             }catch (e:Exception){
-                _loginResponse.value = ScreenState.Error(e.message!!)
+                _loginResponse.value = ScreenState.Error(response.code().toString())
             }
-
         }
-
     }
 
     fun refresh(headers:Map<String,String>){
-        _refreshResponse.value = ScreenState.Loading(null)
 
         viewModelScope.launch {
-            try {
-                val response = repository.refresh(headers)
+            _refreshResponse.value = ScreenState.Loading(null)
+            val response = repository.refresh(headers)
 
+            try {
                 if(response.isSuccessful){
                     _refreshResponse.value = ScreenState.Success(response.body())
                 }else{
                     _refreshResponse.value = ScreenState.Error(response.code().toString())
                 }
-
             }catch (e:Exception){
-                _refreshResponse.value = ScreenState.Error(e.message!!)
+                _refreshResponse.value = ScreenState.Error(response.code().toString())
             }
         }
+
     }
 }

@@ -2,10 +2,10 @@ package com.example.vpcampus.activities.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.vpcampus.MainActivity
 import com.example.vpcampus.activities.BaseActivity
-import com.example.vpcampus.api.authApi.AuthResponse
+import com.example.vpcampus.api.authApi.LoginResponse
 import com.example.vpcampus.databinding.ActivityLoginBinding
 import com.example.vpcampus.network.factory.AuthViewModelFactory
 import com.example.vpcampus.network.models.AuthViewModel
@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity() {
         // view model
         val repository = AuthRepository()
         val viewModelFactory = AuthViewModelFactory(repository)
-        viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(this,viewModelFactory)[AuthViewModel::class.java]
 
         // Toolbar back press handler
         binding.loginToolbarr.setNavigationOnClickListener{
@@ -46,6 +46,11 @@ class LoginActivity : BaseActivity() {
         binding.btnLogin.setOnClickListener {
             handleLoginBtnClick()
         }
+
+        // observe login api call
+        viewModel.loginResponse.observe(this) { response ->
+            parseResponseData(response)
+        }
     }
 
     // handle login button
@@ -59,40 +64,49 @@ class LoginActivity : BaseActivity() {
         }
 
         viewModel.login(email,password)
-
-        viewModel.loginResponse.observe(this){
-            response ->
-            parseLoginResponse(response)
-
-        }
-
     }
 
-    // parse the login response and to the specific task
-    private fun parseLoginResponse(state:ScreenState<AuthResponse.LoginResponse>){
+    private fun parseResponseData(state:ScreenState<LoginResponse>){
         when(state){
-
-            is ScreenState.Success -> {
-                hideProgressDialog()
-                if(state.data != null){
-                    Toast.makeText(this,"Login successfull",Toast.LENGTH_SHORT).show()
-
-                    // save tokens
-                    TokenHandler.saveTokenInSharedPreference(this,state.data.tokens)
-
-                    // save user globally
-                    UserState.user = state.data.user
-                }
-            }
 
             is ScreenState.Loading -> {
                 showProgressDialog()
             }
 
+            is ScreenState.Success -> {
+                hideProgressDialog()
+
+                if(state.data != null){
+                    TokenHandler.saveTokenInSharedPreference(this,state.data.tokens)
+                    UserState.user = state.data.user
+
+                    // check if user is activated or not
+                    if(!state.data.user.isActivated){
+                        val intent = Intent(this,ActivationActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else if(!state.data.user.isVerified){
+                        // TODO otp request
+                        val intent = Intent(this,VerificationActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        val intent = Intent(this,MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+
+                }
+            }
+
             is ScreenState.Error -> {
                 hideProgressDialog()
+                showErrorMessage(binding.root,state.message!!)
             }
+
         }
     }
+
 
 }

@@ -254,6 +254,9 @@ class AuthController {
     const { avatar, department, yearOfStudy, bio } = req.body;
     const user = <UserInterface>req.user;
 
+
+    console.log(req.body)
+
     if (!avatar || !department || !yearOfStudy || !bio)
       return next(
         CreateHttpError.forbidden(
@@ -322,8 +325,6 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: NextFunction) {
     let recivedRefreshToken:string | undefined;
-
-    console.log(req.headers)
 
     if(req.cookies){
       recivedRefreshToken = req.cookies.refreshToken

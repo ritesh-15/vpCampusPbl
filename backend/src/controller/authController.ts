@@ -226,7 +226,7 @@ class AuthController {
       const isValideOtp = OtpService.verify(email, otp, expiresIn, hashedOtp);
   
       if (!isValideOtp)
-        return next(CreateHttpError.badRequest("Otp does not match!"));
+        return next(CreateHttpError.unauthorized("Otp does not match!"));
 
       const user = await User.findOneAndUpdate({_id:currentUser._id},
         {
@@ -288,6 +288,7 @@ class AuthController {
         user: updatedUser,
       });
     } catch (error: any) {
+      console.log(error.message)
       return next(
         CreateHttpError.internalServerError("Internal server error!")
       );

@@ -12,6 +12,7 @@ import passport from "passport";
 import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
+import multer from "multer"
 
 const app: Application = express();
 

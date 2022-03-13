@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer";
 import authController from "../controller/authController";
 import { isAuthenticated } from "../middlewares/authMiddleware";
 
@@ -8,7 +9,7 @@ router.route("/login").post(authController.login)
 
 router.route("/register").post(authController.register);
 
-router.route("/activate").put(isAuthenticated, authController.activate);
+router.route("/activate").put([isAuthenticated], authController.activate);
 
 router.route("/logout").delete(isAuthenticated, authController.logout);
 

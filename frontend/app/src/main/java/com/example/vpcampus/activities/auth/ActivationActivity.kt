@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -33,7 +34,6 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ActivationActivity : BaseActivity() {
@@ -101,7 +101,7 @@ class ActivationActivity : BaseActivity() {
 
         val imageStream: InputStream? = contentResolver.openInputStream(mSelectedImageFileUri!!)
         val selectedImage = BitmapFactory.decodeStream(imageStream)
-        val avatar: String? = encodeImage(selectedImage)
+        val avatar: String? = getEncoded64ImageStringFromBitmap(selectedImage)
 
         Log.d("AVATAR",avatar!!)
 
@@ -116,11 +116,12 @@ class ActivationActivity : BaseActivity() {
             TokenHandler.getTokens(this))
     }
 
-    private fun encodeImage(bm: Bitmap): String? {
-        val baos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val b: ByteArray = baos.toByteArray()
-        return Base64.encodeToString(b, Base64.DEFAULT);
+    private fun getEncoded64ImageStringFromBitmap(bitmap: Bitmap): String? {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(CompressFormat.JPEG, 70, stream)
+        val byteFormat = stream.toByteArray()
+        // get the base 64 string
+        return Base64.encodeToString(byteFormat, Base64.NO_WRAP)
     }
 
     private fun validateData(department:String,yearOfStudy:String,bio:String,avatar:String):Boolean{

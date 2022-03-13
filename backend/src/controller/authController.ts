@@ -231,6 +231,10 @@ class AuthController {
     const { avatar, department, yearOfStudy, bio } = req.body;
     const user = <UserInterface>req.user;
 
+    console.log(req.body)
+    
+    console.log(req.file)
+
     if (!avatar || !department || !yearOfStudy || !bio)
       return next(
         CreateHttpError.forbidden(

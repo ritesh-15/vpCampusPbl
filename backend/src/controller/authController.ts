@@ -249,13 +249,9 @@ class AuthController {
   // @route PUT/activate
   // @desc Activate user
   // @access private
-
   async activate(req: Request, res: Response, next: NextFunction) {
     const { avatar, department, yearOfStudy, bio } = req.body;
     const user = <UserInterface>req.user;
-
-
-    console.log(req.body)
 
     if (!avatar || !department || !yearOfStudy || !bio)
       return next(
@@ -265,9 +261,6 @@ class AuthController {
       );
 
     try {
-      // upload the avatar
-      const avatarInfo = await new UploadService(avatar).uploadAsAvatar();
-
       // update user
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
@@ -277,10 +270,7 @@ class AuthController {
             bio,
             department,
             isActivated: true,
-            avatar: {
-              publicId: avatarInfo.public_id,
-              url: avatarInfo.url,
-            },
+            avatar
           },
         },
         { new: true, runValidators: true }
@@ -291,7 +281,6 @@ class AuthController {
         user: updatedUser,
       });
     } catch (error: any) {
-      console.log(error.message)
       return next(
         CreateHttpError.internalServerError("Internal server error!")
       );

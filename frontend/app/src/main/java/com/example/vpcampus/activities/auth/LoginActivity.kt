@@ -2,15 +2,19 @@ package com.example.vpcampus.activities.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.vpcampus.MainActivity
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.LoginResponse
+import com.example.vpcampus.api.authApi.SendOtpResponse
 import com.example.vpcampus.databinding.ActivityLoginBinding
 import com.example.vpcampus.network.factory.AuthViewModelFactory
 import com.example.vpcampus.network.models.AuthViewModel
 import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.store.UserState
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 
@@ -20,6 +24,8 @@ class LoginActivity : BaseActivity() {
     private lateinit var binding:ActivityLoginBinding
 
     private lateinit var viewModel:AuthViewModel
+
+    private var hash:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +55,50 @@ class LoginActivity : BaseActivity() {
 
         // observe login api call
         viewModel.loginResponse.observe(this) { response ->
-            parseResponseData(response)
+            parseLoginResponse(response)
+        }
+
+        // observe send otp api call
+        viewModel.sendOtpResponse.observe(this){
+            response -> parseSendOtpResponse(response)
+        }
+    }
+
+    // parse the send otp response data
+    private fun parseSendOtpResponse(state:ScreenState<SendOtpResponse>){
+        when(state){
+
+            is ScreenState.Loading -> {
+                showProgressDialog("Sending verification code")
+            }
+
+            is ScreenState.Error -> {
+                hideProgressDialog()
+                when(state.statusCode){
+                    400 -> {
+                        showErrorMessage(binding.root,"Email address is not found please retry!")
+                    }
+                    404 -> {
+                        showErrorMessage(binding.root,"User not found with this email address!")
+                    }
+                    500 -> {
+                        showErrorMessage(binding.root,"Something went wrong!")
+                    }
+                }
+            }
+
+            is ScreenState.Success -> {
+                hideProgressDialog()
+                if(state.data != null){
+                    hash = state.data.otp.hash
+                    val intent = Intent(this,VerificationActivity::class.java)
+                    intent.putExtra(Constants.EMAIL,state.data.otp.email)
+                    intent.putExtra(Constants.HASH,hash!!)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
         }
     }
 
@@ -66,7 +115,8 @@ class LoginActivity : BaseActivity() {
         viewModel.login(email,password)
     }
 
-    private fun parseResponseData(state:ScreenState<LoginResponse>){
+    // parse login response
+    private fun parseLoginResponse(state:ScreenState<LoginResponse>){
         when(state){
 
             is ScreenState.Loading -> {
@@ -81,13 +131,10 @@ class LoginActivity : BaseActivity() {
                     UserState.user = state.data.user
 
                     // check if user is activated or not
-                    if(!state.data.user.isActivated){
+                    if(!state.data.user.isVerified){
+                        viewModel.sendOtp(state.data.user.email,TokenHandler.getTokens(this))
+                    }else if(!state.data.user.isActivated){
                         val intent = Intent(this,ActivationActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }else if(!state.data.user.isVerified){
-                        // TODO otp request
-                        val intent = Intent(this,VerificationActivity::class.java)
                         startActivity(intent)
                         finish()
                     }else{
@@ -102,7 +149,17 @@ class LoginActivity : BaseActivity() {
 
             is ScreenState.Error -> {
                 hideProgressDialog()
-                showErrorMessage(binding.root,state.message!!)
+                when(state.statusCode){
+                    401 -> {
+                        showErrorMessage(binding.root,"Email address or password is incorrect!")
+                    }
+                    404 -> {
+                        showErrorMessage(binding.root,"User not found with this email address!")
+                    }
+                    500 -> {
+                        showErrorMessage(binding.root,"Something went wrong!")
+                    }
+                }
             }
 
         }

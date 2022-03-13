@@ -131,31 +131,62 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_department"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_year_of_study"
-        android:textAllCaps="false"
-        android:textSize="@dimen/textSize"
-        android:padding="@dimen/btnPadding"
-        android:id="@+id/btn_select_year_of_study"
-        android:background="@drawable/outline_button_primary"
-        android:textColor="@color/textPrimary"
+        android:hint="@string/choose_department"
         android:layout_marginTop="@dimen/activation_account_select_button_margin_top"
-        />
+        >
 
-    <androidx.appcompat.widget.AppCompatButton
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:id="@+id/actv_department"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_year_of_study"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_department"
-        android:textAllCaps="false"
-        android:textSize="@dimen/textSize"
-        android:padding="@dimen/btnPadding"
-        android:id="@+id/btn_select_department"
-        android:background="@drawable/outline_button_primary"
-        android:textColor="@color/textPrimary"
+        android:hint="@string/choose_year_of_study"
         android:layout_marginTop="@dimen/activation_account_select_button_margin_top"
-        />
+        >
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:id="@+id/actv_year_of_study"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tf_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/bio"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:hintTextColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/activation_account_select_button_margin_top"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_bio"
+            android:inputType="textMultiLine"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <Button
         android:layout_width="match_parent"
@@ -165,8 +196,7 @@
         android:textSize="@dimen/textSize"
         android:padding="@dimen/btnPadding"
         android:layout_marginTop="@dimen/department_year_of_study_margin_top"
-        android:id="@+id/btn_register"
-        android:visibility="gone"
+        android:id="@+id/btn_activate"
         />
 
 

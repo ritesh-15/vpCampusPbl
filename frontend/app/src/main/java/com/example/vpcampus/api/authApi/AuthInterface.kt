@@ -1,10 +1,7 @@
 package com.example.vpcampus.api.authApi
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.HeaderMap
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthInterface {
 
@@ -18,4 +15,26 @@ interface AuthInterface {
         @HeaderMap headers : Map<String,String>
     ):Response<RefreshResponse>
 
+    @POST("auth/send-otp")
+    suspend fun sendOtp(
+        @Body body:SendOtpBody,
+        @HeaderMap headers : Map<String,String>
+    ):Response<SendOtpResponse>
+
+    @POST("auth/verify-otp")
+    suspend fun verifyOtp(
+        @Body body:VerifyOtpBody,
+        @HeaderMap headers : Map<String,String>
+    ):Response<VerifyOtpResponse>
+
+    @POST("auth/register")
+    suspend fun register(
+        @Body body : RegisterBody
+    ):Response<RegisterResponse>
+
+    @PUT("auth/activate")
+    suspend fun activate(
+        @Body body : ActivateBody,
+        @HeaderMap headers : Map<String,String>
+    ):Response<ActivateResponse>
 }

@@ -4,6 +4,7 @@ import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.example.vpcampus.R
 import com.example.vpcampus.databinding.ActivityBaseBinding
 import com.example.vpcampus.databinding.ProgressDialogBinding
@@ -12,8 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 open class BaseActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityBaseBinding
-
-    private lateinit var dialogBinding:ProgressDialogBinding
 
     private var dialog:Dialog? = null
 
@@ -24,10 +23,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun showProgressDialog(message: String="Please wait..."){
-        dialogBinding = ProgressDialogBinding.inflate(layoutInflater)
-        dialogBinding.pbText.text = message
+        val dialogBinding = ProgressDialogBinding.inflate(layoutInflater)
         dialog = Dialog(this)
-        dialog?.setContentView(R.layout.progress_dialog)
+        dialogBinding.pbText.text = message
+        dialog?.setContentView(dialogBinding.root)
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.show()
     }

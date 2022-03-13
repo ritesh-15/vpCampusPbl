@@ -48,4 +48,20 @@
     <!-- Profile activity   -->
     <string name="profile">Profile</string>
 
+    <!--  deparments list   -->
+    <string name="comp">Computer Engineering</string>
+    <string name="it">Information Technology</string>
+    <string name="entc">Electronics And Telecommunication</string>
+    <string name="mech">Mechanical Engineering</string>
+    <string name="civil">Civil Engineering</string>
+    <string name="aids">Artificial Intelligence And Data Science</string>
+    <string name="elect">Electrical Engineering</string>
+
+    <!--  year of studies  -->
+    <string name="fe">First Year</string>
+    <string name="se">Second Year</string>
+    <string name="te">Third Year</string>
+    <string name="be">Fourth Year</string>
+    <string name="bio">About Yourself</string>
+
 </resources>

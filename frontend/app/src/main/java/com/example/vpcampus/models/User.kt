@@ -4,7 +4,8 @@ import java.io.Serializable
 
 data class Avatar(
     val url:String = "",
-    val publicId:String = ""
+    val publicId:String = "",
+    val filename:String = ""
 ):Serializable
 
 data class User(

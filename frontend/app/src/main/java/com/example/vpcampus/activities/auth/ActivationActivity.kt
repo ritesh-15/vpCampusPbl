@@ -3,13 +3,10 @@ package com.example.vpcampus.activities.auth
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -22,23 +19,32 @@ import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.ActivateBody
 import com.example.vpcampus.api.authApi.ActivateResponse
+import com.example.vpcampus.api.uploads.UploadResponse
 import com.example.vpcampus.databinding.ActivityActivationBinding
+import com.example.vpcampus.models.Avatar
 import com.example.vpcampus.network.factory.AuthViewModelFactory
+import com.example.vpcampus.network.factory.UploadViewModelFactory
 import com.example.vpcampus.network.models.AuthViewModel
+import com.example.vpcampus.network.models.UploadViewModel
 import com.example.vpcampus.repository.AuthRepository
+import com.example.vpcampus.repository.UploadRepository
 import com.example.vpcampus.store.UserState
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.io.ByteArrayOutputStream
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.io.IOException
-import java.io.InputStream
-import java.util.*
+import java.net.URI
 
 
 class ActivationActivity : BaseActivity() {
 
     private lateinit var binding:ActivityActivationBinding
+
+    private lateinit var uploadViewModel :UploadViewModel
 
     private lateinit var viewModel:AuthViewModel
 
@@ -57,6 +63,12 @@ class ActivationActivity : BaseActivity() {
         val repository = AuthRepository()
         val viewModelFactory = AuthViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
+
+        // setting up upload view model
+        uploadViewModel = ViewModelProvider(
+            this,
+            UploadViewModelFactory(UploadRepository())
+        ).get(UploadViewModel::class.java)
 
         val departmentsAdapter = ArrayAdapter(this, R.layout.list_item, getDepartmentsList())
         binding.actvDepartment.setAdapter(departmentsAdapter)
@@ -86,6 +98,62 @@ class ActivationActivity : BaseActivity() {
         viewModel.activateResponse.observe(this){
             response -> parseActivateResponse(response)
         }
+
+        // upload avatar observer
+        uploadViewModel.uploadSingleFileResponse.observe(this){
+            response -> parseUploadAvatarResponse(response)
+        }
+    }
+
+    private fun parseUploadAvatarResponse(state: ScreenState<UploadResponse>) {
+
+        when(state){
+
+            is ScreenState.Loading -> {
+                showProgressDialog("Uploading avatar...")
+            }
+
+            is ScreenState.Success -> {
+                hideProgressDialog()
+                if(state.data != null){
+                    Log.d("FILE_RES",state.data.toString())
+                    activateAccount(Avatar(
+                        state.data.url,
+                        state.data.publicId,
+                        state.data.filename
+                    ))
+                }
+            }
+
+            is ScreenState.Error -> {
+                hideProgressDialog()
+                showErrorMessage(binding.root,"Something went wrong while uploading avatar please try again!")
+            }
+        }
+
+    }
+
+    private fun uploadAvatar(avatar: Uri){
+        Log.d("FILE_URI",avatar.toString())
+        val file = File(URI(avatar.toString()))
+        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val part:MultipartBody.Part = MultipartBody.Part.createFormData("file",null,requestBody)
+
+
+        uploadViewModel.uploadSingleFile(part,TokenHandler.getTokens(this))
+
+    }
+
+    private fun activateAccount(avatar:Avatar){
+        val department:String = binding.actvDepartment.text.toString()
+        val yearOfStudy:String = binding.actvYearOfStudy.text.toString()
+        val bio:String = binding.etBio.text.toString()
+
+        viewModel.activate(ActivateBody(
+            avatar,
+            department, yearOfStudy, bio
+        ),TokenHandler.getTokens(this))
+
     }
 
     private fun handleActivateBtnClick(){
@@ -93,39 +161,16 @@ class ActivationActivity : BaseActivity() {
         val yearOfStudy:String = binding.actvYearOfStudy.text.toString()
         val bio:String = binding.etBio.text.toString()
 
-        if(mSelectedImageFileUri == null){
-            showErrorMessage(binding.root,
-                "Please choose avatar!")
+        if(mSelectedImageFileUri == null ||  !validateData(department,yearOfStudy,bio)){
+            showErrorMessage(binding.root,"Avatar, department, year of study and bio is required!")
             return
         }
 
-        val imageStream: InputStream? = contentResolver.openInputStream(mSelectedImageFileUri!!)
-        val selectedImage = BitmapFactory.decodeStream(imageStream)
-        val avatar: String? = getEncoded64ImageStringFromBitmap(selectedImage)
-
-        Log.d("AVATAR",avatar!!)
-
-        if(!validateData(department, yearOfStudy, bio, avatar))
-        {
-            showErrorMessage(binding.root,
-                "User avatar, department, year of study and bio is required!")
-            return
-        }
-
-        viewModel.activate(ActivateBody(avatar, department, yearOfStudy, bio),
-            TokenHandler.getTokens(this))
+        uploadAvatar(mSelectedImageFileUri!!)
     }
 
-    private fun getEncoded64ImageStringFromBitmap(bitmap: Bitmap): String? {
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(CompressFormat.JPEG, 70, stream)
-        val byteFormat = stream.toByteArray()
-        // get the base 64 string
-        return Base64.encodeToString(byteFormat, Base64.NO_WRAP)
-    }
-
-    private fun validateData(department:String,yearOfStudy:String,bio:String,avatar:String):Boolean{
-        if(department.isEmpty() || yearOfStudy.isEmpty() || bio.isEmpty() || avatar.isEmpty()){
+    private fun validateData(department:String,yearOfStudy:String,bio:String):Boolean{
+        if(department.isEmpty() || yearOfStudy.isEmpty() || bio.isEmpty()){
             return false
         }
 
@@ -185,7 +230,7 @@ class ActivationActivity : BaseActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

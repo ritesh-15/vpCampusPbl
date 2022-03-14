@@ -1,5 +1,7 @@
 package com.example.vpcampus.api.authApi
 
+import com.example.vpcampus.models.Avatar
+
 
 data class LoginRequestBody(
         val email:String,
@@ -24,7 +26,7 @@ data class RegisterBody(
 )
 
 data class ActivateBody(
-    val avatar:String,
+    val avatar:Avatar,
     val department:String,
     val yearOfStudy:String,
     val bio:String

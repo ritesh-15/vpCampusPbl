@@ -57,6 +57,12 @@
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait">
+
+
+            <meta-data
+                android:name="CLOUDINARY_URL"
+                android:value="CLOUDINARY_URL=cloudinary://826232252792938:GUuGtd2mRKNgOvAgi7ADaq23ZGE@dmewli5b4"/>
+
         </activity>
     </application>
 

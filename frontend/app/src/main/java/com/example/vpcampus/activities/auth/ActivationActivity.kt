@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -14,6 +13,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
 import com.example.vpcampus.MainActivity
 import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
@@ -31,6 +33,7 @@ import com.example.vpcampus.repository.UploadRepository
 import com.example.vpcampus.store.UserState
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
+import com.example.vpcampus.utils.UploadImage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -90,6 +93,7 @@ class ActivationActivity : BaseActivity() {
             }
         }
 
+
         binding.btnActivate.setOnClickListener {
             handleActivateBtnClick()
         }
@@ -99,49 +103,38 @@ class ActivationActivity : BaseActivity() {
             response -> parseActivateResponse(response)
         }
 
-        // upload avatar observer
-        uploadViewModel.uploadSingleFileResponse.observe(this){
-            response -> parseUploadAvatarResponse(response)
-        }
     }
 
-    private fun parseUploadAvatarResponse(state: ScreenState<UploadResponse>) {
 
-        when(state){
 
-            is ScreenState.Loading -> {
+    private fun uploadAvatar(avatar: Uri){
+        UploadImage(this).upload(avatar,object:UploadCallback{
+            override fun onStart(requestId: String?) {
                 showProgressDialog("Uploading avatar...")
             }
 
-            is ScreenState.Success -> {
-                hideProgressDialog()
-                if(state.data != null){
-                    Log.d("FILE_RES",state.data.toString())
-                    activateAccount(Avatar(
-                        state.data.url,
-                        state.data.publicId,
-                        state.data.filename
-                    ))
+            override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                if(resultData != null){
+                    val url = resultData["secure_url"].toString()
+                    val publicId = resultData["public_id"].toString()
+
+                    activateAccount(Avatar(url,publicId))
                 }
             }
 
-            is ScreenState.Error -> {
-                hideProgressDialog()
-                showErrorMessage(binding.root,"Something went wrong while uploading avatar please try again!")
+            override fun onError(requestId: String?, error: ErrorInfo?) {
+                showErrorMessage(binding.root,"Something went wrong while uploading avatar")
             }
-        }
 
-    }
+            override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                TODO("Not yet implemented")
+            }
 
-    private fun uploadAvatar(avatar: Uri){
-        Log.d("FILE_URI",avatar.toString())
-        val file = File(URI(avatar.toString()))
-        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-        val part:MultipartBody.Part = MultipartBody.Part.createFormData("file",null,requestBody)
-
-
-        uploadViewModel.uploadSingleFile(part,TokenHandler.getTokens(this))
-
+        })
     }
 
     private fun activateAccount(avatar:Avatar){

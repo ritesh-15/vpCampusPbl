@@ -2,7 +2,6 @@ package com.example.vpcampus.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.vpcampus.MainActivity
 import com.example.vpcampus.models.Tokens
 import org.json.JSONException
 

@@ -12,27 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VpCampus">
-
+        <activity
+            android:name=".activities.notifications.CreateNotificationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_create_notification"
+            android:theme="@style/Theme.VpCampus.NoActionBar" />
         <activity
             android:name=".activities.SplashScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            >
-
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.user.ProfileActivity"
             android:exported="false"
@@ -54,15 +52,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait">
-
-
             <meta-data
                 android:name="CLOUDINARY_URL"
-                android:value="CLOUDINARY_URL=cloudinary://826232252792938:GUuGtd2mRKNgOvAgi7ADaq23ZGE@dmewli5b4"/>
-
+                android:value="CLOUDINARY_URL=cloudinary://826232252792938:GUuGtd2mRKNgOvAgi7ADaq23ZGE@dmewli5b4" />
         </activity>
     </application>
 

@@ -13,15 +13,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
-import com.example.vpcampus.MainActivity
+import com.example.vpcampus.activities.MainActivity
 import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.ActivateBody
 import com.example.vpcampus.api.authApi.ActivateResponse
-import com.example.vpcampus.api.uploads.UploadResponse
 import com.example.vpcampus.databinding.ActivityActivationBinding
 import com.example.vpcampus.models.Avatar
 import com.example.vpcampus.network.factory.AuthViewModelFactory
@@ -35,12 +33,7 @@ import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 import com.example.vpcampus.utils.UploadImage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import java.io.IOException
-import java.net.URI
 
 
 class ActivationActivity : BaseActivity() {
@@ -106,18 +99,20 @@ class ActivationActivity : BaseActivity() {
     }
 
 
-
+    // upload avatar to cloudinary
     private fun uploadAvatar(avatar: Uri){
-        UploadImage(this).upload(avatar,object:UploadCallback{
+        UploadImage.initConfig(this)
+        UploadImage().upload(avatar,object:UploadCallback{
             override fun onStart(requestId: String?) {
                 showProgressDialog("Uploading avatar...")
             }
 
             override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-                TODO("Not yet implemented")
+                Log.d("UPLOADING",bytes.toString())
             }
 
             override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                hideProgressDialog()
                 if(resultData != null){
                     val url = resultData["secure_url"].toString()
                     val publicId = resultData["public_id"].toString()
@@ -127,11 +122,13 @@ class ActivationActivity : BaseActivity() {
             }
 
             override fun onError(requestId: String?, error: ErrorInfo?) {
+                hideProgressDialog()
                 showErrorMessage(binding.root,"Something went wrong while uploading avatar")
             }
 
             override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-                TODO("Not yet implemented")
+                hideProgressDialog()
+                showErrorMessage(binding.root,"Something went wrong while uploading avatar")
             }
 
         })
@@ -182,7 +179,7 @@ class ActivationActivity : BaseActivity() {
                 if(state.data != null){
                     UserState.user = state.data.user
                     if(state.data.user.isActivated && state.data.user.isVerified){
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()

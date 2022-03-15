@@ -2,10 +2,8 @@ package com.example.vpcampus.activities.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.vpcampus.MainActivity
+import com.example.vpcampus.activities.MainActivity
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.LoginResponse
 import com.example.vpcampus.api.authApi.SendOtpResponse
@@ -138,7 +136,7 @@ class LoginActivity : BaseActivity() {
                         startActivity(intent)
                         finish()
                     }else{
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()

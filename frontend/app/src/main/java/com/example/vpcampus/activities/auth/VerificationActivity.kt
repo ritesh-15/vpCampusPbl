@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.example.vpcampus.MainActivity
+import com.example.vpcampus.activities.MainActivity
 import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.authApi.SendOtpResponse
@@ -119,7 +119,7 @@ class VerificationActivity : BaseActivity() {
                            finish()
                        }else{
                            // start main activity
-                           val intent = Intent(this,MainActivity::class.java)
+                           val intent = Intent(this, MainActivity::class.java)
                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                            startActivity(intent)
                            finish()

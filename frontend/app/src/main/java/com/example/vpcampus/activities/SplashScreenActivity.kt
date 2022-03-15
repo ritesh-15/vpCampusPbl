@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.vpcampus.MainActivity
 import com.example.vpcampus.activities.auth.ActivationActivity
 import com.example.vpcampus.activities.auth.LoginActivity
 import com.example.vpcampus.activities.auth.VerificationActivity
@@ -113,7 +112,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }else{
-                        val intent = Intent(this,MainActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()

@@ -18,5 +18,14 @@
         <item name="colorPrimary">@color/colorSecondary</item>
     </style>
 
+    <style name="Theme.VpCampus.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.VpCampus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.VpCampus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

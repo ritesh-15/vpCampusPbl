@@ -1,6 +1,7 @@
 package com.example.vpcampus.api
 
 import com.example.vpcampus.api.authApi.AuthInterface
+import com.example.vpcampus.api.notification.NotificationInterface
 import com.example.vpcampus.api.uploads.UploadInterface
 import com.example.vpcampus.utils.Constants
 import retrofit2.Retrofit
@@ -22,6 +23,10 @@ object ApiInstance{
 
     val uploadApi:UploadInterface by lazy {
         retrofit.create(UploadInterface::class.java)
+    }
+
+    val notificationApi:NotificationInterface by lazy{
+        retrofit.create(NotificationInterface::class.java)
     }
 
 }

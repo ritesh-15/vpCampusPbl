@@ -10,6 +10,19 @@ import JWTToken from "../services/tokenService";
 import OtpService from "../services/OtpService";
 import EmailService from "../services/emailService";
 
+
+interface ActivateInterface{
+
+  avatar : {
+    url : string,
+    publicId:string
+  },
+  department:string,
+  yearOfStudy:string,
+  bio:string
+
+}
+
 class AuthController {
   // @route   POST /login
   // @desc    Login user
@@ -250,15 +263,19 @@ class AuthController {
   // @desc Activate user
   // @access private
   async activate(req: Request, res: Response, next: NextFunction) {
-    const { avatar, department, yearOfStudy, bio } = req.body;
+    const { avatar, department, yearOfStudy, bio }:ActivateInterface = req.body;
     const user = <UserInterface>req.user;
 
     if (!avatar || !department || !yearOfStudy || !bio)
       return next(
-        CreateHttpError.forbidden(
+        CreateHttpError.notFound(
           "Avatar, department, year of study and bio is required!"
         )
       );
+
+      if(!avatar.publicId || !avatar.url){
+        return next(CreateHttpError.notFound("Avatar not found!"))
+      }
 
     try {
       // update user

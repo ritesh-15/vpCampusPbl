@@ -7,7 +7,6 @@ export interface UserInterface {
   avatar: {
     publicId?: string;
     url?: string;
-    filename?:string
   };
   bio?: string;
   department?: string;

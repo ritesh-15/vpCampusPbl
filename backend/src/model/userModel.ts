@@ -22,10 +22,6 @@ const userSchema = new Schema<UserInterface>(
         type: String,
         default: "",
       },
-      filename:{
-        type:String,
-        default:""
-      }
     },
     department: {
       type: String,

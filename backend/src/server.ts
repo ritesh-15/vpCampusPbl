@@ -47,8 +47,6 @@ app.use("/api/v1/auth", authenticationLimiter, authRouter);
 
 app.use("/api/v1/user", userRouter);
 
-app.use("/api/v1/upload",uploadRouter)
-
 app.use("/api/v1/notification", notificationRouter);
 
 // error handler

@@ -27,9 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_main"
-        app:labelVisibilityMode="unlabeled"
         android:elevation="0dp"
-        app:itemIconSize="24dp"
+        app:itemIconSize="26dp"
         app:itemRippleColor="@color/white"
         />
 

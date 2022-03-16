@@ -2,17 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group
-        android:enabled="true"
-        >
-
 
         <item
             android:id="@+id/nav_search"
             android:contentDescription="@string/search"
             android:title="@string/search"
             app:showAsAction="ifRoom"
-            android:icon="@drawable/bell"
+            android:icon="@drawable/ic_search_icon"
             />
 
         <item
@@ -23,7 +19,5 @@
             app:showAsAction="ifRoom"
             />
 
-
-    </group>
 
 </menu>

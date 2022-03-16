@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
 
                 R.id.menu_notifications -> {
-                    item.setIcon(getDrawable(R.drawable.ic_notification_filled))
                     replaceFragment(Notifications())
                     true
                 }

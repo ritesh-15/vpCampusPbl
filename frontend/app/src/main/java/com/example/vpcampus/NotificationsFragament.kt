@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.Toast
@@ -21,6 +22,7 @@ import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,7 +61,7 @@ class Notifications : Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-        val createBtn = view.findViewById<FloatingActionButton>(R.id.fb_create_notification)
+        val createBtn = view.findViewById<ExtendedFloatingActionButton>(R.id.fb_create_notification)
 
         createBtn.setOnClickListener{
            startActivity(Intent(activity,CreateNotificationActivity::class.java))
@@ -80,12 +82,12 @@ class Notifications : Fragment() {
         when(state){
 
             is ScreenState.Loading -> {
-                view?.findViewById<ProgressBar>(R.id.pb_notifications)?.visibility = View.VISIBLE
+                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.VISIBLE
                 view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.GONE
             }
 
             is ScreenState.Success -> {
-                view?.findViewById<ProgressBar>(R.id.pb_notifications)?.visibility = View.GONE
+                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
                 view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
                 if(state.data != null){
                     val rvNotifications = view?.findViewById<RecyclerView>(R.id.rv_notification)
@@ -96,7 +98,7 @@ class Notifications : Fragment() {
             }
 
             is ScreenState.Error -> {
-                view?.findViewById<ProgressBar>(R.id.pb_notifications)?.visibility = View.GONE
+                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
                 view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
                 Log.e("ERROR_ALL",state.message!!)
             }

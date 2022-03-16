@@ -43,6 +43,9 @@
     <dimen name="department_year_of_study_inner_text_margin_top">8dp</dimen>
     <dimen name="department_year_of_study_text_size">18sp</dimen>
 
+
+
+
     <!--  Profile activity   -->
     <dimen name="profile_image_width_height">150dp</dimen>
     <dimen name="profile_short_info_margin_top">16dp</dimen>

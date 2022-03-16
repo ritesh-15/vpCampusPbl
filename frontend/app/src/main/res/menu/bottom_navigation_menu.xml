@@ -5,23 +5,23 @@
     <item
         android:id="@+id/menu_notifications"
         android:enabled="true"
-        android:icon="@drawable/bell"
-        android:title=""
+        android:icon="@drawable/notifications_selector"
+        android:title="Notifications"
         />
 
     <item
         android:id="@+id/menu_clubs"
         android:enabled="true"
-        android:icon="@drawable/ic_club_group_icon"
-        android:title=""
+        android:icon="@drawable/clubs_selector"
+        android:title="Clubs"
         />
 
 
     <item
         android:id="@+id/menu_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_profile_icon"
-        android:title=""
+        android:icon="@drawable/profile_selector"
+        android:title="Account"
         />
 
 </menu>

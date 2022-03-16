@@ -9,7 +9,11 @@
         <entry key="..\:/Development/Android/VpCampus/app/src/main/res/layout/activity_main.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/app/src/main/res/layout/activity_register.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/app/src/main/res/layout/activity_verification.xml" value="0.2234375" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/ic_notification.xml" value="0.153" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/ic_profile_icon.xml" value="0.153" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/selected_bottom_item.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_activation.xml" value="0.2234375" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_base.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_create_notification.xml" value="0.264" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_create_notification2.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_login.xml" value="0.2234375" />
@@ -20,6 +24,7 @@
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/content_create_notification.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_clubs.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_notifications.xml" value="0.2234375" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/list_item.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/progress_dialog.xml" value="0.22192028985507245" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/rv_item_notification.xml" value="0.264" />

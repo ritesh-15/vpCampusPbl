@@ -9,6 +9,7 @@ import com.example.vpcampus.ClubsFragment
 import com.example.vpcampus.R
 import com.example.vpcampus.databinding.ActivityMainBinding
 import com.example.vpcampus.Notifications
+import com.example.vpcampus.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,13 +28,18 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
 
                 R.id.menu_notifications -> {
-                    Toast.makeText(this,"Click",Toast.LENGTH_SHORT).show()
+                    item.setIcon(getDrawable(R.drawable.ic_notification_filled))
                     replaceFragment(Notifications())
                     true
                 }
 
                 R.id.menu_clubs -> {
                     replaceFragment(ClubsFragment())
+                    true
+                }
+
+                R.id.menu_profile -> {
+                    replaceFragment(ProfileFragment())
                     true
                 }
 

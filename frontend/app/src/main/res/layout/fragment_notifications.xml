@@ -52,6 +52,7 @@
             android:layout_height="match_parent"
             android:id="@+id/sv_notifications"
             android:visibility="gone"
+            android:background="@color/white"
             >
 
             <androidx.recyclerview.widget.RecyclerView

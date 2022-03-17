@@ -1,5 +1,6 @@
 package com.example.vpcampus
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.vpcampus.activities.user.EditProfileAcitivty
 import com.example.vpcampus.store.UserState
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -34,6 +37,11 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        // edit icon listern
+        view?.findViewById<FloatingActionButton>(R.id.fb_edit_profile)?.setOnClickListener {
+            startActivity(Intent(activity,EditProfileAcitivty::class.java))
+        }
 
         if(UserState.user != null){
 

@@ -79,5 +79,7 @@
     <string name="create">Create</string>
     <string name="search">Search</string>
     <string name="more">more</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="update">Update</string>
 
 </resources>

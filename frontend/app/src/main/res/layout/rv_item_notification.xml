@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="?attr/selectableItemBackground"
-    android:theme="@android:style/ThemeOverlay.Material.Dark"
+    android:orientation="vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     >
 
     <LinearLayout
@@ -13,7 +14,11 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        >
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -52,8 +57,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="0.5dp"
+        android:background="#fafafa"
         />
 
 

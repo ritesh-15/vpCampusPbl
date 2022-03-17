@@ -3,6 +3,7 @@ package com.example.vpcampus.api
 import com.example.vpcampus.api.authApi.AuthInterface
 import com.example.vpcampus.api.notification.NotificationInterface
 import com.example.vpcampus.api.uploads.UploadInterface
+import com.example.vpcampus.api.userApi.UserInterface
 import com.example.vpcampus.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,6 +28,10 @@ object ApiInstance{
 
     val notificationApi:NotificationInterface by lazy{
         retrofit.create(NotificationInterface::class.java)
+    }
+
+    val userApi:UserInterface by lazy {
+        retrofit.create(UserInterface::class.java)
     }
 
 }

@@ -13,6 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VpCampus">
         <activity
+            android:name=".activities.user.EditProfileAcitivty"
+            android:exported="false" />
+        <activity
+            android:name=".activities.user.EditProfileActivity"
+            android:exported="false"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/Theme.VpCampus.NoActionBar" />
+        <activity
             android:name=".activities.notifications.CreateNotificationActivity"
             android:exported="false"
             android:label="@string/title_activity_create_notification"

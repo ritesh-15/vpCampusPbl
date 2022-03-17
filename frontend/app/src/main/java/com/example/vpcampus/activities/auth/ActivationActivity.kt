@@ -29,6 +29,7 @@ import com.example.vpcampus.network.models.UploadViewModel
 import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.repository.UploadRepository
 import com.example.vpcampus.store.UserState
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 import com.example.vpcampus.utils.UploadImage
@@ -66,10 +67,10 @@ class ActivationActivity : BaseActivity() {
             UploadViewModelFactory(UploadRepository())
         ).get(UploadViewModel::class.java)
 
-        val departmentsAdapter = ArrayAdapter(this, R.layout.list_item, getDepartmentsList())
+        val departmentsAdapter = ArrayAdapter(this, R.layout.list_item, Constants.getDepartmentsList(this))
         binding.actvDepartment.setAdapter(departmentsAdapter)
 
-        val yearOfStudyAdapter = ArrayAdapter(this, R.layout.list_item, getYearOfStudies())
+        val yearOfStudyAdapter = ArrayAdapter(this, R.layout.list_item, Constants.getYearOfStudies(this))
         binding.actvYearOfStudy.setAdapter(yearOfStudyAdapter)
 
         binding.cimUserAvatar.setOnClickListener {
@@ -245,30 +246,6 @@ class ActivationActivity : BaseActivity() {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
-    }
-
-    private fun getDepartmentsList():List<String>{
-        val departments = ArrayList<String>()
-        departments.add(getString(R.string.comp))
-        departments.add(getString(R.string.it))
-        departments.add(getString(R.string.elect))
-        departments.add(getString(R.string.entc))
-        departments.add(getString(R.string.mech))
-        departments.add(getString(R.string.civil))
-        departments.add(getString(R.string.aids))
-
-        return departments
-    }
-
-    private fun getYearOfStudies():List<String>{
-        val years = ArrayList<String>()
-
-        years.add(getString(R.string.fe))
-        years.add(getString(R.string.se))
-        years.add(getString(R.string.te))
-        years.add(getString(R.string.be))
-
-        return years
     }
 
     // handle back press here

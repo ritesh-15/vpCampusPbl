@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
+    tools:context=".activities.user.EditProfileAcitivty"
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,8 +37,9 @@
                         android:id="@+id/fr_profile_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
-                        app:title="@string/profile"
+                        app:title="Edit profile"
                         android:background="@color/white"
+                        app:navigationIcon="@drawable/ic_arrow_back"
                         />
 
                 </com.google.android.material.appbar.AppBarLayout>
@@ -54,39 +57,8 @@
                         android:layout_width="@dimen/profile_image_width_height"
                         android:layout_height="@dimen/profile_image_width_height"
                         android:src="@drawable/ic_user_avatar"
-                        android:id="@+id/iv_profile_user_image"
+                        android:id="@+id/iv_ed_profile_user_image"
                         />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/profile_short_info_margin_top"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ritesh"
-                            android:textSize="@dimen/profile_name_text_size"
-                            android:textColor="@color/textPrimary"
-                            android:id="@+id/tv_profile_name"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="lorem epsum bio is here and can be updated with given text"
-                            android:textSize="@dimen/textSize"
-                            android:textColor="@color/textLight"
-                            android:layout_marginTop="@dimen/profile_bio_margin_top"
-                            android:gravity="center"
-                            android:id="@+id/tv_profile_bio"
-                            />
-
-                    </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tv_name"
@@ -99,7 +71,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
                             android:id="@+id/et_profile_name"
                             android:text="Ritesh Khore"
                             android:textColor="@color/textPrimary"
@@ -118,7 +89,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
                             android:id="@+id/et_profile_email"
                             android:text="riteshkhore@gmail.com"
                             android:textColor="@color/textPrimary"
@@ -128,44 +98,72 @@
 
 
 
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tv_department"
+                        android:id="@+id/til_department"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/department"
+                        android:hint="@string/choose_department"
+                        android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                        >
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:id="@+id/actv_edit_department"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_year_of_study"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/choose_year_of_study"
+                        android:layout_marginTop="@dimen/profile_input_box_margin_top"
+                        >
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:id="@+id/actv_edit_year_of_study"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tv_ed_profile_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/bio"
                         android:layout_marginTop="@dimen/profile_input_box_margin_top"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:id="@+id/et_profile_department"
-                            android:text="Computer engineering"
+                            android:id="@+id/et_ed_profile_bio"
+                            android:text="Bio"
                             android:textColor="@color/textPrimary"
+                            android:inputType="textMultiLine"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tv_year_of_study"
+                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/year_of_study"
+                        android:text="@string/update"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/textSize"
+                        android:padding="@dimen/btnPadding"
                         android:layout_marginTop="@dimen/profile_input_box_margin_top"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:id="@+id/et_profile_yearofstudy"
-                            android:text="Second year"
-                            android:textColor="@color/textPrimary"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                        android:id="@+id/btn_update"
+                        />
 
                 </LinearLayout>
 
@@ -187,7 +185,7 @@
         >
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_edit_profile"
+            android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -198,4 +196,4 @@
     </LinearLayout>
 
 
-</FrameLayout>
+</LinearLayout>

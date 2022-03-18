@@ -161,9 +161,11 @@ class NotificationController {
   // @desc Get all  notification
   // @access public
   async getAllNotifications(req: Request, res: Response, next: NextFunction) {
-    // TODO implement public and private access
+   
+    const currentUser = <UserInterface>req.user
+
     try {
-      const notifications = await Notification.find().populate("userId");
+      const notifications = await Notification.find({userId: {$ne:currentUser._id}}).sort({createdAt:-1}).populate("userId");
 
       return res.json({
         ok: true,

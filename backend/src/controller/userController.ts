@@ -19,9 +19,9 @@ class UserController {
 
     try {
       if(avatar){
-        await UploadService.deletePreviousAvatar(avatar.publicId)
+        await UploadService.deletePreviousAvatar(user.avatar.publicId!!)
       }
-          
+
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {

@@ -15,8 +15,7 @@ class UserController {
 
     const user = <UserInterface>req.user;
 
-    console.log(req.body)
-
+  
     try {
 
       if(avatar){

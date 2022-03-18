@@ -11,17 +11,21 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.vpcampus.activities.notifications.CreateNotificationActivity
+import com.example.vpcampus.activities.notifications.SingleNotificationActivity
 import com.example.vpcampus.adapters.NotificationsAdapter
 import com.example.vpcampus.api.notification.AllNotificationResponse
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -74,6 +78,10 @@ class Notifications : Fragment() {
             response -> parseAllNotificationsResponse(response)
         }
 
+        view.findViewById<MaterialToolbar>(R.id.toolbar_notification).setNavigationOnClickListener {
+            activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
+        }
+
         // Inflate the layout for this fragment
         return view
     }
@@ -83,23 +91,35 @@ class Notifications : Fragment() {
 
             is ScreenState.Loading -> {
                 view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.VISIBLE
-                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.GONE
+//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.GONE
             }
 
             is ScreenState.Success -> {
                 view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
-                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
+//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
                 if(state.data != null){
                     val rvNotifications = view?.findViewById<RecyclerView>(R.id.rv_notification)
                     rvNotifications?.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
-                    rvNotifications?.adapter = NotificationsAdapter(requireActivity(),
+                    val adapter =  NotificationsAdapter(requireActivity(),
                         state.data.notifications)
+
+                    adapter.setOnClickListener(object : NotificationsAdapter.OnClickListener{
+                        override fun onClick(position: Int) {
+                            val currentNotification = state.data.notifications[position]
+                            val intent = Intent(this@Notifications.context,SingleNotificationActivity::class.java)
+                            intent.putExtra(Constants.NOTIFICATION,currentNotification)
+                            startActivity(intent)
+                        }
+
+                    })
+
+                    rvNotifications?.adapter = adapter
                 }
             }
 
             is ScreenState.Error -> {
                 view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
-                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
+//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
                 Log.e("ERROR_ALL",state.message!!)
             }
 
@@ -107,15 +127,6 @@ class Notifications : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Notifications.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Notifications().apply {

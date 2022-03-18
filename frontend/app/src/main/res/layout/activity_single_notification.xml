@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.notifications.SingleNotificationActivity"
+    android:orientation="vertical"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true"
+        android:id="@+id/abl_single_notification"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/single_notification_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            android:background="@color/white"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/abl_single_notification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/screenPadding"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsums title of the notifications"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/tv_title"
+            android:textSize="22sp"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="22dp"
+            android:id="@+id/ll_user_info"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user_avatar"
+                android:id="@+id/iv_user_avatar"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_name"
+                    android:text="Ritesh Khore"
+                    android:textSize="@dimen/textSize"
+                    android:textColor="@color/textPrimary"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_email"
+                    android:text="riteshkhore@gmail.com"
+                    android:textSize="14sp"
+                    android:textColor="@color/textLight"
+                    android:layout_marginTop="2dp"
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="description"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/ll_user_info"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/tv_notification_description"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

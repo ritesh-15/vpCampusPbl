@@ -42,3 +42,7 @@ data class ActivateResponse(
     val ok:Boolean,
     val user: User
 )
+
+data class LogOutResponse(
+    val ok:Boolean
+)

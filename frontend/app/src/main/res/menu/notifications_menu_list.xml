@@ -11,13 +11,4 @@
             android:icon="@drawable/ic_search_icon"
             />
 
-        <item
-            android:id="@+id/nav_more"
-            android:icon="@drawable/ic_more_icon"
-            android:contentDescription="@string/more"
-            android:title="@string/more"
-            app:showAsAction="ifRoom"
-            />
-
-
 </menu>

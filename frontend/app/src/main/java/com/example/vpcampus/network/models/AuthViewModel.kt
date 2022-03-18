@@ -57,6 +57,12 @@ class AuthViewModel(
     val activateResponse:LiveData<ScreenState<ActivateResponse>>
         get() = _activateResponse
 
+    // logout
+    private val _logoutResponse = MutableLiveData<ScreenState<LogOutResponse>>()
+
+    val logoutResponse:LiveData<ScreenState<LogOutResponse>>
+        get() = _logoutResponse
+
     fun login(email:String,password:String){
         val body = LoginRequestBody(email, password)
 
@@ -160,6 +166,20 @@ class AuthViewModel(
                 }
             }catch (e:Exception){
                 _activateResponse.value = ScreenState.Error(e.message!!,response.code())
+            }
+
+        }
+    }
+
+    fun logout(headers: Map<String, String>){
+        viewModelScope.launch {
+            _logoutResponse.value = ScreenState.Loading(null)
+            val response = repository.logout(headers)
+
+            if(response.isSuccessful){
+                    _logoutResponse.value = ScreenState.Success(response.body())
+            }else{
+                _logoutResponse.value = ScreenState.Error(response.message(),response.code())
             }
 
         }

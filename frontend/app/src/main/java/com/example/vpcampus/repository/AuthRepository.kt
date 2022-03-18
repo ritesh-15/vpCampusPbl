@@ -29,4 +29,8 @@ class AuthRepository {
     suspend fun activate(body:ActivateBody,headers:Map<String,String>):Response<ActivateResponse>{
         return ApiInstance.authApi.activate(body,headers)
     }
+
+    suspend fun logout(headers:Map<String,String>):Response<LogOutResponse>{
+        return ApiInstance.authApi.logout(headers)
+    }
 }

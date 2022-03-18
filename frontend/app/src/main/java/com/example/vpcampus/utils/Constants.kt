@@ -14,6 +14,8 @@ object Constants {
     const val REFRESH_TOKEN = "refreshToken"
     const val AUTHORIZATION = "authorization"
 
+    const val NOTIFICATION = "notification"
+
 
     fun getDepartmentsList(context:Context):List<String>{
         val departments = ArrayList<String>()

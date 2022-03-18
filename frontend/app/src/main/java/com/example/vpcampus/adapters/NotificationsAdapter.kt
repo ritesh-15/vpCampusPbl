@@ -14,11 +14,24 @@ class NotificationsAdapter(
     private val context:Context,
     private var list:List<Notification>
 ):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var mListener:OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(RvItemNotificationBinding.inflate(LayoutInflater.from(parent.context),parent,
             false
-        ))
+        ),mListener!!)
     }
+
+
+    interface OnClickListener{
+        fun onClick(position:Int)
+    }
+
+    fun setOnClickListener(listener:OnClickListener){
+        this.mListener = listener
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
@@ -44,8 +57,15 @@ class NotificationsAdapter(
         return list.size
     }
 
-    class MyViewHolder(binding:RvItemNotificationBinding):RecyclerView.ViewHolder(binding.root){
+    class MyViewHolder(binding:RvItemNotificationBinding,listener:OnClickListener):RecyclerView.ViewHolder(binding.root){
         val binding = binding
 
+        init {
+
+            binding.root.setOnClickListener {
+                listener.onClick(adapterPosition)
+            }
+
+        }
     }
 }

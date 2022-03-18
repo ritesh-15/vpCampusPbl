@@ -37,4 +37,9 @@ interface AuthInterface {
         @Body body : ActivateBody,
         @HeaderMap headers : Map<String,String>
     ):Response<ActivateResponse>
+
+    @DELETE("auth/logout")
+    suspend fun logout(
+        @HeaderMap headers : Map<String,String>
+    ):Response<LogOutResponse>
 }

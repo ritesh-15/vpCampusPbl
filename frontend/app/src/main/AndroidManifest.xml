@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VpCampus">
         <activity
+            android:name=".activities.notifications.SingleNotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.user.EditProfileAcitivty"
             android:exported="false" />
         <activity

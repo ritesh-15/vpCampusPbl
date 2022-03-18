@@ -1,4 +1,7 @@
 package com.example.vpcampus.models
+
+import java.io.Serializable
+
 /*
 
   userId: UserInterface | ObjectId;
@@ -19,4 +22,4 @@ data class Notification(
     val updatedAt:String,
     val access:String,
     val attachments:Any
-)
+):Serializable

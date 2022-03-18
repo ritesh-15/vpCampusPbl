@@ -3,6 +3,7 @@ package com.example.vpcampus.utils
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.cloudinary.Transformation
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
@@ -23,6 +24,7 @@ class UploadImage(
 
     fun upload(url:Uri,callback: UploadCallback){
         MediaManager.get().upload(url).callback(callback).dispatch()
+
     }
 
 }

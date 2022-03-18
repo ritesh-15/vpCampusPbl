@@ -34,7 +34,7 @@
                     >
 
                     <com.google.android.material.appbar.MaterialToolbar
-                        android:id="@+id/fr_profile_toolbar"
+                        android:id="@+id/edit_profile_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:title="Edit profile"
@@ -77,27 +77,6 @@
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tv_email_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/email_address"
-                        android:layout_marginTop="@dimen/profile_input_box_margin_top"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/et_profile_email"
-                            android:text="riteshkhore@gmail.com"
-                            android:textColor="@color/textPrimary"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_department"

@@ -16,6 +16,11 @@ class UserController {
     const user = <UserInterface>req.user;
 
     try {
+
+      if(avatar){
+        await UploadService.deletePreviousAvatar(avatar.publicId)
+      }
+
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {
@@ -35,7 +40,8 @@ class UserController {
         ok: true,
         user: updatedUser,
       });
-    } catch (error) {
+    } catch (error:any) {
+      console.log(error.message)
       return next(
         CreateHttpError.internalServerError("Internal server error!")
       );

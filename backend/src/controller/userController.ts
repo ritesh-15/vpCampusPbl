@@ -15,6 +15,8 @@ class UserController {
 
     const user = <UserInterface>req.user;
 
+    console.log(req.body)
+
     try {
 
       if(avatar){
@@ -41,7 +43,7 @@ class UserController {
         user: updatedUser,
       });
     } catch (error:any) {
-      console.log(error.message)
+      console.log(error)
       return next(
         CreateHttpError.internalServerError("Internal server error!")
       );

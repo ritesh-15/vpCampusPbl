@@ -15,18 +15,13 @@ class UserController {
 
     const user = <UserInterface>req.user;
 
-  
+    console.log(req.body)
+
     try {
-
-      let newAvatar = null
-
       if(avatar){
-        newAvatar = await new UploadService(avatar).uploadAsAvatar()
         await UploadService.deletePreviousAvatar(avatar.publicId)
       }
-
-      console.log(newAvatar)
-
+          
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
         {
@@ -35,7 +30,7 @@ class UserController {
             department,
             yearOfStudy,
             bio,
-            avatar: newAvatar ? {publicId:newAvatar.public_id,url:newAvatar.secure_url}
+            avatar: avatar ? avatar
               : user.avatar,
           },
         },

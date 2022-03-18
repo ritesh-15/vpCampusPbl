@@ -13,7 +13,6 @@ import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
 import path from "path";
-import { uploadRouter } from "./routes/fileRoutes";
 
 const app: Application = express();
 

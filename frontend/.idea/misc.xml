@@ -12,6 +12,9 @@
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/clubs_selector.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/ic_notification.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/ic_profile_icon.xml" value="0.153" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/notification_item_selector.xml" value="0.153" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/notification_item_unseletected_res.xml" value="0.153" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/notification_seletected_item_res.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/notifications_selector.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/profile_selector.xml" value="0.153" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/drawable/selected_bottom_item.xml" value="0.153" />
@@ -28,7 +31,8 @@
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/activity_verification.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/content_create_notification.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_clubs.xml" value="0.2234375" />
-        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_notifications.xml" value="0.2234375" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_notification_inbox.xml" value="0.21927083333333333" />
+        <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_notifications.xml" value="0.12" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/fragment_second.xml" value="0.10822401614530777" />
         <entry key="..\:/Development/Android/VpCampus/frontend/app/src/main/res/layout/list_item.xml" value="0.2234375" />

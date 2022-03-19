@@ -3,6 +3,7 @@
 
     <group
         android:id="@+id/user_notifications"
+        android:checkableBehavior="single"
         >
 
         <item

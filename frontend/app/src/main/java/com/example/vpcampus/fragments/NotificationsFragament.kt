@@ -1,4 +1,4 @@
-package com.example.vpcampus
+package com.example.vpcampus.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,44 +7,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.ScrollView
-import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.vpcampus.R
 import com.example.vpcampus.activities.notifications.CreateNotificationActivity
 import com.example.vpcampus.activities.notifications.SingleNotificationActivity
 import com.example.vpcampus.adapters.NotificationsAdapter
 import com.example.vpcampus.api.notification.AllNotificationResponse
+import com.example.vpcampus.databinding.FragmentNotificationsBinding
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
 import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Notifications.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Notifications : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var notificationViewModel:NotificationViewModel
+
+    private lateinit var notificationFragmentBinding:FragmentNotificationsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,19 +46,23 @@ class Notifications : Fragment() {
         notificationViewModel = ViewModelProvider(
             this,
             NotificationViewModelFactory(NotificationRepository())
-        ).get(NotificationViewModel::class.java)
+        )[NotificationViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val view:View = inflater.inflate(R.layout.fragment_notifications, container, false);
+    ): View {
 
-        val createBtn = view.findViewById<ExtendedFloatingActionButton>(R.id.fb_create_notification)
+        notificationFragmentBinding = FragmentNotificationsBinding.inflate(layoutInflater,container,false)
 
-        createBtn.setOnClickListener{
+
+        notificationFragmentBinding.fbCreateNotification.setOnClickListener{
            startActivity(Intent(activity,CreateNotificationActivity::class.java))
+        }
+
+        notificationFragmentBinding.toolbarNotification.setNavigationOnClickListener {
+            activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
         }
 
         notificationViewModel.getAllNotifications(TokenHandler.getTokens(requireActivity()))
@@ -78,28 +72,21 @@ class Notifications : Fragment() {
             response -> parseAllNotificationsResponse(response)
         }
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar_notification).setNavigationOnClickListener {
-            activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
-        }
-
-        // Inflate the layout for this fragment
-        return view
+        return notificationFragmentBinding.root
     }
 
     private fun parseAllNotificationsResponse(state: ScreenState<AllNotificationResponse>) {
         when(state){
 
             is ScreenState.Loading -> {
-                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.VISIBLE
-//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.GONE
+                notificationFragmentBinding.pbNotifications.visibility = View.VISIBLE
             }
 
             is ScreenState.Success -> {
-                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
-//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
+                notificationFragmentBinding.pbNotifications.visibility = View.GONE
                 if(state.data != null){
-                    val rvNotifications = view?.findViewById<RecyclerView>(R.id.rv_notification)
-                    rvNotifications?.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+                    notificationFragmentBinding.rvNotificationInbox.layoutManager =
+                       StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
                     val adapter =  NotificationsAdapter(requireActivity(),
                         state.data.notifications)
 
@@ -113,13 +100,12 @@ class Notifications : Fragment() {
 
                     })
 
-                    rvNotifications?.adapter = adapter
+                    notificationFragmentBinding.rvNotificationInbox.adapter = adapter
                 }
             }
 
             is ScreenState.Error -> {
-                view?.findViewById<LinearLayout>(R.id.pb_notifications)?.visibility = View.GONE
-//                view?.findViewById<ScrollView>(R.id.sv_notifications)?.visibility = View.VISIBLE
+                notificationFragmentBinding.pbNotifications.visibility = View.GONE
                 Log.e("ERROR_ALL",state.message!!)
             }
 

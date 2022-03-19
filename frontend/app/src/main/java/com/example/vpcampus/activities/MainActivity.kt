@@ -2,38 +2,28 @@ package com.example.vpcampus.activities
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.ScrollCaptureCallback
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.vpcampus.ClubsFragment
 import com.example.vpcampus.R
 import com.example.vpcampus.databinding.ActivityMainBinding
-import com.example.vpcampus.Notifications
-import com.example.vpcampus.ProfileFragment
 import com.example.vpcampus.activities.auth.LoginActivity
 import com.example.vpcampus.api.authApi.LogOutResponse
-import com.example.vpcampus.databinding.NavDrawerHeaderLayoutBinding
+import com.example.vpcampus.fragments.*
+import com.example.vpcampus.models.User
 import com.example.vpcampus.network.factory.AuthViewModelFactory
 import com.example.vpcampus.network.models.AuthViewModel
 import com.example.vpcampus.repository.AuthRepository
-import com.example.vpcampus.store.UserState
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarItemView
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding:ActivityMainBinding
-
-    private lateinit var navHeaderBinding:NavDrawerHeaderLayoutBinding
 
     private lateinit var authViewModel:AuthViewModel
 
@@ -52,29 +42,18 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
             response -> parseLogoutResponse(response)
         }
 
-        // navbar header layout binding
-        navHeaderBinding = NavDrawerHeaderLayoutBinding.inflate(layoutInflater)
-        navHeaderBinding.tvUserEmail.text = UserState.user!!.email
-        navHeaderBinding.tvUserName.text = UserState.user!!.name
-
-        Glide
-            .with(this)
-            .load(UserState.user!!.avatar.url)
-            .centerCrop()
-            .placeholder(R.drawable.ic_user_avatar)
-            .into(navHeaderBinding.ivUserAvatar)
-
-
         binding.mainNavigation.setNavigationItemSelectedListener(this)
 
         replaceFragment(Notifications())
 
+        // bottom navigation item selected
         binding.bnMain.setOnItemSelectedListener {
             item ->
 
             when(item.itemId){
 
                 R.id.menu_notifications -> {
+                    binding.mainNavigation.setCheckedItem(R.id.menu_item_inbox)
                     replaceFragment(Notifications())
                     true
                 }
@@ -96,6 +75,22 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
             }
         }
+
+
+    }
+
+    // set up nav header data
+    private fun setUpNavHeaderData(user:User){
+            Glide
+                .with(this)
+                .load(user.avatar.url)
+                .centerCrop()
+                .placeholder(R.drawable.ic_user_avatar)
+                .into(findViewById(R.id.iv_nav_user_avatar))
+
+            findViewById<TextView>(R.id.tv_nav_user_name).text =user.name
+            findViewById<TextView>(R.id.tv_nav_user_email).text = user.email
+
     }
 
     // log out response parser
@@ -106,6 +101,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
             }
 
             is ScreenState.Success -> {
+                TokenHandler.deleteTokens(this)
                 val intent = Intent(this,LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
@@ -118,20 +114,32 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         }
     }
 
-    // navigation item listener
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        Toast.makeText(this,"Selected",Toast.LENGTH_SHORT).show()
-        when(item.itemId){
-            R.id.menu_item_logout -> {
-                authViewModel.logout(TokenHandler.getTokens(this))
-
-            }
-        }
-        return true
-    }
-
     private fun replaceFragment(fragment:Fragment){
         supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
     }
+
+    // navigation item selected
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+
+            R.id.menu_item_logout -> {
+                authViewModel.logout(TokenHandler.getTokens(this))
+            }
+
+            R.id.menu_item_sent -> {
+                replaceFragment(NotificationSentFragment())
+                binding.mainDrawer.close()
+            }
+
+            R.id.menu_item_inbox -> {
+                replaceFragment(Notifications())
+                binding.mainDrawer.close()
+            }
+        }
+
+        return true
+    }
+
 
 }

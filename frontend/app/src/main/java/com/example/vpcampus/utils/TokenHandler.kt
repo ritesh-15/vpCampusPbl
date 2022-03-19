@@ -27,6 +27,18 @@ class TokenHandler {
         }
 
 
+        fun deleteTokens(context:Context){
+            prefs= context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+            edit= prefs?.edit()
+            try {
+                edit?.remove("accessToken")
+                edit?.remove("refreshToken")
+                edit?.apply()
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+
         fun saveTokenInSharedPreference(context: Context, tokens: Tokens){
             prefs= context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
             edit= prefs?.edit()

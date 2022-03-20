@@ -3,24 +3,20 @@ import User from "../model/userModel";
 import CreateHttpError from "../utils/errorHandler";
 import bcrypt from "bcrypt";
 import { setResponseToken } from "../utils/setResponseToken";
-import UploadService from "../services/uploadFileService";
 import Token from "../model/tokenModel";
 import { UserInterface } from "../interfaces/UserInterface";
 import JWTToken from "../services/tokenService";
 import OtpService from "../services/OtpService";
 import EmailService from "../services/emailService";
 
-
-interface ActivateInterface{
-
-  avatar : {
-    url : string,
-    publicId:string
-  },
-  department:string,
-  yearOfStudy:string,
-  bio:string
-
+interface ActivateInterface {
+  avatar: {
+    url: string;
+    publicId: string;
+  };
+  department: string;
+  yearOfStudy: string;
+  bio: string;
 }
 
 class AuthController {
@@ -30,13 +26,14 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
-    if(!email || !password)
-      return next(CreateHttpError.notFound("Email address and password is required!"))
+    if (!email || !password)
+      return next(
+        CreateHttpError.notFound("Email address and password is required!")
+      );
 
     try {
       // check if user already exists with this email
       const user = await User.findOne({ email }).select("+password");
-
 
       if (!user)
         return next(
@@ -46,8 +43,6 @@ class AuthController {
       // compare user password
       const isAuthenticated = await bcrypt.compare(password, user.password);
 
-
-
       if (!isAuthenticated)
         return next(
           CreateHttpError.unauthorized(
@@ -55,7 +50,7 @@ class AuthController {
           )
         );
 
-     const tokens =  await setResponseToken(res, user);
+      const tokens = await setResponseToken(res, user);
 
       return res.status(200).json({
         ok: true,
@@ -69,9 +64,9 @@ class AuthController {
           yearOfStudy: user.yearOfStudy,
           bio: user.bio,
           role: user.role,
-          isVerified:user.isVerified
+          isVerified: user.isVerified,
         },
-        tokens
+        tokens,
       });
     } catch (error) {
       return next(
@@ -112,24 +107,22 @@ class AuthController {
         name,
       };
 
-    const user = await User.create(body);
+      const user = await User.create(body);
 
-    const newOtp = new OtpService(email)
-      
-    const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`
+      const newOtp = new OtpService(email);
 
-    const newEmail = new EmailService(
-      {
-        to:email,
-        subject:"Account verification!",
-        html:EmailService.generateOtpTemplate(user.name,newOtp.otp),
-        text:"Account verification!"
-      }
-    )
+      const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`;
 
-    await newEmail.send()
+      const newEmail = new EmailService({
+        to: email,
+        subject: "Account verification!",
+        html: EmailService.generateOtpTemplate(user.name, newOtp.otp),
+        text: "Account verification!",
+      });
 
-     const tokens  =  await setResponseToken(res, user);
+      await newEmail.send();
+
+      const tokens = await setResponseToken(res, user);
 
       return res.json({
         ok: true,
@@ -143,7 +136,7 @@ class AuthController {
           yearOfStudy: user.yearOfStudy,
           bio: user.bio,
           role: user.role,
-          isVerified:user.isVerified
+          isVerified: user.isVerified,
         },
         tokens,
         otp: {
@@ -162,38 +155,41 @@ class AuthController {
   // @route POST/send-otp
   // @desc send otp
   // @access public
-  async sendOtp(req: Request, res: Response, next: NextFunction){
-    const {email} = req.body
-    const currentUser = req.user!! as UserInterface
+  async sendOtp(req: Request, res: Response, next: NextFunction) {
+    const { email } = req.body;
+    const currentUser = req.user!! as UserInterface;
 
-    if(!email)
-      return next(CreateHttpError.badRequest("Email address is not found!"))
+    if (!email)
+      return next(CreateHttpError.badRequest("Email address is not found!"));
 
-    if(email != currentUser.email){
-      return next(CreateHttpError
-        .badRequest("Email address not match with account email address!"))
-    }  
+    if (email != currentUser.email) {
+      return next(
+        CreateHttpError.badRequest(
+          "Email address not match with account email address!"
+        )
+      );
+    }
 
     try {
-      const user = await User.findOne({email})
+      const user = await User.findOne({ email });
 
-      if(!user)
-        return next(CreateHttpError.notFound("User with this email is not found!"))
+      if (!user)
+        return next(
+          CreateHttpError.notFound("User with this email is not found!")
+        );
 
-      const newOtp = new OtpService(email)
-      
-      const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`
+      const newOtp = new OtpService(email);
 
-      const newEmail = new EmailService(
-        {
-          to:email,
-          subject:"Account verification!",
-          html:EmailService.generateOtpTemplate(user.name,newOtp.otp),
-          text:"Account verification!"
-        }
-      )
+      const hashedOtp = `${newOtp.hash()}.${newOtp.expiresIn}`;
 
-    await newEmail.send()
+      const newEmail = new EmailService({
+        to: email,
+        subject: "Account verification!",
+        html: EmailService.generateOtpTemplate(user.name, newOtp.otp),
+        text: "Account verification!",
+      });
+
+      await newEmail.send();
 
       return res.json({
         ok: true,
@@ -203,67 +199,71 @@ class AuthController {
           otp: newOtp.otp,
         },
       });
-    
-
     } catch (error) {
-      return next(CreateHttpError.internalServerError("Internal server error!"))
-    }  
-
+      return next(
+        CreateHttpError.internalServerError("Internal server error!")
+      );
+    }
   }
 
   // @route PUT/verify
   // @desc verify account
   // @access private
-  async verify(req: Request, res: Response, next: NextFunction){
-    const currentUser = <UserInterface>req.user
+  async verify(req: Request, res: Response, next: NextFunction) {
+    const currentUser = <UserInterface>req.user;
 
-    const {otp,email,hash} = req.body
+    const { otp, email, hash } = req.body;
 
-    if(!otp || !email || !hash)
-      return next(CreateHttpError.badRequest("All fileds are required!"))
-
+    if (!otp || !email || !hash)
+      return next(CreateHttpError.badRequest("All fileds are required!"));
 
     try {
-      if(currentUser.email != email)
-        return next(CreateHttpError.badRequest("Account email address not match!"))
+      if (currentUser.email != email)
+        return next(
+          CreateHttpError.badRequest("Account email address not match!")
+        );
 
       const givenHash = <string>hash;
 
       const expiresIn = parseInt(givenHash.split(".")[1]);
-  
+
       const hashedOtp = givenHash.split(".")[0];
-  
+
       if (Date.now() > expiresIn)
         return next(CreateHttpError.badRequest("Otp expires!"));
-  
+
       const isValideOtp = OtpService.verify(email, otp, expiresIn, hashedOtp);
-  
+
       if (!isValideOtp)
         return next(CreateHttpError.unauthorized("Otp does not match!"));
 
-      const user = await User.findOneAndUpdate({_id:currentUser._id},
+      const user = await User.findOneAndUpdate(
+        { _id: currentUser._id },
         {
-          $set:{
-            isVerified:true
-          }
-        },{new:true})
+          $set: {
+            isVerified: true,
+          },
+        },
+        { new: true }
+      );
 
       return res.json({
-        ok:true,
-        user
-      })  
-
+        ok: true,
+        user,
+      });
     } catch (error) {
-      return next(CreateHttpError.internalServerError("Internal server error!"))
-    }  
-
+      return next(
+        CreateHttpError.internalServerError("Internal server error!")
+      );
+    }
   }
 
   // @route PUT/activate
   // @desc Activate user
   // @access private
   async activate(req: Request, res: Response, next: NextFunction) {
-    const { avatar, department, yearOfStudy, bio }:ActivateInterface = req.body;
+    const { avatar, department, yearOfStudy, bio }: ActivateInterface =
+      req.body;
     const user = <UserInterface>req.user;
 
     if (!avatar || !department || !yearOfStudy || !bio)
@@ -273,9 +273,9 @@ class AuthController {
         )
       );
 
-      if(!avatar.publicId || !avatar.url){
-        return next(CreateHttpError.notFound("Avatar not found!"))
-      }
+    if (!avatar.publicId || !avatar.url) {
+      return next(CreateHttpError.notFound("Avatar not found!"));
+    }
 
     try {
       // update user
@@ -287,7 +287,7 @@ class AuthController {
             bio,
             department,
             isActivated: true,
-            avatar
+            avatar,
           },
         },
         { new: true, runValidators: true }
@@ -330,15 +330,15 @@ class AuthController {
   // @access public
 
   async refresh(req: Request, res: Response, next: NextFunction) {
-    let recivedRefreshToken:string | undefined;
+    let recivedRefreshToken: string | undefined;
 
-    if(req.cookies){
-      recivedRefreshToken = req.cookies.refreshToken
+    if (req.cookies) {
+      recivedRefreshToken = req.cookies.refreshToken;
     }
 
-    if(!recivedRefreshToken){
-      const token = req.headers['refreshtoken']
-      recivedRefreshToken = token?.toString().split(" ")[1]
+    if (!recivedRefreshToken) {
+      const token = req.headers["refreshtoken"];
+      recivedRefreshToken = token?.toString().split(" ")[1];
     }
 
     if (!recivedRefreshToken)
@@ -347,10 +347,9 @@ class AuthController {
     try {
       const tokenInfo = JWTToken.verifyRefreshToken(recivedRefreshToken);
 
-      const isTokenExists = await Token.findOne({token:recivedRefreshToken})
+      const isTokenExists = await Token.findOne({ token: recivedRefreshToken });
 
-      if(!isTokenExists)
-        throw new Error("Session exipred!")
+      if (!isTokenExists) throw new Error("Session exipred!");
 
       const user = await User.findById(tokenInfo._id);
 
@@ -362,7 +361,7 @@ class AuthController {
       // setting up new tokens
       const tokens = await setResponseToken(res, user);
 
-      return res.json({ ok: true, user ,tokens});
+      return res.json({ ok: true, user, tokens });
     } catch (error) {
       return next(CreateHttpError.unauthorized("Unauthorised!"));
     }

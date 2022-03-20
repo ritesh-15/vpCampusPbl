@@ -27,14 +27,14 @@ class UploadService {
     });
   }
 
- static async deletePreviousAvatar(publicId: string) {
-  console.log({CLOUDINARY_API_KEY,CLOUDINARY_API_SECRET})
-  cloudinary.config({
-    cloud_name: CLOUD_NAME,
-    api_key: CLOUDINARY_API_KEY,
-    api_secret: CLOUDINARY_API_SECRET,
-  });
-  return await cloudinary.uploader.destroy(publicId);
+  static async deletePreviousAvatar(publicId: string) {
+    console.log({ CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET });
+    cloudinary.config({
+      cloud_name: CLOUD_NAME,
+      api_key: CLOUDINARY_API_KEY,
+      api_secret: CLOUDINARY_API_SECRET,
+    });
+    return await cloudinary.uploader.destroy(publicId);
   }
 }
 

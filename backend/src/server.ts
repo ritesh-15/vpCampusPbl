@@ -12,7 +12,7 @@ import passport from "passport";
 import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
-import path from "path";
+import { Server } from "socket.io";
 
 const app: Application = express();
 
@@ -31,7 +31,7 @@ app.use(morgan("dev"));
 
 app.use(helmet());
 
-app.use(express.json({limit:"100mb"}));
+app.use(express.json({ limit: "100mb" }));
 
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
@@ -56,4 +56,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+const server = app.listen(PORT, () =>
+  console.log(`Server is running on port ${PORT}`)
+);
+
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+  console.log("User connected!");
+});

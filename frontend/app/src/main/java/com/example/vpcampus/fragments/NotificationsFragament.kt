@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -16,12 +17,15 @@ import com.example.vpcampus.activities.notifications.SingleNotificationActivity
 import com.example.vpcampus.adapters.NotificationsAdapter
 import com.example.vpcampus.api.notification.AllNotificationResponse
 import com.example.vpcampus.databinding.FragmentNotificationsBinding
+import com.example.vpcampus.models.Notification
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
 import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
+import com.example.vpcampus.utils.SocketInstance
 import com.example.vpcampus.utils.TokenHandler
+import com.facebook.shimmer.ShimmerFrameLayout
 
 
 private const val ARG_PARAM1 = "param1"
@@ -36,12 +40,20 @@ class Notifications : Fragment() {
 
     private lateinit var notificationFragmentBinding:FragmentNotificationsBinding
 
+    private lateinit var inboxNotifications:List<Notification>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        SocketInstance().setSocket()
+        SocketInstance().connect()
+        val mSocket = SocketInstance().getSocket()
+
+        mSocket?.emit("join")
 
         notificationViewModel = ViewModelProvider(
             this,
@@ -56,21 +68,21 @@ class Notifications : Fragment() {
 
         notificationFragmentBinding = FragmentNotificationsBinding.inflate(layoutInflater,container,false)
 
-
         notificationFragmentBinding.fbCreateNotification.setOnClickListener{
            startActivity(Intent(activity,CreateNotificationActivity::class.java))
         }
+
+
 
         notificationFragmentBinding.toolbarNotification.setNavigationOnClickListener {
             activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
         }
 
-        notificationViewModel.getAllNotifications(TokenHandler.getTokens(requireActivity()))
-
-
         notificationViewModel.allNotificationsResponse.observe(requireActivity()){
             response -> parseAllNotificationsResponse(response)
         }
+
+        notificationViewModel.getAllNotifications(TokenHandler.getTokens(requireContext()))
 
         return notificationFragmentBinding.root
     }
@@ -79,16 +91,26 @@ class Notifications : Fragment() {
         when(state){
 
             is ScreenState.Loading -> {
-                notificationFragmentBinding.pbNotifications.visibility = View.VISIBLE
+                notificationFragmentBinding.sflNotifications.visibility = View.VISIBLE
+                notificationFragmentBinding.rvNotificationInbox.visibility = View.GONE
+                notificationFragmentBinding.sflNotifications.startShimmerAnimation()
+
             }
 
             is ScreenState.Success -> {
-                notificationFragmentBinding.pbNotifications.visibility = View.GONE
+                notificationFragmentBinding.sflNotifications.visibility = View.GONE
+                notificationFragmentBinding.rvNotificationInbox.visibility = View.VISIBLE
+                notificationFragmentBinding.sflNotifications.stopShimmerAnimation()
+
                 if(state.data != null){
+                    inboxNotifications = state.data.notifications
+
                     notificationFragmentBinding.rvNotificationInbox.layoutManager =
                        StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+
+
                     val adapter =  NotificationsAdapter(requireActivity(),
-                        state.data.notifications)
+                        inboxNotifications)
 
                     adapter.setOnClickListener(object : NotificationsAdapter.OnClickListener{
                         override fun onClick(position: Int) {
@@ -105,7 +127,9 @@ class Notifications : Fragment() {
             }
 
             is ScreenState.Error -> {
-                notificationFragmentBinding.pbNotifications.visibility = View.GONE
+                notificationFragmentBinding.sflNotifications.visibility = View.GONE
+                notificationFragmentBinding.rvNotificationInbox.visibility = View.VISIBLE
+                notificationFragmentBinding.sflNotifications.stopShimmerAnimation()
                 Log.e("ERROR_ALL",state.message!!)
             }
 

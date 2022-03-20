@@ -7,4 +7,5 @@
     <color name="textLight">#a6a6a6</color>
     <color name="red">#FFD5D5</color>
     <color name="errorMessageColor">#D00101</color>
+    <color name="colorGray">#dddddd</color>
 </resources>

@@ -15,8 +15,10 @@
     </style>
 
     <style name="Widget.App.CircularProgressIndicator" parent="Widget.MaterialComponents.CircularProgressIndicator">
-        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
     </style>
+
 
     <style name="Theme.VpCampus.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -3,20 +3,31 @@ package com.example.vpcampus.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.vpcampus.R
 import com.example.vpcampus.databinding.ActivityMainBinding
 import com.example.vpcampus.activities.auth.LoginActivity
+import com.example.vpcampus.activities.notifications.SingleNotificationActivity
+import com.example.vpcampus.adapters.NotificationsAdapter
 import com.example.vpcampus.api.authApi.LogOutResponse
+import com.example.vpcampus.api.notification.AllNotificationResponse
 import com.example.vpcampus.fragments.*
+import com.example.vpcampus.models.Notification
 import com.example.vpcampus.models.User
 import com.example.vpcampus.network.factory.AuthViewModelFactory
+import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.AuthViewModel
+import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.AuthRepository
+import com.example.vpcampus.repository.NotificationRepository
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 import com.google.android.material.navigation.NavigationView
@@ -75,7 +86,6 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
             }
         }
-
 
     }
 

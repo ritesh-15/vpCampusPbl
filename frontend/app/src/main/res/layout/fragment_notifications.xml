@@ -32,28 +32,66 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/pb_notifications"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            >-->
+
+<!--&lt;!&ndash;            <ProgressBar&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:visibility="visible"&ndash;&gt;-->
+<!--&lt;!&ndash;                />&ndash;&gt;-->
+<!--&lt;!&ndash;            &ndash;&gt;-->
+<!--            <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                style="@style/Widget.App.CircularProgressIndicator"-->
+<!--                />-->
+
+<!--        </LinearLayout>-->
+
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/pb_notifications"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:id="@+id/sfl_notifications"
             >
 
-            <ProgressBar
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="visible"
-                />
+                android:orientation="vertical"
+                >
 
-        </LinearLayout>
+                <include layout="@layout/rv_notification_skeleton"/>
 
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rv_notification_inbox"
+            android:visibility="gone"
             />
 
     </LinearLayout>

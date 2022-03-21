@@ -129,27 +129,6 @@ class NotificationController {
     }
   }
 
-  async getSentNotifcations(req: Request, res: Response, next: NextFunction) {
-    const user = req.user as UserInterface;
-
-    try {
-      const notifications = await Notification.find({
-        userId: user._id,
-      })
-        .sort({ createdAt: -1 })
-        .populate("userId");
-
-      return res.json({
-        ok: true,
-        notifications,
-      });
-    } catch (error) {
-      return next(
-        CreateHttpError.internalServerError("Internal server error!")
-      );
-    }
-  }
-
   // @route GET /:id
   // @desc Get single  notification
   // @access public
@@ -183,11 +162,24 @@ class NotificationController {
   // @access public
   async getAllNotifications(req: Request, res: Response, next: NextFunction) {
     const currentUser = <UserInterface>req.user;
+    const { sent } = req.query;
+
+    console.log(sent);
+
+    let query;
+
+    if (sent) {
+      query = {
+        userId: currentUser._id,
+      };
+    } else {
+      query = {
+        userId: { $ne: currentUser._id },
+      };
+    }
 
     try {
-      const notifications = await Notification.find({
-        userId: { $ne: currentUser._id },
-      })
+      const notifications = await Notification.find(query)
         .sort({ createdAt: -1 })
         .populate("userId");
 
@@ -196,6 +188,7 @@ class NotificationController {
         notifications,
       });
     } catch (error: any) {
+      console.log(error.message);
       next(CreateHttpError.internalServerError("Internal server error!"));
     }
   }

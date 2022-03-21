@@ -10,12 +10,12 @@ router
 
 router
   .route("/all")
-  .get([isAuthenticated],notificationController.getAllNotifications);
+  .get([isAuthenticated], notificationController.getAllNotifications);
 
 router
   .route("/:id")
   .put([isAuthenticated], notificationController.updateNotification)
   .delete([isAuthenticated], notificationController.deleteNotification)
-  .get([isAuthenticated],notificationController.getSingleNotification);
+  .get([isAuthenticated], notificationController.getSingleNotification);
 
 export { router as notificationRouter };

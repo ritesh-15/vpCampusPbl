@@ -129,6 +129,27 @@ class NotificationController {
     }
   }
 
+  async getSentNotifcations(req: Request, res: Response, next: NextFunction) {
+    const user = req.user as UserInterface;
+
+    try {
+      const notifications = await Notification.find({
+        userId: user._id,
+      })
+        .sort({ createdAt: -1 })
+        .populate("userId");
+
+      return res.json({
+        ok: true,
+        notifications,
+      });
+    } catch (error) {
+      return next(
+        CreateHttpError.internalServerError("Internal server error!")
+      );
+    }
+  }
+
   // @route GET /:id
   // @desc Get single  notification
   // @access public

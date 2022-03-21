@@ -12,10 +12,7 @@ class UserController {
 
   async updateProfile(req: Request, res: Response, next: NextFunction) {
     const { avatar, department, yearOfStudy, name, bio } = req.body;
-
     const user = <UserInterface>req.user;
-
-    console.log(req.body);
 
     try {
       if (avatar) {

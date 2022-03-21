@@ -52,11 +52,11 @@ class NotificationViewModel(
 
     }
 
-    fun getAllNotifications(headers: Map<String, String>){
+    fun getAllNotifications(headers: Map<String, String>,sent:String? = null){
 
         viewModelScope.launch {
             _allNotificationsResponse.value = ScreenState.Loading(null)
-            val response = repository.getAllNotifications(headers)
+            val response = repository.getAllNotifications(headers,sent)
 
             try {
 

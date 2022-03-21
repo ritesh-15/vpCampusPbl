@@ -16,9 +16,10 @@ class NotificationRepository {
     }
 
     suspend fun getAllNotifications(
-        headers:Map<String,String>
+        headers:Map<String,String>,
+        sent:String? = null
     ):Response<AllNotificationResponse>{
-        return ApiInstance.notificationApi.getAllNotifications(headers)
+        return ApiInstance.notificationApi.getAllNotifications(headers,sent)
     }
 
 }

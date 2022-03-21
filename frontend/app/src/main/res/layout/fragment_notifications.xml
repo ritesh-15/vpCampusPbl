@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:liftOnScroll="true"
-            app:layout_constraintTop_toTopOf="parent"
             >
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -31,29 +30,6 @@
                 />
 
         </com.google.android.material.appbar.AppBarLayout>
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:id="@+id/pb_notifications"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            >-->
-
-<!--&lt;!&ndash;            <ProgressBar&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_gravity="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:visibility="visible"&ndash;&gt;-->
-<!--&lt;!&ndash;                />&ndash;&gt;-->
-<!--&lt;!&ndash;            &ndash;&gt;-->
-<!--            <com.google.android.material.progressindicator.CircularProgressIndicator-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                style="@style/Widget.App.CircularProgressIndicator"-->
-<!--                />-->
-
-<!--        </LinearLayout>-->
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"

@@ -3,12 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.NotificationSentFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sent"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true"
+            >
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_notification"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:menu="@menu/notifications_menu_list"
+                app:navigationIcon="@drawable/ic_menu_icon"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sfl_notifications"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+                <include layout="@layout/rv_notification_skeleton"/>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_notification_sent"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
 
 </FrameLayout>

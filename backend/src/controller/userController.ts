@@ -94,6 +94,39 @@ class UserController {
     }
   }
 
+  // @route PUT/get/:id
+  // @desc Get user current user
+  // @access private
+  async getUserById(req: Request, res: Response, next: NextFunction) {
+    const currentUser = req.user as UserInterface;
+
+    try {
+      const user = await User.findOne({ _id: currentUser._id });
+
+      if (!user) return next(CreateHttpError.notFound("User not found!"));
+
+      return res.json({
+        ok: true,
+        user: {
+          _id: user._id,
+          email: user.email,
+          name: user.name,
+          isActivated: user.isActivated,
+          avatar: user.avatar,
+          department: user.department,
+          yearOfStudy: user.yearOfStudy,
+          bio: user.bio,
+          role: user.role,
+          isVerified: user.isVerified,
+        },
+      });
+    } catch (error) {
+      return next(
+        CreateHttpError.internalServerError("Internal server error!")
+      );
+    }
+  }
+
   // @route PUT/update-user/role
   // @desc update user role
   // @access admin

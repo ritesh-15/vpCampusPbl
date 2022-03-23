@@ -8,4 +8,6 @@ router
   .route("/update-profile")
   .put(isAuthenticated, userController.updateProfile);
 
+router.route("/get").get(isAuthenticated, userController.getUserById);
+
 export { router as userRouter };

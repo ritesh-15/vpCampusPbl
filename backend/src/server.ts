@@ -72,7 +72,13 @@ io.on("connection", (socket) => {
   console.log(socket.id);
   console.log("User connected!");
 
-  socket.on("join", () => {
-    console.log("socket join");
+  socket.on("join-notification-room", () => {
+    socket.join("notification-room");
+
+    socket.on("new-notification", (notification) => {
+      io.to("notification-room").emit("new-notification", notification);
+    });
+
+    console.log("Notification room joined");
   });
 });

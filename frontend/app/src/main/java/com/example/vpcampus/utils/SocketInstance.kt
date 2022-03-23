@@ -9,21 +9,18 @@ import java.net.URISyntaxException
 
 class SocketInstance {
 
-    private var mSocket:Socket? = null
-
-    @Synchronized
-    fun setSocket(){
-        try {
-            mSocket = IO.socket(Constants.SOCKET_BASE_URL)
-        }catch (e:URISyntaxException){
-            Log.e("SOCKET_ERROR",e.message!!)
-        }catch (e:SocketTimeoutException){
-            Log.e("SOCKET_ERROR",e.message!!)
-        }
+    companion object{
+        private var mSocket:Socket? = null
     }
+
 
     @Synchronized
     fun getSocket():Socket?{
+        if(mSocket == null){
+            mSocket = IO.socket(Constants.SOCKET_BASE_URL)
+            return mSocket
+        }
+
         return mSocket
     }
 

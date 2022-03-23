@@ -20,6 +20,11 @@ object Constants {
 
     const val NOTIFICATION = "notification"
 
+    const val JOIN_NOTIFICATION_ROOM = "join-notification-room"
+
+    const val SOCKET = "socket"
+
+    const val NEW_NOTIFICATION = "new-notification"
 
     fun getDepartmentsList(context:Context):List<String>{
         val departments = ArrayList<String>()

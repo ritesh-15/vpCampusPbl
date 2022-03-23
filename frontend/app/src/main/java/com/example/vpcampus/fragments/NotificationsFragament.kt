@@ -3,12 +3,12 @@ package com.example.vpcampus.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.vpcampus.R
@@ -25,16 +25,10 @@ import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.SocketInstance
 import com.example.vpcampus.utils.TokenHandler
-import com.facebook.shimmer.ShimmerFrameLayout
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import io.socket.client.Socket
 
 
 class Notifications : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var notificationViewModel:NotificationViewModel
 
@@ -42,18 +36,24 @@ class Notifications : Fragment() {
 
     private lateinit var inboxNotifications:List<Notification>
 
+    private var mSocket:Socket? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+        mSocket = SocketInstance().getSocket()
+        mSocket?.connect()
+
+        mSocket?.emit(Constants.JOIN_NOTIFICATION_ROOM)
+
+        mSocket?.on(Constants.NEW_NOTIFICATION){
+            args ->
+            if(args[0] != null){
+                activity?.runOnUiThread {
+                    Toast.makeText(activity,"REcived response",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-
-        SocketInstance().setSocket()
-        SocketInstance().connect()
-        val mSocket = SocketInstance().getSocket()
-
-        mSocket?.emit("join")
 
         notificationViewModel = ViewModelProvider(
             this,
@@ -69,10 +69,9 @@ class Notifications : Fragment() {
         notificationFragmentBinding = FragmentNotificationsBinding.inflate(layoutInflater,container,false)
 
         notificationFragmentBinding.fbCreateNotification.setOnClickListener{
-           startActivity(Intent(activity,CreateNotificationActivity::class.java))
+            val intent = Intent(activity,CreateNotificationActivity::class.java)
+           startActivity(intent)
         }
-
-
 
         notificationFragmentBinding.toolbarNotification.setNavigationOnClickListener {
             activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
@@ -136,14 +135,10 @@ class Notifications : Fragment() {
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Notifications().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        mSocket?.disconnect()
+        mSocket = null
     }
+
 }

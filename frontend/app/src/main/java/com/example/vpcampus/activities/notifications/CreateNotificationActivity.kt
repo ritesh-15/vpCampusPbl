@@ -10,8 +10,11 @@ import com.example.vpcampus.databinding.ActivityCreateNotificationBinding
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
+import com.example.vpcampus.utils.SocketInstance
 import com.example.vpcampus.utils.TokenHandler
+import io.socket.client.Socket
 
 class CreateNotificationActivity : BaseActivity() {
 
@@ -19,10 +22,16 @@ class CreateNotificationActivity : BaseActivity() {
 
     private lateinit var notificationViewModel:NotificationViewModel
 
+    private var mSocket:Socket? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mSocket = SocketInstance().getSocket()
+
+        mSocket?.emit(Constants.JOIN_NOTIFICATION_ROOM)
 
         notificationViewModel = ViewModelProvider(
             this,
@@ -54,6 +63,7 @@ class CreateNotificationActivity : BaseActivity() {
             is ScreenState.Success -> {
                 hideProgressDialog()
                 if(state.data != null){
+                    mSocket?.emit(Constants.NEW_NOTIFICATION,state.data.notification)
                     Toast.makeText(this,"Notification created successfully!",Toast.LENGTH_SHORT).show()
                     finish()
                 }
@@ -85,5 +95,11 @@ class CreateNotificationActivity : BaseActivity() {
         if(title.isEmpty() && description.isEmpty())
             return false
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mSocket?.disconnect()
+        mSocket = null
     }
 }

@@ -78,7 +78,6 @@ io.on("connection", (socket) => {
     socket.on("new-notification", (notification) => {
       console.log(notification);
       socket.in("notification-room").emit("new-notification", notification);
-      io.to("notification-room").emit("new-notification", notification);
     });
 
     console.log("Notification room joined");

@@ -20,6 +20,28 @@ class UserViewModel(
         get() = _updateProfileResponse
 
 
+    private var _userDetailsResponse = MutableLiveData<ScreenState<UpdateProfileResponse>>()
+
+    val userDetailsResponse:LiveData<ScreenState<UpdateProfileResponse>>
+        get() = _userDetailsResponse
+
+    fun getUserDetails(
+        headers: Map<String, String>
+    ){
+        viewModelScope.launch {
+            _userDetailsResponse.value = ScreenState.Loading(null)
+
+            val response = repository.getUserDetails(headers)
+
+            if(response.isSuccessful){
+                _userDetailsResponse.value = ScreenState.Success(response.body())
+            }else{
+                _userDetailsResponse.value = ScreenState.Error(response.message(),response.code())
+            }
+
+        }
+    }
+
     fun updateProfile(
         body:UpdateProfileBody,
         headers:Map<String,String>

@@ -4,12 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
+    tools:context=".fragments.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/fr_profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/profile"
+            android:background="@color/white"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/main_profile_container"
         >
 
 
@@ -24,22 +49,6 @@
                 android:orientation="vertical"
 
                 >
-
-                <com.google.android.material.appbar.AppBarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:liftOnScroll="true"
-                    >
-
-                    <com.google.android.material.appbar.MaterialToolbar
-                        android:id="@+id/fr_profile_toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:title="@string/profile"
-                        android:background="@color/white"
-                        />
-
-                </com.google.android.material.appbar.AppBarLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +78,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ritesh"
+                            android:text="Name"
                             android:textSize="@dimen/profile_name_text_size"
                             android:textColor="@color/textPrimary"
                             android:id="@+id/tv_profile_name"
@@ -101,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:id="@+id/et_profile_name"
-                            android:text="Ritesh Khore"
+                            android:text="Name"
                             android:textColor="@color/textPrimary"
                             />
 
@@ -120,7 +129,7 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:id="@+id/et_profile_email"
-                            android:text="riteshkhore@gmail.com"
+                            android:text="abc@gmail.com"
                             android:textColor="@color/textPrimary"
                             />
 
@@ -174,28 +183,47 @@
         </ScrollView>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|end"
+            android:gravity="bottom|end"
+            >
 
-    </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fb_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="Edit"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/ic_edit_icon"
+                />
+        </LinearLayout>
 
 
-    <LinearLayout
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="bottom|end"
-        android:gravity="bottom|end"
+        android:id="@+id/profile_skeleton"
         >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_edit_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="Edit"
-            android:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_edit_icon"
-            />
-    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/fragment_profile_skeleton"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

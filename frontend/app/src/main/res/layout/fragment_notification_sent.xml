@@ -26,6 +26,7 @@
                 android:background="@color/white"
                 app:menu="@menu/notifications_menu_list"
                 app:navigationIcon="@drawable/ic_menu_icon"
+                app:title="Sent"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>

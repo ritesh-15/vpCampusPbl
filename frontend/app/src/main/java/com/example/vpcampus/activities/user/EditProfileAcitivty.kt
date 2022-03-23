@@ -23,6 +23,7 @@ import com.example.vpcampus.api.userApi.UpdateProfileBody
 import com.example.vpcampus.api.userApi.UpdateProfileResponse
 import com.example.vpcampus.databinding.ActivityEditProfileAcitivtyBinding
 import com.example.vpcampus.models.Avatar
+import com.example.vpcampus.models.User
 import com.example.vpcampus.network.factory.UserViewModelFactory
 import com.example.vpcampus.network.models.UserViewModel
 import com.example.vpcampus.repository.UserRepository
@@ -44,6 +45,8 @@ class EditProfileAcitivty : BaseActivity() {
 
     private var mSelectedImageFileUri: Uri? = null
 
+    private var user:User? = null
+
     private lateinit var binding:ActivityEditProfileAcitivtyBinding
 
     private lateinit var userViewModel:UserViewModel
@@ -53,8 +56,11 @@ class EditProfileAcitivty : BaseActivity() {
 
         binding = ActivityEditProfileAcitivtyBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+        if(intent.hasExtra(Constants.USER)){
+            user = intent.getSerializableExtra(Constants.USER) as User
+        }
 
+        setContentView(binding.root)
 
         userViewModel = ViewModelProvider(
             this,
@@ -165,8 +171,9 @@ class EditProfileAcitivty : BaseActivity() {
             is ScreenState.Success -> {
                 hideProgressDialog()
                 Toast.makeText(this,"Update successfully!",Toast.LENGTH_SHORT).show()
-                UserState.user = state.data?.user
-                setResult(Activity.RESULT_OK,Intent())
+                val intent = Intent()
+                intent.putExtra(Constants.USER,state.data?.user)
+                setResult(Activity.RESULT_OK,intent)
                 finish()
             }
 
@@ -210,22 +217,22 @@ class EditProfileAcitivty : BaseActivity() {
     private fun setUpData(){
         Glide
             .with(this)
-            .load(UserState.user!!.avatar.url)
+            .load(user!!.avatar.url)
             .centerCrop()
             .placeholder(R.drawable.ic_user_avatar)
             .into(binding.ivEdProfileUserImage)
 
 
-        binding.etProfileName.setText(UserState.user!!.name)
-        binding.etEdProfileBio.setText(UserState.user!!.bio)
+        binding.etProfileName.setText(user!!.name)
+        binding.etEdProfileBio.setText(user!!.bio)
 
 
         val departmentsAdapter = ArrayAdapter(this, R.layout.list_item, Constants.getDepartmentsList(this))
-        binding.actvEditDepartment.setText(UserState.user!!.department,true)
+        binding.actvEditDepartment.setText(user!!.department,true)
         binding.actvEditDepartment.setAdapter(departmentsAdapter)
 
         val yearOfStudyAdapter = ArrayAdapter(this, R.layout.list_item, Constants.getYearOfStudies(this))
-        binding.actvEditYearOfStudy.setText(UserState.user!!.yearOfStudy,true)
+        binding.actvEditYearOfStudy.setText(user!!.yearOfStudy,true)
         binding.actvEditYearOfStudy.setAdapter(yearOfStudyAdapter)
 
     }

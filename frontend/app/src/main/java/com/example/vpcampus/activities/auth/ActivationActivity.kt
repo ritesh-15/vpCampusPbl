@@ -182,6 +182,7 @@ class ActivationActivity : BaseActivity() {
                     if(state.data.user.isActivated && state.data.user.isVerified){
                         val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.putExtra(Constants.USER,state.data.user)
                         startActivity(intent)
                         finish()
                     }else{

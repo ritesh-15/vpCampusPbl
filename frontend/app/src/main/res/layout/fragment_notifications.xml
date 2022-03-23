@@ -27,6 +27,7 @@
                 android:background="@color/white"
                 app:navigationIcon="@drawable/ic_menu_icon"
                 app:menu="@menu/notifications_menu_list"
+                app:title="Primary"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>

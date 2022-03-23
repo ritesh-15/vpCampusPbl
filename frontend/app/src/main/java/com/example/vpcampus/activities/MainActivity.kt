@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -18,6 +19,7 @@ import com.example.vpcampus.activities.notifications.SingleNotificationActivity
 import com.example.vpcampus.adapters.NotificationsAdapter
 import com.example.vpcampus.api.authApi.LogOutResponse
 import com.example.vpcampus.api.notification.AllNotificationResponse
+import com.example.vpcampus.databinding.NavDrawerHeaderLayoutBinding
 import com.example.vpcampus.fragments.*
 import com.example.vpcampus.models.Notification
 import com.example.vpcampus.models.User
@@ -38,10 +40,17 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
     private lateinit var authViewModel:AuthViewModel
 
+    private var user:User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if(intent.hasExtra(Constants.USER)){
+            user = intent.getSerializableExtra(Constants.USER) as User
+            setUpNavHeaderData(user)
+        }
 
         authViewModel = ViewModelProvider(
             this,
@@ -90,16 +99,20 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     }
 
     // set up nav header data
-    private fun setUpNavHeaderData(user:User){
-            Glide
-                .with(this)
-                .load(user.avatar.url)
-                .centerCrop()
-                .placeholder(R.drawable.ic_user_avatar)
-                .into(findViewById(R.id.iv_nav_user_avatar))
+    private fun setUpNavHeaderData(user:User?){
 
-            findViewById<TextView>(R.id.tv_nav_user_name).text =user.name
-            findViewById<TextView>(R.id.tv_nav_user_email).text = user.email
+        val headerVieww = binding.mainNavigation.getHeaderView(0)
+        val navBarBinding = NavDrawerHeaderLayoutBinding.bind(headerVieww)
+
+        Glide
+            .with(this)
+            .load(user?.avatar?.url)
+            .centerCrop()
+            .placeholder(R.drawable.ic_user_avatar)
+            .into(navBarBinding.ivNavUserAvatar)
+
+            navBarBinding.tvNavUserName.text = user?.name
+            navBarBinding.tvNavUserEmail.text = user?.email
 
     }
 
@@ -139,11 +152,13 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
 
             R.id.menu_item_sent -> {
                 replaceFragment(NotificationSentFragment())
+                binding.bnMain.menu.findItem(R.id.menu_notifications).isChecked = true
                 binding.mainDrawer.close()
             }
 
             R.id.menu_item_inbox -> {
                 replaceFragment(Notifications())
+                binding.bnMain.menu.findItem(R.id.menu_notifications).isChecked = true
                 binding.mainDrawer.close()
             }
         }

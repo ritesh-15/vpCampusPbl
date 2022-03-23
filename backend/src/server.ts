@@ -76,6 +76,7 @@ io.on("connection", (socket) => {
     socket.join("notification-room");
 
     socket.on("new-notification", (notification) => {
+      console.log(notification);
       io.to("notification-room").emit("new-notification", notification);
     });
 

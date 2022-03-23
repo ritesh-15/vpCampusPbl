@@ -77,9 +77,7 @@ io.on("connection", (socket) => {
 
     socket.on("new-notification", (notification) => {
       console.log(notification);
-      socket.broadcast
-        .to("notification-room")
-        .emit("new-notification", notification);
+      socket.in("notification-room").emit("new-notification", notification);
       io.to("notification-room").emit("new-notification", notification);
     });
 

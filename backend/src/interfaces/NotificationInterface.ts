@@ -15,4 +15,5 @@ export interface NotificationInterface {
   updatedAt: Date;
   access: string;
   attachments: Attachment[];
+  html: string;
 }

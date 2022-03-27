@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import { JSDOM } from "jsdom";
+import { marked } from "marked";
 import { UserInterface } from "../interfaces/UserInterface";
 import Notification from "../model/notificationModel";
 import CreateHttpError from "../utils/errorHandler";
+import createDomPurify from "dompurify";
 
 class NotificationController {
   // @route POST/create
@@ -70,12 +73,17 @@ class NotificationController {
           CreateHttpError.notFound("Notification with given id is not found!")
         );
 
+      const window: any = new JSDOM().window;
+      const purify = createDomPurify(window);
+      const html = purify.sanitize(marked.parse(description));
+
       notification = await Notification.findOneAndUpdate(
         { _id: id },
         {
           $set: {
             title,
             description,
+            html,
           },
         },
         { new: true }

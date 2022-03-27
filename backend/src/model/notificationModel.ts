@@ -54,7 +54,7 @@ const notificationSchema = new Schema<NotificationInterface>(
 
 notificationSchema.pre("validate", function (next) {
   if (this.description) {
-    this.html = purify.sanitize(marked(this.description));
+    this.html = purify.sanitize(marked.parse(this.description));
   }
 
   next();

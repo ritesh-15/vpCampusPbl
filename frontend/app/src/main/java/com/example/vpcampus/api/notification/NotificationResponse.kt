@@ -8,6 +8,9 @@ data class CreateNotificationResponse(
     val notification:Notification
 )
 
+data class DeleteNotificationResponse(
+    val ok:Boolean,
+)
 
 data class AllNotificationResponse(
     val ok: Boolean,

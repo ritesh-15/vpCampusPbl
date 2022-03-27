@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.SplashScreenActivity"
     android:padding="@dimen/screenPadding"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
@@ -17,9 +17,10 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="@dimen/splash_screen_text_size"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
+        android:id="@+id/title"
         />
 
     <ProgressBar

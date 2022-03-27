@@ -15,19 +15,26 @@
         <activity
             android:name=".activities.notifications.SingleNotificationActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.notifications.UpdateNotificationActivity"
+            android:exported="false"
+            android:label="Update notification"
+            android:theme="@style/Theme.VpCampus.NoActionBar"
+            />
+
         <activity
             android:name=".activities.user.EditProfileAcitivty"
-            android:exported="false" />
-        <activity
-            android:name=".activities.user.EditProfileActivity"
             android:exported="false"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/Theme.VpCampus.NoActionBar" />
+
         <activity
             android:name=".activities.notifications.CreateNotificationActivity"
             android:exported="false"
             android:label="@string/title_activity_create_notification"
             android:theme="@style/Theme.VpCampus.NoActionBar" />
+
         <activity
             android:name=".activities.SplashScreenActivity"
             android:exported="true"
@@ -38,30 +45,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.user.ProfileActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.auth.ActivationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.auth.VerificationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.auth.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.auth.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.MainActivity"
             android:exported="false"
@@ -70,6 +79,7 @@
                 android:name="CLOUDINARY_URL"
                 android:value="CLOUDINARY_URL=cloudinary://826232252792938:GUuGtd2mRKNgOvAgi7ADaq23ZGE@dmewli5b4" />
         </activity>
+
     </application>
 
 </manifest>

@@ -14,7 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.VpCampus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.VpCampus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

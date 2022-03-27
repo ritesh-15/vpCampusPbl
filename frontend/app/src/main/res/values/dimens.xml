@@ -50,7 +50,6 @@
     <dimen name="profile_name_text_size">22sp</dimen>
     <dimen name="profile_bio_margin_top">8dp</dimen>
     <dimen name="profile_input_box_margin_top">18dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

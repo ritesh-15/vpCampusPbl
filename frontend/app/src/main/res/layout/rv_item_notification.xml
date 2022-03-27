@@ -36,26 +36,22 @@
                 android:layout_height="wrap_content"
                 android:text="Notification title"
                 android:textColor="@color/textPrimary"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:singleLine="true"
+                />
 
             <TextView
                 android:id="@+id/tv_notification_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:text="Description"
-                android:textColor="@color/textLight"
-                android:textSize="@dimen/textSize" />
+                android:textSize="14sp"
+                android:singleLine="true"
+                />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#f5f5f5"
-        />
-
 
 </LinearLayout>

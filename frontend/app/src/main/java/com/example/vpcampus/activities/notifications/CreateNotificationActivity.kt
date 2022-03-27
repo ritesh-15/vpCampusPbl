@@ -1,6 +1,5 @@
 package com.example.vpcampus.activities.notifications
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -10,10 +9,7 @@ import com.example.vpcampus.databinding.ActivityCreateNotificationBinding
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
 import com.example.vpcampus.repository.NotificationRepository
-import com.example.vpcampus.utils.Constants
-import com.example.vpcampus.utils.ScreenState
-import com.example.vpcampus.utils.SocketInstance
-import com.example.vpcampus.utils.TokenHandler
+import com.example.vpcampus.utils.*
 import io.socket.client.Socket
 
 class CreateNotificationActivity : BaseActivity() {
@@ -28,6 +24,8 @@ class CreateNotificationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setUpFont()
 
         mSocket = SocketInstance().getSocket()
 
@@ -50,6 +48,14 @@ class CreateNotificationActivity : BaseActivity() {
             response -> parseCreateNotificationResponse(response)
         }
 
+    }
+
+    private fun setUpFont(){
+        binding.tfDescription.typeface = FontService.regular(this)
+        binding.tfTitle.typeface = FontService.regular(this)
+        binding.btnCreate.typeface = FontService.regular(this)
+        binding.etDescription.typeface = FontService.regular(this)
+        binding.etTitle.typeface = FontService.regular(this)
     }
 
     private fun parseCreateNotificationResponse(state: ScreenState<CreateNotificationResponse>) {

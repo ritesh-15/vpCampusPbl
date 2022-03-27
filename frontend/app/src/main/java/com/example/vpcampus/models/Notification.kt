@@ -1,5 +1,6 @@
 package com.example.vpcampus.models
 
+import android.text.Html
 import java.io.Serializable
 
 /*
@@ -21,5 +22,7 @@ data class Notification(
     val createdAt:String,
     val updatedAt:String,
     val access:String,
-    val attachments:Any
+    val attachments:Any,
+    val _id:String,
+    val html:String
 ):Serializable

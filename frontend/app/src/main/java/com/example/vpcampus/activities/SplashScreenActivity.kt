@@ -16,6 +16,7 @@ import com.example.vpcampus.network.models.AuthViewModel
 import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.store.UserState
 import com.example.vpcampus.utils.Constants
+import com.example.vpcampus.utils.FontService
 import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 
@@ -32,10 +33,13 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpFont()
+
         val tokens = TokenHandler.getTokens(this)
 
         val repository = AuthRepository()
         val viewModelFactory = AuthViewModelFactory(repository)
+
         viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
 
 
@@ -49,6 +53,11 @@ class SplashScreenActivity : AppCompatActivity() {
         viewModel?.sendOtpResponse?.observe(this){
             response -> parseSendOtpResponse(response)
         }
+    }
+
+    // set up font
+    private fun setUpFont(){
+        binding.title.typeface = FontService.extraBold(this)
     }
 
     // parse send otp response data

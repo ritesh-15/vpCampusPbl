@@ -50,7 +50,8 @@ class Notifications : Fragment() {
             args ->
             if(args[0] != null){
                 activity?.runOnUiThread {
-                    Toast.makeText(activity,"REcived response",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"recived response",Toast.LENGTH_SHORT).show()
+                    Log.d("updated-notification",args[0].toString())
                 }
             }
         }
@@ -107,7 +108,6 @@ class Notifications : Fragment() {
                     notificationFragmentBinding.rvNotificationInbox.layoutManager =
                        StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
 
-
                     val adapter =  NotificationsAdapter(requireActivity(),
                         inboxNotifications)
 
@@ -133,12 +133,6 @@ class Notifications : Fragment() {
             }
 
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mSocket?.disconnect()
-        mSocket = null
     }
 
 }

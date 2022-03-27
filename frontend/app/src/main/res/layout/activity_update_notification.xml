@@ -18,7 +18,7 @@
             android:id="@+id/new_notification_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="New notification"
+            app:title="Update Notification"
             app:navigationIcon="@drawable/ic_arrow_back"
             android:background="@color/white"
             />
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/et_description"
                 android:inputType="textMultiLine"
-                android:minLines="10"
+                android:lines="10"
                 android:gravity="start"
                 />
 
@@ -77,12 +77,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/create"
+            android:text="Update"
             android:textAllCaps="false"
             android:textSize="@dimen/textSize"
             android:padding="@dimen/btnPadding"
             android:layout_marginTop="18dp"
-            android:id="@+id/btn_create"
+            android:id="@+id/btn_update"
             />
 
 

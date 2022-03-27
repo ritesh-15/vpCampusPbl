@@ -17,4 +17,17 @@ interface NotificationInterface {
         @Query("sent") sent:String? = null
     ):Response<AllNotificationResponse>
 
+    @DELETE("notification/{id}")
+    suspend fun deleteNotification(
+        @HeaderMap headers:Map<String,String>,
+        @Path("id") id:String
+    ):Response<DeleteNotificationResponse>
+
+    @PUT("notification/{id}")
+    suspend fun updateNotification(
+        @HeaderMap headers:Map<String,String>,
+        @Path("id") id:String,
+        @Body body:NotificationBody
+    ):Response<CreateNotificationResponse>
+
 }

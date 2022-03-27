@@ -8,4 +8,5 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:fontFamily="@font/poppins_regular"
         />

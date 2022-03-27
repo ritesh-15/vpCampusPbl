@@ -1,5 +1,6 @@
 package com.example.vpcampus.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -34,10 +35,13 @@ class Notifications : Fragment() {
 
     private lateinit var notificationFragmentBinding:FragmentNotificationsBinding
 
-    private lateinit var inboxNotifications:List<Notification>
+    private lateinit var inboxNotifications:ArrayList<Notification>
+
+    private var adapter:NotificationsAdapter? = null
 
     private var mSocket:Socket? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,11 +51,15 @@ class Notifications : Fragment() {
         mSocket?.emit(Constants.JOIN_NOTIFICATION_ROOM)
 
         mSocket?.on(Constants.NEW_NOTIFICATION){
-            args ->
+                args ->
             if(args[0] != null){
                 activity?.runOnUiThread {
-                    Toast.makeText(activity,"recived response",Toast.LENGTH_SHORT).show()
-                    Log.d("updated-notification",args[0].toString())
+                    val output = ArrayList<Notification>()
+                    val notification = args[0] as Notification
+                    output.add(notification)
+                    output.addAll(inboxNotifications)
+                    adapter?.notifyDataSetChanged()
+                    Log.d("updated-notification",notification.toString())
                 }
             }
         }
@@ -108,10 +116,10 @@ class Notifications : Fragment() {
                     notificationFragmentBinding.rvNotificationInbox.layoutManager =
                        StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
 
-                    val adapter =  NotificationsAdapter(requireActivity(),
+                    adapter =  NotificationsAdapter(requireActivity(),
                         inboxNotifications)
 
-                    adapter.setOnClickListener(object : NotificationsAdapter.OnClickListener{
+                    adapter?.setOnClickListener(object : NotificationsAdapter.OnClickListener{
                         override fun onClick(position: Int) {
                             val currentNotification = state.data.notifications[position]
                             val intent = Intent(this@Notifications.context,SingleNotificationActivity::class.java)
@@ -120,6 +128,7 @@ class Notifications : Fragment() {
                         }
 
                     })
+
 
                     notificationFragmentBinding.rvNotificationInbox.adapter = adapter
                 }

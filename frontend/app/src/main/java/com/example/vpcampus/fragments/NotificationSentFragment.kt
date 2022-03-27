@@ -1,11 +1,14 @@
 package com.example.vpcampus.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.vpcampus.activities.notifications.SingleNotificationActivity
@@ -21,25 +24,30 @@ import com.example.vpcampus.utils.ScreenState
 import com.example.vpcampus.utils.TokenHandler
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class NotificationSentFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     private lateinit var viewModel:NotificationViewModel
 
     private lateinit var binding:FragmentNotificationSentBinding
 
-    private lateinit var sentNotifications:List<Notification>
+    private var adapter:NotificationsAdapter? = null
+
+    private lateinit var sentNotifications:ArrayList<Notification>
+
+    @SuppressLint("NotifyDataSetChanged")
+    private var singleNotificationAction = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result ->
+        if(result.resultCode == DELETE_NOTIFICATION_CODE){
+            val deletedNotification = result.data?.getSerializableExtra(Constants.NOTIFICATION) as Notification
+            Log.d("Delete_notification",deletedNotification.toString())
+            sentNotifications.remove(deletedNotification)
+            adapter?.notifyDataSetChanged()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -84,16 +92,16 @@ class NotificationSentFragment : Fragment() {
                         StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
 
 
-                    val adapter =  NotificationsAdapter(requireActivity(),
+                    adapter =  NotificationsAdapter(requireActivity(),
                         sentNotifications)
 
-                    adapter.setOnClickListener(object : NotificationsAdapter.OnClickListener{
+                    adapter?.setOnClickListener(object : NotificationsAdapter.OnClickListener{
                         override fun onClick(position: Int) {
                             val currentNotification = state.data.notifications[position]
                             val intent = Intent(this@NotificationSentFragment.context,
                                 SingleNotificationActivity::class.java)
                             intent.putExtra(Constants.NOTIFICATION,currentNotification)
-                            startActivity(intent)
+                            singleNotificationAction.launch(intent)
                         }
 
                     })
@@ -113,13 +121,6 @@ class NotificationSentFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NotificationSentFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val DELETE_NOTIFICATION_CODE = 200
     }
 }

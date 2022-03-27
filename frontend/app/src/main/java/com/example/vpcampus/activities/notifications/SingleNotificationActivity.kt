@@ -12,6 +12,7 @@ import com.example.vpcampus.R
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.notification.DeleteNotificationResponse
 import com.example.vpcampus.databinding.ActivitySingleNotificationBinding
+import com.example.vpcampus.fragments.NotificationSentFragment
 import com.example.vpcampus.models.Notification
 import com.example.vpcampus.network.factory.NotificationViewModelFactory
 import com.example.vpcampus.network.models.NotificationViewModel
@@ -25,9 +26,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class SingleNotificationActivity : BaseActivity() {
 
     companion object{
-
         const val UPDATE_NOTIFICATION_CODE = 200
-
     }
 
     private lateinit var binding:ActivitySingleNotificationBinding
@@ -108,6 +107,9 @@ class SingleNotificationActivity : BaseActivity() {
 
             is ScreenState.Success -> {
                 hideProgressDialog()
+                val intent = Intent()
+                intent.putExtra(Constants.NOTIFICATION,mNotification!!)
+                setResult(NotificationSentFragment.DELETE_NOTIFICATION_CODE,intent)
                 finish()
             }
 

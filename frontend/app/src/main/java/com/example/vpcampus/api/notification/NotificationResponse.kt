@@ -14,5 +14,5 @@ data class DeleteNotificationResponse(
 
 data class AllNotificationResponse(
     val ok: Boolean,
-    val notifications:List<Notification>
+    val notifications:ArrayList<Notification>
 ):Serializable

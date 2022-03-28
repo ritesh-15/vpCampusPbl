@@ -53,13 +53,10 @@ class Notifications : Fragment() {
         mSocket?.on(Constants.NEW_NOTIFICATION){
                 args ->
             if(args[0] != null){
+                val notification = args[0].toString()
+                Toast.makeText(activity,"SOcket notification",Toast.LENGTH_SHORT).show()
                 activity?.runOnUiThread {
-                    val output = ArrayList<Notification>()
-                    val notification = args[0] as Notification
-                    output.add(notification)
-                    output.addAll(inboxNotifications)
-                    adapter?.notifyDataSetChanged()
-                    Log.d("updated-notification",notification.toString())
+                    Log.d("updated-notification",notification)
                 }
             }
         }

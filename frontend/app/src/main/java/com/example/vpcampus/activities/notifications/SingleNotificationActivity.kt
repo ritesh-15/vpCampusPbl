@@ -40,6 +40,9 @@ class SingleNotificationActivity : BaseActivity() {
         if(result.resultCode == UPDATE_NOTIFICATION_CODE){
             mNotification = result.data?.getSerializableExtra(Constants.NOTIFICATION) as Notification
             setUpUi(mNotification!!)
+            val intent = Intent()
+            intent.putExtra(Constants.NOTIFICATION,mNotification)
+            setResult(NotificationSentFragment.UPDATE_NOTIFICATION_CODE,intent)
             Toast.makeText(this,"Notification updated!",Toast.LENGTH_SHORT).show()
         }
     }

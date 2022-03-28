@@ -122,5 +122,6 @@ class NotificationSentFragment : Fragment() {
 
     companion object {
         const val DELETE_NOTIFICATION_CODE = 200
+        const val UPDATE_NOTIFICATION_CODE = 201
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.SplashScreenActivity"
     android:padding="@dimen/screenPadding"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/ic_bg"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
@@ -23,13 +23,14 @@
         android:id="@+id/title"
         />
 
-    <ProgressBar
-        android:layout_width="@dimen/progress_bar_width_height"
-        android:layout_height="@dimen/progress_bar_width_height"
-        android:indeterminate="true"
-        style="@style/Widget.App.CircularProgressIndicator"
-        android:layout_marginTop="@dimen/progress_bar_margin_top"
-        />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        app:lottie_rawRes="@raw/progressbaranimation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 
 
 </LinearLayout>

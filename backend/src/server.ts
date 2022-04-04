@@ -13,6 +13,8 @@ import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
 import { Server } from "socket.io";
+import { EventEmitter } from "events";
+import EmitterInstance from "./utils/EmitterInstance";
 
 const app: Application = express();
 
@@ -20,6 +22,9 @@ const PORT = process.env.PORT || 9000;
 
 // database connection
 connection();
+
+// emitter
+const emiiter = EmitterInstance.getInstance();
 
 // middlewares
 
@@ -75,7 +80,7 @@ io.on("connection", (socket) => {
   socket.on("join-notification-room", () => {
     socket.join("notification-room");
 
-    socket.on("new-notification", (notification) => {
+    emiiter.on("new-notification", (notification) => {
       console.log(notification);
       io.in("notification-room").emit("new-notification", notification);
     });

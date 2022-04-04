@@ -5,6 +5,8 @@ import { UserInterface } from "../interfaces/UserInterface";
 import Notification from "../model/notificationModel";
 import CreateHttpError from "../utils/errorHandler";
 import createDomPurify from "dompurify";
+import { EventEmitter } from "stream";
+import EmitterInstance from "../utils/EmitterInstance";
 
 class NotificationController {
   // @route POST/create
@@ -28,6 +30,11 @@ class NotificationController {
       });
 
       await notification.populate("userId");
+
+      EmitterInstance.getInstance().emit(
+        "new-notification",
+        JSON.stringify(notification)
+      );
 
       return res.json({
         ok: true,

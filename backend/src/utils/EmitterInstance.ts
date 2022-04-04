@@ -5,15 +5,10 @@ class EmitterInstance {
 
   static getInstance(): EventEmitter {
     if (this.emiiter == null) {
-      return new EventEmitter();
+      this.emiiter = new EventEmitter();
+      return this.emiiter;
     }
     return this.emiiter;
-  }
-
-  static setInstance() {
-    if (this.emiiter == null) {
-      this.emiiter = new EventEmitter();
-    }
   }
 }
 

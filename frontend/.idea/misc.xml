@@ -61,7 +61,7 @@
         <entry key="..\:/Development/Android/VpCampus/frontend/frontend/app/src/main/res/layout/activity_splash_screen.xml" value="0.2234375" />
         <entry key="..\:/Development/Android/VpCampus/frontend/frontend/app/src/main/res/layout/progress_dialog.xml" value="0.2234375" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/drawable/notifications_selector.xml" value="0.1755" />
-        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/activity_activation.xml" value="0.13360507246376813" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/activity_activation.xml" value="0.264" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/activity_base.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/activity_create_notification.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/activity_edit_profile_acitivty.xml" value="0.22083333333333333" />
@@ -83,6 +83,11 @@
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/progress_dialog.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/rv_item_notification.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/layout/rv_notification_skeleton.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/menu/navigation_drawer.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/menu/notifications_menu_list.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/menu/single_notification_menu.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Admin/Desktop/PBL Project/vpCampusPbl/frontend/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1755" />
       </map>
     </option>
   </component>

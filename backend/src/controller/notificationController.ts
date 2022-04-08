@@ -31,11 +31,6 @@ class NotificationController {
 
       await notification.populate("userId");
 
-      EmitterInstance.getInstance().emit(
-        "new-notification",
-        JSON.stringify(notification)
-      );
-
       return res.json({
         ok: true,
         notification,

@@ -23,9 +23,6 @@ const PORT = process.env.PORT || 9000;
 // database connection
 connection();
 
-// emitter
-const emiiter = EmitterInstance.getInstance();
-
 // middlewares
 
 app.use("/api", apiLimiter);
@@ -74,15 +71,12 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  console.log("User connected!");
-
   socket.on("join-notification-room", () => {
     socket.join("notification-room");
 
-    emiiter.on("new-notification", (notification) => {
+    socket.on("new-notification", (notification) => {
       console.log(notification);
-      io.in("notification-room").emit("new-notification", notification);
+      io.to("notification-room").emit(notification);
     });
 
     console.log("Notification room joined");

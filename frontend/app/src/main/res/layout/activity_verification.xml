@@ -25,7 +25,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="@dimen/verification_text_size"
-            android:textColor="@color/colorSecondary"
+            android:textColor="#E16B13E8"
             android:textStyle="bold"
             />
 

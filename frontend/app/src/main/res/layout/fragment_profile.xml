@@ -218,7 +218,7 @@
             android:orientation="vertical"
             >
 
-            <include layout="@layout/fragment_profile_skeleton"/>
+            <include layout="@layout/fragment_profile_skeleton" />
 
         </LinearLayout>
 

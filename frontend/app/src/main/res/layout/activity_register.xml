@@ -46,25 +46,23 @@
         >
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_register_image"
-            android:layout_gravity="center"
-            android:id="@+id/iv_login_image"
-            />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="220sp"
+            app:lottie_rawRes="@raw/register"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_back"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/welcome_text_martin_top"
             android:gravity="center"
-            android:layout_gravity="center"
+            android:text="@string/welcome_back"
+            android:textColor="#E16B13E8"
             android:textSize="@dimen/welcome_text_size"
-            android:textColor="@color/colorSecondary"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"

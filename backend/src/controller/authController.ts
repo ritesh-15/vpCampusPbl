@@ -363,6 +363,7 @@ class AuthController {
 
       return res.json({ ok: true, user, tokens });
     } catch (error) {
+      console.log(error);
       return next(CreateHttpError.unauthorized("Unauthorised!"));
     }
   }

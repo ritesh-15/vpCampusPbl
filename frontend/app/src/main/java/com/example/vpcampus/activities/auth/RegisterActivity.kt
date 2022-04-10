@@ -30,11 +30,6 @@ class RegisterActivity : BaseActivity() {
         val viewModelFactory = AuthViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
 
-        // Toolbar back press listener
-        binding.registerToolbar.setNavigationOnClickListener{
-            onBackPressed()
-        }
-
         // Already have account listener
         binding.tvAlreadyHaveAccount.setOnClickListener {
             startActivity(Intent(this,LoginActivity::class.java))

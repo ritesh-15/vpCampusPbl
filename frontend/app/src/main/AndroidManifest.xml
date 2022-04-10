@@ -16,21 +16,31 @@
         android:usesCleartextTraffic="true">
 
         <activity
+            android:name=".activities.clubs.SingleClubActivity"
+            android:exported="false"
+            android:screenOrientation="locked"
+            android:theme="@style/Theme.SingleClub" />
+
+        <activity
             android:name=".activities.clubs.CreateNewClub"
             android:exported="false" />
+
         <activity
             android:name=".activities.notifications.SingleNotificationActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.notifications.UpdateNotificationActivity"
             android:exported="false"
             android:label="Update notification"
             android:theme="@style/Theme.VpCampus.NoActionBar" />
+
         <activity
             android:name=".activities.user.EditProfileAcitivty"
             android:exported="false"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/Theme.VpCampus.NoActionBar" />
+
         <activity
             android:name=".activities.notifications.CreateNotificationActivity"
             android:exported="false"
@@ -38,10 +48,10 @@
             android:theme="@style/Theme.VpCampus.NoActionBar" />
 
         <activity
-            android:theme="@style/Theme.SpalshScreenStyle"
             android:name=".activities.SplashScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SpalshScreenStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,22 +63,35 @@
             android:name=".activities.BaseActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activities.auth.ActivationActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AuthTheme"
+            />
+
         <activity
             android:name=".activities.auth.VerificationActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AuthTheme"
+            />
+
         <activity
             android:name=".activities.auth.RegisterActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AuthTheme"
+            />
+
         <activity
             android:name=".activities.auth.LoginActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AuthTheme"
+            />
+
         <activity
             android:name=".activities.MainActivity"
             android:exported="false"

@@ -30,6 +30,8 @@ object Constants {
     const val CHANNEL_ID = "notifications"
     const val CHANNEL_NAME = "notificationsChannel"
 
+    const val CLUB = "club"
+
     fun getDepartmentsList(context:Context):List<String>{
         val departments = ArrayList<String>()
         departments.add(context.getString(R.string.comp))

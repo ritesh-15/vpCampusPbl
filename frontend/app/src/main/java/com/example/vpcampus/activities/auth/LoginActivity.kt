@@ -35,10 +35,7 @@ class LoginActivity : BaseActivity() {
         val viewModelFactory = AuthViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory)[AuthViewModel::class.java]
 
-        // Toolbar back press handler
-        binding.loginToolbarr.setNavigationOnClickListener{
-            onBackPressed()
-        }
+
 
         // Create new account activity handler
         binding.tvCreateNewAccount.setOnClickListener {

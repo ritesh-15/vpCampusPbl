@@ -1,15 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
     <style name="Theme.VpCampus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryVariant">#3700B3</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">#03DAC5</item>
-        <item name="colorSecondaryVariant">#018786</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
@@ -19,8 +20,16 @@
     </style>
 
     <style name="Theme.SpalshScreenStyle"  parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
+    </style>
+
+    <style name="Theme.SingleClub"  parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
+    </style>
+
+    <style name="Theme.AuthTheme"  parent="Theme.VpCampus">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.VpCampus.NoActionBar">

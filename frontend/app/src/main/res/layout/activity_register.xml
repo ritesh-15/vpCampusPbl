@@ -16,25 +16,6 @@
     android:orientation="vertical"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true"
-        >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/register_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/register"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            android:background="@color/white"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +41,7 @@
             android:layout_marginTop="@dimen/welcome_text_martin_top"
             android:gravity="center"
             android:text="@string/welcome_back"
-            android:textColor="#E16B13E8"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/welcome_text_size"
             android:textStyle="bold" />
 

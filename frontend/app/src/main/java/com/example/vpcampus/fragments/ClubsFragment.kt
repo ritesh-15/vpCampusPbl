@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vpcampus.R
 import com.example.vpcampus.activities.clubs.CreateNewClub
+import com.example.vpcampus.activities.clubs.SingleClubActivity
 import com.example.vpcampus.adapters.ClubsAdapter
 import com.example.vpcampus.api.clubs.GetAllClubsResponse
 import com.example.vpcampus.databinding.FragmentClubsBinding
@@ -23,6 +24,7 @@ import com.example.vpcampus.models.ErrorMessage
 import com.example.vpcampus.network.factory.ClubsViewModelFactory
 import com.example.vpcampus.network.models.ClubsViewModel
 import com.example.vpcampus.repository.ClubRepository
+import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
 import com.google.gson.Gson
 
@@ -80,7 +82,9 @@ class ClubsFragment : Fragment() {
 
                     clubsAdapter?.setOnItemClickListener(object : ClubsAdapter.OnClickListener {
                         override fun onItemClick(position: Int) {
-                            Toast.makeText(context, "Clicked Club", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(activity,SingleClubActivity::class.java)
+                            intent.putExtra(Constants.CLUB, state.data.clubs)
+                            startActivity(intent)
                         }
 
                     })

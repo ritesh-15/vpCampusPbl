@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/appBarBackground"
         >
 
 
@@ -24,10 +25,12 @@
                 android:id="@+id/toolbar_notification"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
+                android:background="@color/colorPrimary"
                 app:navigationIcon="@drawable/ic_menu_icon"
                 app:menu="@menu/notifications_menu_list"
                 app:title="Primary"
+                app:titleTextColor="@color/white"
+                app:navigationIconTint="@color/white"
                 />
 
         </com.google.android.material.appbar.AppBarLayout>

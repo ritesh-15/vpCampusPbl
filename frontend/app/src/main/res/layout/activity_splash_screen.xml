@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.SplashScreenActivity"
     android:padding="@dimen/screenPadding"
-    android:background="@drawable/ic_bg"
+    android:background="@color/colorPrimary"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"

@@ -12,7 +12,6 @@ interface AuthInterface {
 
     @GET("auth/refresh")
     suspend fun refresh(
-        @HeaderMap headers : Map<String,String>
     ):Response<RefreshResponse>
 
     @POST("auth/send-otp")

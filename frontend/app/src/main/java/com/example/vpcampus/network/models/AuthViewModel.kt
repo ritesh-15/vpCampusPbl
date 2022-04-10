@@ -82,11 +82,11 @@ class AuthViewModel(
         }
     }
 
-    fun refresh(headers:Map<String,String>){
+    fun refresh(){
 
         viewModelScope.launch {
             _refreshResponse.value = ScreenState.Loading(null)
-            val response = repository.refresh(headers)
+            val response = repository.refresh()
 
             try {
                 if(response.isSuccessful){

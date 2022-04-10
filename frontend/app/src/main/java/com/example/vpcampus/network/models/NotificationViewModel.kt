@@ -38,9 +38,8 @@ class NotificationViewModel(
             val response = repository.createNewNotification(NotificationBody(title, description),headers)
 
             try {
-
                 if(response.isSuccessful){
-                    _createNotificationResponse.value = ScreenState.Success(response.body())
+                    _createNotificationResponse.value = ScreenState.Success(response.body(),response)
                 }else{
                     _createNotificationResponse.value = ScreenState.Error(response.message(),response.code())
                 }

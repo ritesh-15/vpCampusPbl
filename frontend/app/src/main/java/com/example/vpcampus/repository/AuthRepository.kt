@@ -10,8 +10,8 @@ class AuthRepository {
         return ApiInstance.authApi.login(body)
     }
 
-   suspend fun refresh(headers:Map<String,String>):Response<RefreshResponse>{
-        return ApiInstance.authApi.refresh(headers)
+   suspend fun refresh():Response<RefreshResponse>{
+        return ApiInstance.authApi.refresh()
     }
 
     suspend fun sendOtp(body:SendOtpBody,headers:Map<String,String>):Response<SendOtpResponse>{

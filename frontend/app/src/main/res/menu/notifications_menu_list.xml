@@ -9,6 +9,7 @@
             android:title="@string/search"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_search_icon"
+
             />
 
 </menu>

@@ -35,7 +35,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         setUpFont()
 
-        val tokens = TokenHandler.getTokens(this)
 
         val repository = AuthRepository()
         val viewModelFactory = AuthViewModelFactory(repository)
@@ -43,13 +42,13 @@ class SplashScreenActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,viewModelFactory).get(AuthViewModel::class.java)
 
 
-        viewModel?.refresh(tokens)
+        viewModel?.refresh()
         viewModel?.refreshResponse?.observe(this){
            response -> parseRefreshResponse(response)
 
         }
 
-        // send otp obeserver
+        // send otp observer
         viewModel?.sendOtpResponse?.observe(this){
             response -> parseSendOtpResponse(response)
         }

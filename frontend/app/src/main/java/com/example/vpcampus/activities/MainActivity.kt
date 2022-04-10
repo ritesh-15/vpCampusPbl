@@ -31,23 +31,27 @@ import com.example.vpcampus.repository.AuthRepository
 import com.example.vpcampus.repository.NotificationRepository
 import com.example.vpcampus.utils.Constants
 import com.example.vpcampus.utils.ScreenState
+import com.example.vpcampus.utils.SocketInstance
 import com.example.vpcampus.utils.TokenHandler
 import com.google.android.material.navigation.NavigationView
+import io.socket.client.Socket
 
-class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    private lateinit var authViewModel:AuthViewModel
+    private lateinit var authViewModel: AuthViewModel
 
-    private var user:User? = null
+    private var user: User? = null
+
+    private var mSocket: Socket? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(intent.hasExtra(Constants.USER)){
+        if (intent.hasExtra(Constants.USER)) {
             user = intent.getSerializableExtra(Constants.USER) as User
             setUpNavHeaderData(user)
         }
@@ -58,19 +62,22 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
         )[AuthViewModel::class.java]
 
         // auth view model log out observer
-        authViewModel.logoutResponse.observe(this){
-            response -> parseLogoutResponse(response)
+        authViewModel.logoutResponse.observe(this) { response ->
+            parseLogoutResponse(response)
         }
+
+        mSocket = SocketInstance().getSocket()
+        SocketInstance().connect()
+        mSocket?.emit(Constants.JOIN_NOTIFICATION_ROOM, user?._id)
 
         binding.mainNavigation.setNavigationItemSelectedListener(this)
 
         replaceFragment(Notifications())
 
         // bottom navigation item selected
-        binding.bnMain.setOnItemSelectedListener {
-            item ->
+        binding.bnMain.setOnItemSelectedListener { item ->
 
-            when(item.itemId){
+            when (item.itemId) {
 
                 R.id.menu_notifications -> {
                     binding.mainNavigation.setCheckedItem(R.id.menu_item_inbox)
@@ -99,7 +106,7 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
     }
 
     // set up nav header data
-    private fun setUpNavHeaderData(user:User?){
+    private fun setUpNavHeaderData(user: User?) {
 
         val headerVieww = binding.mainNavigation.getHeaderView(0)
         val navBarBinding = NavDrawerHeaderLayoutBinding.bind(headerVieww)
@@ -111,40 +118,42 @@ class MainActivity : BaseActivity(),NavigationView.OnNavigationItemSelectedListe
             .placeholder(R.drawable.ic_user_avatar)
             .into(navBarBinding.ivNavUserAvatar)
 
-            navBarBinding.tvNavUserName.text = user?.name
-            navBarBinding.tvNavUserEmail.text = user?.email
+        navBarBinding.tvNavUserName.text = user?.name
+        navBarBinding.tvNavUserEmail.text = user?.email
 
     }
 
     // log out response parser
     private fun parseLogoutResponse(state: ScreenState<LogOutResponse>) {
-        when(state){
+        when (state) {
             is ScreenState.Loading -> {
                 showProgressDialog("Logging Out...")
             }
 
             is ScreenState.Success -> {
                 TokenHandler.deleteTokens(this)
-                val intent = Intent(this,LoginActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             }
 
             is ScreenState.Error -> {
-                showErrorMessage(binding.root,"Something went wrong!")
+                showErrorMessage(binding.root, "Something went wrong!")
             }
         }
     }
 
-    private fun replaceFragment(fragment:Fragment){
-        supportFragmentManager.beginTransaction().replace(binding.flMain.id, fragment).commit()
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.flMain.id, fragment)
+            .commit()
     }
 
     // navigation item selected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
 
             R.id.menu_item_logout -> {
                 authViewModel.logout(TokenHandler.getTokens(this))

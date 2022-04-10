@@ -13,6 +13,8 @@ import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
 import { Server } from "socket.io";
+import clubRouter from "./routes/clubRouter";
+import chatRouter from "./routes/chatRouter";
 
 const app: Application = express();
 
@@ -47,6 +49,10 @@ app.use("/api/v1/auth", authenticationLimiter, authRouter);
 app.use("/api/v1/user", userRouter);
 
 app.use("/api/v1/notification", notificationRouter);
+
+app.use("/api/v1/club", clubRouter);
+
+app.use("/api/v1/chat", chatRouter);
 
 // error handler
 

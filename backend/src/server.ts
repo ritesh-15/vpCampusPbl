@@ -13,8 +13,6 @@ import { passportJwt } from "./middlewares/passportJwt";
 import { userRouter } from "./routes/userRoutes";
 import { notificationRouter } from "./routes/notificationRoutes";
 import { Server } from "socket.io";
-import { EventEmitter } from "events";
-import EmitterInstance from "./utils/EmitterInstance";
 
 const app: Application = express();
 
@@ -76,7 +74,7 @@ io.on("connection", (socket) => {
 
     socket.on("new-notification", (notification) => {
       console.log(notification);
-      io.to("notification-room").emit("new-notification", notification);
+      socket.to("notification-room").emit("new-notification", notification);
     });
 
     console.log(`Notification room joined ${userID}`);

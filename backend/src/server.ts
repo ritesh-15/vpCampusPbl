@@ -71,7 +71,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("join-notification-room", () => {
+  socket.on("join-notification-room", (userID) => {
     socket.join("notification-room");
 
     socket.on("new-notification", (notification) => {
@@ -79,6 +79,6 @@ io.on("connection", (socket) => {
       io.to("notification-room").emit("new-notification", notification);
     });
 
-    console.log("Notification room joined");
+    console.log(`Notification room joined ${userID}`);
   });
 });

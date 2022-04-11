@@ -1,93 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Notifications">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/appBarBackground"
-        >
-
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true"
-            >
+            android:background="@color/appBarBackground">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_notification"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:navigationIcon="@drawable/ic_menu_icon"
-                app:menu="@menu/notifications_menu_list"
-                app:title="Primary"
-                app:titleTextColor="@color/white"
-                app:navigationIconTint="@color/white"
-                />
+                android:layout_height="?attr/actionBarSize">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_app_bar_search"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_search_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_search_icon" />
+
+                    <EditText
+                        android:id="@+id/tv_search_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:minHeight="48dp"
+                        android:text="Search"
+                        android:layout_weight="1"
+                        android:textCursorDrawable="@null" />
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/sfl_notifications"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
-                <include layout="@layout/rv_notification_skeleton"/>
+                <include layout="@layout/rv_notification_skeleton" />
 
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_notification_inbox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rv_notification_inbox"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
     </LinearLayout>
 
 
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fb_create_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:contentDescription="create"
-        app:icon="@drawable/ic_edit_icon"
-        android:id="@+id/fb_create_notification"
         android:text="Create"
+        app:icon="@drawable/ic_edit_icon"
 
         />
 

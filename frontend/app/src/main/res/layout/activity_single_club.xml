@@ -4,84 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.clubs.SingleClubActivity"
     android:background="#f6f6f6"
     android:paddingBottom="8dp"
-    >
+    tools:context=".activities.clubs.SingleClubActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/single_club_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/single_club_app_bar_layout"
         android:background="@color/appBarBackground"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            >
+            android:layout_height="?attr/actionBarSize">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/iv_arrow_back"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:id="@+id/iv_arrow_back"
                     android:src="@drawable/ic_arrow_back"
-                    />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_club_image"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:layout_marginStart="16dp"
                     android:src="@drawable/ic_user_avatar"
-                    android:id="@+id/iv_club_image"
-                    app:layout_constraintStart_toEndOf="@id/iv_arrow_back"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/tv_club_name"
-                    android:layout_marginStart="16dp"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/iv_arrow_back"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/iv_club_image"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/tv_club_name"
-                android:text="Club Name"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/textPrimary"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_marginStart="16dp"
-                    android:ellipsize="end"
-                    app:layout_constraintBottom_toTopOf="@id/tv_club_description"
-                />
-
-                <TextView
+                    android:id="@+id/tv_club_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/iv_club_image"
-                    app:layout_constraintTop_toBottomOf="@id/tv_club_name"
-                    android:id="@+id/tv_club_description"
-                    android:text="Club description"
-                    android:textSize="14sp"
-                    android:textColor="@color/textLight"
+                    android:layout_marginStart="16dp"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:ellipsize="end"
+                    android:text="Club Name"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/tv_club_description"
+                    app:layout_constraintStart_toEndOf="@id/iv_club_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_club_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Club description"
+                    android:textColor="@color/textLight"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    app:layout_constraintStart_toEndOf="@id/iv_club_image"
+                    app:layout_constraintTop_toBottomOf="@id/tv_club_name" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,54 +83,50 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_single_club_chats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/single_club_app_bar_layout"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/rv_single_club_chats"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/single_club_app_bar_layout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
+            android:id="@+id/tv_chat_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintEnd_toStartOf="@id/btn_send"
-            android:hint="Enter message"
-            android:id="@+id/tv_chat_message"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/bg_chat_message_text_input"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
             android:elevation="8dp"
-            />
+            android:hint="Enter message"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_send"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/btn_send"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintStart_toEndOf="@id/tv_chat_message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/btn_send"
-            android:src="@drawable/ic_chat_sent"
-            android:background="@drawable/bg_chat_send_button"
-            app:tint="@color/white"
             android:layout_marginStart="8dp"
-            />
+            android:background="@drawable/bg_chat_send_button"
+            android:src="@drawable/ic_chat_sent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_chat_message"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

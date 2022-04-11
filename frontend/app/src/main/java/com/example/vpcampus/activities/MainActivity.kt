@@ -86,7 +86,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 }
 
                 R.id.menu_clubs -> {
-                    replaceFragment(ClubsFragment())
+                    val bundle = Bundle()
+                    bundle.putSerializable(Constants.USER, user)
+                    val fragment = ClubsFragment()
+                    fragment.arguments = bundle
+                    replaceFragment(fragment)
                     true
                 }
 

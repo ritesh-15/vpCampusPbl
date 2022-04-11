@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vpcampus.api.clubs.CreateClubBody
-import com.example.vpcampus.api.clubs.CreateClubResponse
-import com.example.vpcampus.api.clubs.GetAllClubsResponse
+import com.example.vpcampus.api.clubs.*
 import com.example.vpcampus.repository.ClubRepository
 import com.example.vpcampus.utils.ScreenState
 import kotlinx.coroutines.launch
@@ -17,16 +15,16 @@ class ClubsViewModel(
 
     // get all clubs response
     private var _allClubs: MutableLiveData<ScreenState<GetAllClubsResponse>> = MutableLiveData()
-    val allClubs:LiveData<ScreenState<GetAllClubsResponse>>
+    val allClubs: LiveData<ScreenState<GetAllClubsResponse>>
         get() = _allClubs
 
-    fun getAllClubs(){
+    fun getAllClubs() {
         viewModelScope.launch {
             _allClubs.value = ScreenState.Loading(null)
             val response = repository.getAllClubs()
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 _allClubs.value = ScreenState.Success(response.body())
-            }else{
+            } else {
                 _allClubs.value = ScreenState.Error(errorBody = response.errorBody())
             }
         }
@@ -35,19 +33,59 @@ class ClubsViewModel(
 
     // create club response
     private var _createClub: MutableLiveData<ScreenState<CreateClubResponse>> = MutableLiveData()
-    val createClub:LiveData<ScreenState<CreateClubResponse>>
+    val createClub: LiveData<ScreenState<CreateClubResponse>>
         get() = _createClub
 
     fun createClub(
-        body: CreateClubBody
-    ){
+        body: CreateClubBody,
+    ) {
         viewModelScope.launch {
             _createClub.value = ScreenState.Loading(null)
             val response = repository.createNewClub(body)
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 _createClub.value = ScreenState.Success(response.body())
-            }else{
+            } else {
                 _createClub.value = ScreenState.Error(errorBody = response.errorBody())
+            }
+        }
+    }
+
+
+    // create chat response
+    private var _createChat: MutableLiveData<ScreenState<NewChatResponse>> = MutableLiveData()
+    val createChat: LiveData<ScreenState<NewChatResponse>>
+        get() = _createChat
+
+    fun createChat(
+        body: CreateChatBody,
+        clubId: String,
+    ) {
+        viewModelScope.launch {
+            _createChat.value = ScreenState.Loading(null)
+            val response = repository.createChat(body, clubId)
+            if (response.isSuccessful) {
+                _createChat.value = ScreenState.Success(response.body())
+            } else {
+                _createChat.value = ScreenState.Error(errorBody = response.errorBody())
+            }
+        }
+    }
+
+    // get all chats
+    private var _allChats: MutableLiveData<ScreenState<AllChatsResponse>> = MutableLiveData()
+    val allChats: LiveData<ScreenState<AllChatsResponse>>
+        get() = _allChats
+
+    fun allChats(
+        clubId: String,
+    ) {
+        viewModelScope.launch {
+            _allChats.value = ScreenState.Loading(null)
+            val response = repository.getAllChats(clubId)
+            if (response.isSuccessful) {
+                _allChats.value = ScreenState.Success(response.body())
+            } else {
+                _allChats.value = ScreenState.Error(errorBody = response.errorBody())
             }
         }
     }

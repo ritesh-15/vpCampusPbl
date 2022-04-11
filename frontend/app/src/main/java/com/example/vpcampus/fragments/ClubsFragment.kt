@@ -21,6 +21,7 @@ import com.example.vpcampus.api.clubs.GetAllClubsResponse
 import com.example.vpcampus.databinding.FragmentClubsBinding
 import com.example.vpcampus.models.Club
 import com.example.vpcampus.models.ErrorMessage
+import com.example.vpcampus.models.User
 import com.example.vpcampus.network.factory.ClubsViewModelFactory
 import com.example.vpcampus.network.models.ClubsViewModel
 import com.example.vpcampus.repository.ClubRepository
@@ -33,6 +34,7 @@ class ClubsFragment : Fragment() {
     private lateinit var binding: FragmentClubsBinding
     private lateinit var clubViewModel: ClubsViewModel
     private var clubsAdapter: ClubsAdapter? = null
+    private var user: User? = null
 
     private val activityAction =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -44,6 +46,8 @@ class ClubsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentClubsBinding.inflate(layoutInflater, container, false)
+
+        user = arguments?.getSerializable(Constants.USER) as User
 
         binding.fbCreateNewClub.setOnClickListener {
             val intent = Intent(activity, CreateNewClub::class.java)
@@ -82,8 +86,9 @@ class ClubsFragment : Fragment() {
 
                     clubsAdapter?.setOnItemClickListener(object : ClubsAdapter.OnClickListener {
                         override fun onItemClick(position: Int) {
-                            val intent = Intent(activity,SingleClubActivity::class.java)
-                            intent.putExtra(Constants.CLUB, state.data.clubs)
+                            val intent = Intent(activity, SingleClubActivity::class.java)
+                            intent.putExtra(Constants.CLUB, state.data.clubs[position])
+                            intent.putExtra(Constants.USER, user)
                             startActivity(intent)
                         }
 

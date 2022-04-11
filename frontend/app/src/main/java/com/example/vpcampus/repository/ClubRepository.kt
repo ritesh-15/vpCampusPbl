@@ -1,9 +1,7 @@
 package com.example.vpcampus.repository
 
 import com.example.vpcampus.api.ApiInstance
-import com.example.vpcampus.api.clubs.CreateClubBody
-import com.example.vpcampus.api.clubs.CreateClubResponse
-import com.example.vpcampus.api.clubs.GetAllClubsResponse
+import com.example.vpcampus.api.clubs.*
 import retrofit2.Response
 
 class ClubRepository {
@@ -13,4 +11,16 @@ class ClubRepository {
     suspend fun createNewClub(
         body:CreateClubBody
     ): Response<CreateClubResponse> = ApiInstance.clubsApi.createNewClub(body)
+
+
+    suspend fun createChat(
+        body:CreateChatBody,
+        clubId:String
+    ): Response<NewChatResponse> = ApiInstance.clubsApi.createChat(body, clubId)
+
+
+    suspend fun getAllChats(
+        clubId:String
+    ): Response<AllChatsResponse> = ApiInstance.clubsApi.getAllChats(clubId)
+
 }

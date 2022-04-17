@@ -63,6 +63,8 @@ class ChatController {
           },
         });
 
+      // added admin populated
+
       return res.json({
         ok: true,
         chats: chats,

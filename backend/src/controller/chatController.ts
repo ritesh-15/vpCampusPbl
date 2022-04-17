@@ -55,7 +55,13 @@ class ChatController {
     try {
       const chats = await Chat.find({ clubId: id })
         .populate("userId")
-        .populate("clubId");
+        .populate("clubId")
+        .populate({
+          path: "clubId",
+          populate: {
+            path: "admin",
+          },
+        });
 
       return res.json({
         ok: true,

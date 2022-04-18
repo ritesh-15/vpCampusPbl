@@ -31,7 +31,14 @@ class ChatController {
         message,
       });
 
-      await (await chat.populate("userId")).populate("clubId");
+      await (
+        await (await chat.populate("userId")).populate("clubId")
+      ).populate({
+        path: "clubId",
+        populate: {
+          path: "admin",
+        },
+      });
 
       return res.status(201).json({
         ok: true,

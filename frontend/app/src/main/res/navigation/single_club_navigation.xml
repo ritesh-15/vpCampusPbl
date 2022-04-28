@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/single_club_navigation"
+    app:startDestination="@id/fragment_club_chats">
+
+    <fragment
+        android:id="@+id/fragment_club_information"
+        android:name="com.example.vpcampus.fragments.ClubInformationFragment"
+        android:label="fragment_club_information"
+        tools:layout="@layout/fragment_club_information" >
+        <action
+            android:id="@+id/action_fragment_club_information_to_fragment_club_chats"
+            app:destination="@id/fragment_club_chats" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_club_chats"
+        android:name="com.example.vpcampus.fragments.ClubChatsFragment"
+        android:label="ClubChatsFragment" >
+        <action
+            android:id="@+id/action_fragment_club_chats_to_fragment_club_information"
+            app:destination="@id/fragment_club_information" />
+        <argument
+            android:name="user"
+            app:argType="com.example.vpcampus.models.User" />
+        <argument
+            android:name="club"
+            app:argType="com.example.vpcampus.models.Club" />
+    </fragment>
+
+</navigation>

@@ -90,4 +90,42 @@ class ClubsViewModel(
         }
     }
 
+    // delete club
+    private var _deleteClub: MutableLiveData<ScreenState<DeleteClubResponse>> = MutableLiveData()
+    val deleteClub: LiveData<ScreenState<DeleteClubResponse>>
+        get() = _deleteClub
+
+    fun deleteClub(clubId: String) {
+
+        viewModelScope.launch {
+            _deleteClub.value = ScreenState.Loading(null)
+            val response = repository.deleteClub(clubId)
+            if (response.isSuccessful) {
+                _deleteClub.value = ScreenState.Success(response.body())
+            } else {
+                _deleteClub.value = ScreenState.Error(errorBody = response.errorBody())
+            }
+        }
+
+    }
+
+    // update club information
+    private var _updateClub: MutableLiveData<ScreenState<CreateClubResponse>> = MutableLiveData()
+    val updateClub: LiveData<ScreenState<CreateClubResponse>>
+        get() = _updateClub
+
+    fun updateClub(clubId: String, body: UpdateClubBody) {
+
+        viewModelScope.launch {
+            _updateClub.value = ScreenState.Loading(null)
+            val response = repository.updateClub(clubId, body)
+            if (response.isSuccessful) {
+                _updateClub.value = ScreenState.Success(response.body())
+            } else {
+                _updateClub.value = ScreenState.Error(errorBody = response.errorBody())
+            }
+        }
+
+    }
+
 }

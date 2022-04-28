@@ -27,3 +27,8 @@ data class AllChatsResponse(
     val ok:Boolean,
     val chats:ArrayList<Chat>
 )
+
+data class DeleteClubResponse(
+    val ok:Boolean,
+    val message:String
+)

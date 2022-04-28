@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vpcampus.databinding.RvChatRecivedItemBinding
 import com.example.vpcampus.databinding.RvChatSentItemBinding
 import com.example.vpcampus.models.Chat
@@ -19,7 +20,7 @@ class ChatAdapter(
     companion object {
 
         private const val CHAT_SENT_CODE = 1
-        private const val CHAT_RECEVIED_CODE = 2
+        private const val CHAT_RECEIVED_CODE = 2
 
     }
 
@@ -36,7 +37,7 @@ class ChatAdapter(
                 )
             }
 
-            CHAT_RECEVIED_CODE -> {
+            CHAT_RECEIVED_CODE -> {
                 ChatReceivedViewHolder(
                     RvChatRecivedItemBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -65,7 +66,7 @@ class ChatAdapter(
             return CHAT_SENT_CODE
         }
 
-        return CHAT_RECEVIED_CODE
+        return CHAT_RECEIVED_CODE
 
     }
 
@@ -75,9 +76,24 @@ class ChatAdapter(
         if (holder is ChatSentViewHolder) {
             holder.binding.tvChatMessage.text = model.message
             holder.binding.tvUserName.text = model.userId.name
+
+            Glide
+                .with(context)
+                .load(model.userId.avatar.url)
+                .centerCrop()
+                .placeholder(com.example.vpcampus.R.drawable.ic_user_avatar)
+                .into(holder.binding.civUserAvatar)
+
         } else if (holder is ChatReceivedViewHolder) {
             holder.binding.tvChatMessage.text = model.message
             holder.binding.tvUserName.text = model.userId.name
+
+            Glide
+                .with(context)
+                .load(model.userId.avatar.url)
+                .centerCrop()
+                .placeholder(com.example.vpcampus.R.drawable.ic_user_avatar)
+                .into(holder.binding.civUserAvatar)
         }
 
     }

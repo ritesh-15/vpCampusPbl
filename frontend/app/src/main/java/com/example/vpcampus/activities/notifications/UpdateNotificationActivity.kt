@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.vpcampus.activities.BaseActivity
 import com.example.vpcampus.api.notification.CreateNotificationResponse
 import com.example.vpcampus.api.notification.NotificationBody

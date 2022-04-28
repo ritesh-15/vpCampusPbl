@@ -8,6 +8,12 @@ data class CreateClubBody(
     val avatar:Avatar
 )
 
+data class UpdateClubBody(
+    val name:String?,
+    val description:String?,
+    val avatar:Avatar?
+)
+
 data class CreateChatBody(
     val message:String
 )

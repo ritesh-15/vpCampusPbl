@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#22577E</color>
-    <color name="colorPrimaryVariant">#5584AC</color>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryVariant">#673AB7</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorSecondary">#FAFFAF</color>
-    <color name="textPrimary">#fff</color>
+    <color name="colorSecondary">#00BCD4</color>
+    <color name="textPrimary">#262626</color>
     <color name="textLight">#a6a6a6</color>
     <color name="red">#FFD5D5</color>
     <color name="errorMessageColor">#D00101</color>
     <color name="colorGray">#dddddd</color>
     <color name="textWhite">#D7D7D7</color>
-    <color name="appBarBackground">#101010</color>
+    <color name="appBarBackground">#fff</color>
 </resources>

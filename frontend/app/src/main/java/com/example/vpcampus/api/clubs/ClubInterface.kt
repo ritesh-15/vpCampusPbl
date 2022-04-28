@@ -1,10 +1,7 @@
 package com.example.vpcampus.api.clubs
 
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ClubInterface {
 
@@ -27,4 +24,15 @@ interface ClubInterface {
     suspend fun getAllChats(
         @Path("clubId") clubId: String,
     ): Response<AllChatsResponse>
+
+    @DELETE("club/{clubId}")
+    suspend fun deleteClub(
+        @Path("clubId") clubId:String
+    ):Response<DeleteClubResponse>
+
+    @PUT("club/{clubId}")
+    suspend fun updateClub(
+        @Path("clubId") clubId:String,
+        @Body body:UpdateClubBody
+    ):Response<CreateClubResponse>
 }

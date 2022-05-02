@@ -49,6 +49,7 @@ class Notifications : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
+
         notificationFragmentBinding =
             FragmentNotificationsBinding.inflate(layoutInflater, container, false)
 

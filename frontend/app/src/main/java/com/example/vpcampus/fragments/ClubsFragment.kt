@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,10 @@ class ClubsFragment : Fragment() {
         binding.fbCreateNewClub.setOnClickListener {
             val intent = Intent(activity, CreateNewClub::class.java)
             activityAction.launch(intent)
+        }
+
+        binding.clubToolbar.setNavigationOnClickListener {
+            activity?.findViewById<DrawerLayout>(R.id.main_drawer)?.open()
         }
 
         // set up view mode

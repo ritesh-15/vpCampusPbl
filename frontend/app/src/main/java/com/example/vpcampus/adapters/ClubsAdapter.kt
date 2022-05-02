@@ -1,10 +1,12 @@
 package com.example.vpcampus.adapters
 
 import android.content.Context
+import android.os.Build
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.vpcampus.R
@@ -12,7 +14,9 @@ import com.example.vpcampus.databinding.RvItemClubBinding
 import com.example.vpcampus.models.Club
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
+import java.time.ZonedDateTime as ZonedDateTime1
 
 class ClubsAdapter(
     private val context: Context,
@@ -37,6 +41,7 @@ class ClubsAdapter(
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val model = list[position]
@@ -46,9 +51,9 @@ class ClubsAdapter(
             holder.binding.tvClubName.text = model.name
             holder.binding.tvClubDescription.text = model.description
             try {
-                val format: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+                val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
                 val date = format.parse(model.createdAt)
-                holder.binding.tvCreatedTime.text = date.toString()
+                holder.binding.tvCreatedTime.text = date.time.toString()
             }catch (e:ParseException){
                 holder.binding.tvCreatedTime.text = "EXE"
             }
